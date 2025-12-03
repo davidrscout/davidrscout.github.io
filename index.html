@@ -1,229 +1,291 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>David Rodríguez | Portfolio</title>
 
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #000;
-      color: #fff;
-      font-family: "Inter", sans-serif;
-      line-height: 1.6;
-      scroll-behavior: smooth;
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --card: #0a0a0a;
+      --border: #1a1a1a;
+      --accent: #4da3ff;
+      --muted: rgba(255,255,255,0.65);
+
+      --light-bg: #f7f7f7;
+      --light-text: #111;
+      --light-card: #fff;
+      --light-border: #ddd;
+      --light-muted: #555;
     }
 
-    header {
-      padding: 60px 8%;
+    [data-theme="light"] {
+      --bg: var(--light-bg);
+      --text: var(--light-text);
+      --card: var(--light-card);
+      --border: var(--light-border);
+      --muted: var(--light-muted);
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      transition: background 0.3s ease, color 0.3s ease;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 150px 8% 80px;
       max-width: 1200px;
       margin: auto;
+      opacity: 0;
+      animation: fadeUp 1.2s ease forwards;
     }
 
     h1 {
-      font-size: 56px;
+      font-size: 64px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 22px;
+      color: var(--muted);
+      max-width: 650px;
+    }
+
+    /* SECTION */
+    .section {
+      padding: 70px 8%;
+      max-width: 1200px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .section:nth-child(even) {
+      animation-delay: .2s;
+    }
+
+    h2 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    /* PROJECT CARDS */
+    .projects-grid {
+      display: grid;
+      gap: 32px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      padding: 30px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      transition: 0.25s ease;
+      transform: translateY(0);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+    }
+
+    .card-title {
+      font-size: 24px;
       font-weight: 700;
       margin-bottom: 10px;
     }
 
-    h2 {
-      font-size: 32px;
-      margin-top: 80px;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    .subtitle {
-      font-size: 20px;
-      opacity: 0.7;
-      max-width: 600px;
-    }
-
-    .section {
-      padding: 40px 8%;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .projects-grid {
-      display: grid;
-      gap: 28px;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      margin-top: 30px;
-    }
-
-    .project-card {
-      background: #0a0a0a;
-      padding: 28px;
-      border-radius: 14px;
-      border: 1px solid #111;
-      transition: 0.2s ease-in-out;
-    }
-
-    .project-card:hover {
-      border: 1px solid #333;
-      transform: translateY(-3px);
-    }
-
-    .project-title {
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .project-desc {
-      font-size: 16px;
-      opacity: 0.75;
-      margin-bottom: 12px;
+    .card-desc {
+      font-size: 17px;
+      color: var(--muted);
+      margin-bottom: 14px;
     }
 
     .tag {
-      display: inline-block;
-      background: #111;
-      padding: 5px 12px;
-      margin-right: 6px;
-      margin-bottom: 6px;
-      border-radius: 6px;
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 50px;
       font-size: 13px;
-      opacity: 0.85;
+      margin-right: 6px;
+      opacity: 0.8;
     }
 
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    /* SKILLS */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
       gap: 14px;
-      margin-top: 20px;
     }
 
     .skill {
-      background: #0a0a0a;
-      padding: 16px;
-      border-radius: 10px;
-      border: 1px solid #111;
-      text-align: center;
+      padding: 10px 18px;
+      background: var(--card);
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    /* MODE TOGGLE */
+    .theme-toggle {
+      position: fixed;
+      right: 26px;
+      top: 26px;
+      cursor: pointer;
       font-size: 15px;
+      padding: 8px 18px;
+      border-radius: 6px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      opacity: .85;
+    }
+
+    .theme-toggle:hover {
+      opacity: 1;
     }
 
     footer {
-      padding: 50px 8%;
       text-align: center;
-      opacity: 0.6;
-      font-size: 14px;
+      padding: 60px;
+      color: var(--muted);
+      font-size: 15px;
       margin-top: 60px;
     }
 
-    a {
-      color: #4da3ff;
-      text-decoration: none;
-    }
+    a { color: var(--accent); text-decoration: none; }
 
-    a:hover {
-      opacity: 0.7;
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 
 <body>
 
-<header>
+<div class="theme-toggle" onclick="toggleTheme()">Cambiar modo</div>
+
+<!-- HERO -->
+<section class="hero">
   <h1>David Rodríguez</h1>
   <p class="subtitle">
-    Programador, especialista en IA, red team, y ojeador de fútbol.  
-    Construyo sistemas inteligentes, herramientas ofensivas avanzadas, y plataformas de scouting basadas en datos.
+    Programador, especialista en IA y red team, creador de Gemsy: la plataforma de scouting inteligente que combina datos, vídeo e IA para encontrar talento antes que nadie.
   </p>
-</header>
+</section>
 
-<section class="section" id="proyectos">
-  <h2>Proyectos destacados</h2>
+<!-- GEMSY -->
+<section class="section">
+  <h2>Gemsy</h2>
+
+  <div class="card">
+    <div class="card-title">Plataforma completa de scouting profesional</div>
+    <div class="card-desc">
+      Gemsy es el ecosistema que conecta <strong>IA, datos globales, análisis de vídeo, scraping masivo y herramientas de ojeador</strong> dentro de un solo producto usable por clubes y scouts reales.
+      <br><br>
+      Incluye:
+      <ul>
+        <li>Búsqueda de jugadores en lenguaje natural</li>
+        <li>Clasificación automática con IA</li>
+        <li>Scraping global de Transfermarkt y otras fuentes</li>
+        <li>Informes automáticos de jugadores</li>
+        <li>Integración con Google Sheets</li>
+        <li>Dashboard web completo y modo API</li>
+      </ul>
+    </div>
+    <div class="tag">IA</div>
+    <div class="tag">Scraping</div>
+    <div class="tag">Scouting</div>
+    <div class="tag">Automatización</div>
+    <br><br>
+    <a href="https://gemsy.es" target="_blank">gemsy.es</a> • 
+    <a href="https://drscout.es" target="_blank">drscout.es</a>
+  </div>
+</section>
+
+<!-- PROYECTOS DE CIBERSEGURIDAD -->
+<section class="section">
+  <h2>Herramientas de ciberseguridad</h2>
 
   <div class="projects-grid">
-
-    <div class="project-card">
-      <div class="project-title">Gemsy AI</div>
-      <div class="project-desc">
-        Plataforma de scouting profesional basada en IA. Capaz de filtrar jugadores en lenguaje natural,
-        detectar talento oculto, integrar datos, vídeo y análisis automatizado.
+    <div class="card">
+      <div class="card-title">AutoScan Offensive Tool</div>
+      <div class="card-desc">
+        Motor ofensivo avanzado con descubrimiento, explotación real, automatización de payloads, paralelo, lógica de impacto y frameworks ofensivos combinados con IA.
       </div>
-      <div class="tag">Python</div>
-      <div class="tag">Fullstack</div>
-      <div class="tag">IA</div>
-      <div class="tag">Scouting</div>
+      <div class="tag">Red Team</div><div class="tag">Python</div><div class="tag">Automatización</div>
     </div>
 
-    <div class="project-card">
-      <div class="project-title">AutoScan Offensive Tool</div>
-      <div class="project-desc">
-        Suite ofensiva automatizada con reconocimiento, explotación real, plantillas, motores paralelos 
-        y ejecución de payloads. Uso personal para formación avanzada en red team.
+    <div class="card">
+      <div class="card-title">Recon Toolkit</div>
+      <div class="card-desc">
+        Conjunto de herramientas para reconocimiento avanzado: subdominios, escaneo inteligente, rotación, evasión y análisis automático.
       </div>
-      <div class="tag">Red Team</div>
-      <div class="tag">Python</div>
-      <div class="tag">Nmap + IA</div>
-      <div class="tag">Orquestación</div>
+      <div class="tag">Python</div><div class="tag">OSINT</div><div class="tag">Hacking</div>
     </div>
-
-    <div class="project-card">
-      <div class="project-title">DRScrape v3 (Transfermarkt Global Scraper)</div>
-      <div class="project-desc">
-        Sistema de scraping masivo para todas las ligas del mundo. Optimizado para tolerancia a 429,
-        rotación IP, ejecución 24/7 y sincronización directa con bases de datos.
-      </div>
-      <div class="tag">Python</div>
-      <div class="tag">Scraping</div>
-      <div class="tag">Automatización</div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-title">ScoutBot 0.3</div>
-      <div class="project-desc">
-        Agente conversacional para ojeadores capaz de filtrar jugadores, consultar fuentes externas,
-        generar informes, actualizar Google Sheets y funcionar en WhatsApp, web y Telegram.
-      </div>
-      <div class="tag">IA</div>
-      <div class="tag">Bots</div>
-      <div class="tag">Scouting</div>
-    </div>
-
   </div>
 </section>
 
-<section class="section" id="skills">
+<!-- OTRAS SKILLS -->
+<section class="section">
   <h2>Skills</h2>
-
-  <div class="skills-grid">
+  
+  <div class="skills">
     <div class="skill">Python</div>
-    <div class="skill">Scraping avanzado</div>
-    <div class="skill">IA aplicada</div>
+    <div class="skill">Scraping global</div>
     <div class="skill">Ciberseguridad ofensiva</div>
+    <div class="skill">IA aplicada</div>
+    <div class="skill">Bots y automatización</div>
     <div class="skill">DevOps básico</div>
+    <div class="skill">Análisis de jugadores</div>
+    <div class="skill">Sistemas distribuidos</div>
     <div class="skill">Bases de datos</div>
-    <div class="skill">Modelos LLM</div>
-    <div class="skill">Scouting & Data</div>
   </div>
 </section>
 
-<section class="section" id="sobre-mi">
+<!-- SOBRE MI -->
+<section class="section">
   <h2>Sobre mí</h2>
-  <p>
-    Soy programador, especialista en IA y red team, con experiencia real en creación de herramientas ofensivas,
-    automatización extrema, scraping global, y sistemas de scouting basados en datos.  
-    Mi objetivo es unir IA, ciberseguridad y fútbol para crear herramientas que hagan el trabajo 10 veces más eficiente.
-  </p>
+
+  <div class="card">
+    <div class="card-desc" style="font-size:18px;">
+      Soy programador, especialista en IA aplicada y red team. Me enfoco en construir herramientas reales,
+      no prototipos: scraping global que tarda días, agentes con razonamiento, motores ofensivos capaces
+      de ejecutar exploits reales y plataformas completas como Gemsy.
+    </div>
+  </div>
 </section>
 
-<section class="section" id="contacto">
+<!-- CONTACTO -->
+<section class="section">
   <h2>Contacto</h2>
-  <p>
+  <p style="font-size:18px;">
     Email: <a href="mailto:davidrodriguezscout@gmail.com">davidrodriguezscout@gmail.com</a><br>
-    GitHub: <a href="https://github.com/davidrscout" target="_blank">github.com/davidrscout</a>
+    GitHub: <a target="_blank" href="https://github.com/davidrscout">github.com/davidrscout</a>
   </p>
 </section>
 
 <footer>
-  © 2025 David Rodríguez. Todos los derechos reservados.
+  © 2025 David Rodríguez | Portfolio
 </footer>
+
+<script>
+  function toggleTheme() {
+    document.body.dataset.theme =
+      document.body.dataset.theme === "light" ? "dark" : "light";
+  }
+</script>
 
 </body>
 </html>

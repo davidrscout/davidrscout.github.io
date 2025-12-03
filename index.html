@@ -1,11 +1,229 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Portfolio de David</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>David Rodríguez | Portfolio</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #fff;
+      font-family: "Inter", sans-serif;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      padding: 60px 8%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 32px;
+      margin-top: 80px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      font-size: 20px;
+      opacity: 0.7;
+      max-width: 600px;
+    }
+
+    .section {
+      padding: 40px 8%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .projects-grid {
+      display: grid;
+      gap: 28px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      margin-top: 30px;
+    }
+
+    .project-card {
+      background: #0a0a0a;
+      padding: 28px;
+      border-radius: 14px;
+      border: 1px solid #111;
+      transition: 0.2s ease-in-out;
+    }
+
+    .project-card:hover {
+      border: 1px solid #333;
+      transform: translateY(-3px);
+    }
+
+    .project-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .project-desc {
+      font-size: 16px;
+      opacity: 0.75;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #111;
+      padding: 5px 12px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      border-radius: 6px;
+      font-size: 13px;
+      opacity: 0.85;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .skill {
+      background: #0a0a0a;
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid #111;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    footer {
+      padding: 50px 8%;
+      text-align: center;
+      opacity: 0.6;
+      font-size: 14px;
+      margin-top: 60px;
+    }
+
+    a {
+      color: #4da3ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      opacity: 0.7;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Bienvenido</h1>
-  <p>Este es mi sitio web estático en GitHub Pages.</p>
+
+<header>
+  <h1>David Rodríguez</h1>
+  <p class="subtitle">
+    Programador, especialista en IA, red team, y ojeador de fútbol.  
+    Construyo sistemas inteligentes, herramientas ofensivas avanzadas, y plataformas de scouting basadas en datos.
+  </p>
+</header>
+
+<section class="section" id="proyectos">
+  <h2>Proyectos destacados</h2>
+
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-title">Gemsy AI</div>
+      <div class="project-desc">
+        Plataforma de scouting profesional basada en IA. Capaz de filtrar jugadores en lenguaje natural,
+        detectar talento oculto, integrar datos, vídeo y análisis automatizado.
+      </div>
+      <div class="tag">Python</div>
+      <div class="tag">Fullstack</div>
+      <div class="tag">IA</div>
+      <div class="tag">Scouting</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">AutoScan Offensive Tool</div>
+      <div class="project-desc">
+        Suite ofensiva automatizada con reconocimiento, explotación real, plantillas, motores paralelos 
+        y ejecución de payloads. Uso personal para formación avanzada en red team.
+      </div>
+      <div class="tag">Red Team</div>
+      <div class="tag">Python</div>
+      <div class="tag">Nmap + IA</div>
+      <div class="tag">Orquestación</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">DRScrape v3 (Transfermarkt Global Scraper)</div>
+      <div class="project-desc">
+        Sistema de scraping masivo para todas las ligas del mundo. Optimizado para tolerancia a 429,
+        rotación IP, ejecución 24/7 y sincronización directa con bases de datos.
+      </div>
+      <div class="tag">Python</div>
+      <div class="tag">Scraping</div>
+      <div class="tag">Automatización</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">ScoutBot 0.3</div>
+      <div class="project-desc">
+        Agente conversacional para ojeadores capaz de filtrar jugadores, consultar fuentes externas,
+        generar informes, actualizar Google Sheets y funcionar en WhatsApp, web y Telegram.
+      </div>
+      <div class="tag">IA</div>
+      <div class="tag">Bots</div>
+      <div class="tag">Scouting</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="skills">
+  <h2>Skills</h2>
+
+  <div class="skills-grid">
+    <div class="skill">Python</div>
+    <div class="skill">Scraping avanzado</div>
+    <div class="skill">IA aplicada</div>
+    <div class="skill">Ciberseguridad ofensiva</div>
+    <div class="skill">DevOps básico</div>
+    <div class="skill">Bases de datos</div>
+    <div class="skill">Modelos LLM</div>
+    <div class="skill">Scouting & Data</div>
+  </div>
+</section>
+
+<section class="section" id="sobre-mi">
+  <h2>Sobre mí</h2>
+  <p>
+    Soy programador, especialista en IA y red team, con experiencia real en creación de herramientas ofensivas,
+    automatización extrema, scraping global, y sistemas de scouting basados en datos.  
+    Mi objetivo es unir IA, ciberseguridad y fútbol para crear herramientas que hagan el trabajo 10 veces más eficiente.
+  </p>
+</section>
+
+<section class="section" id="contacto">
+  <h2>Contacto</h2>
+  <p>
+    Email: <a href="mailto:davidrodriguezscout@gmail.com">davidrodriguezscout@gmail.com</a><br>
+    GitHub: <a href="https://github.com/davidrscout" target="_blank">github.com/davidrscout</a>
+  </p>
+</section>
+
+<footer>
+  © 2025 David Rodríguez. Todos los derechos reservados.
+</footer>
+
 </body>
 </html>

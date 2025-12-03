@@ -2,50 +2,46 @@
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>David Rodríguez | Dev & Cyber</title>
-    <meta name="description" content="Portafolio de David Rodríguez Ramírez: Desarrollador Full Stack, Especialista en IA y Ciberseguridad Ofensiva. Creador de gemsy.es.">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>David Rodríguez | Dev, IA & Cyber</title>
+    <meta name="description" content="Portafolio profesional de David Rodríguez: Programador, IA aplicada, Ciberseguridad ofensiva y creador de Gemsy.es.">
 
-    <!-- Configuración Tailwind personalizada -->
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        mono: ['Space Grotesk', 'monospace'],
+                        sans: ['Outfit','sans-serif'],
+                        mono: ['Space Grotesk','monospace'],
                     },
                     colors: {
                         cyber: {
-                            primary: '#00f3ff',   // Cyan neón
-                            secondary: '#7000ff', // Violeta neón
-                            accent: '#ff0055',    // Rosa neón
-                            dark: '#050505',      // Fondo casi negro
-                            glass: 'rgba(255, 255, 255, 0.03)',
-                            border: 'rgba(255, 255, 255, 0.1)'
+                            cyan: '#00f3ff',
+                            violet: '#7000ff',
+                            pink: '#ff006a',
+                            dark: '#050505',
+                            glass: 'rgba(255,255,255,0.04)',
+                            border: 'rgba(255,255,255,0.1)'
                         }
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        float: 'float 6s ease-in-out infinite',
+                        glow: 'glow 4s infinite ease-in-out'
                     },
                     keyframes: {
                         float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                            '0%,100%': { transform:'translateY(0)' },
+                            '50%': { transform:'translateY(-18px)' }
                         },
-                        'pulse-glow': {
-                            '0%, 100%': { opacity: '0.5', transform: 'scale(1)' },
-                            '50%': { opacity: '1', transform: 'scale(1.05)' },
+                        glow: {
+                            '0%,100%': { opacity:'0.4' },
+                            '50%': { opacity:'1' }
                         }
                     }
                 }
@@ -54,615 +50,349 @@
     </script>
 
     <style>
-        /* Estilos base y scrollbar */
-        body {
-            background-color: #050505;
-            color: #ffffff;
-            overflow-x: hidden;
-        }
-        
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #050505;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00f3ff;
+        body { background:#050505; color:white; overflow-x:hidden; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width:8px; }
+        ::-webkit-scrollbar-thumb { background:#222; border-radius:4px; }
+        ::-webkit-scrollbar-thumb:hover { background:#00f3ff; }
+
+        /* Glass */
+        .glass { background:rgba(255,255,255,0.04); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.08); }
+
+        /* Text gradient */
+        .grad { background:linear-gradient(90deg,#00f3ff,#7000ff,#ff006a); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+        /* 3D card hover */
+        .card3d { transition:all .35s cubic-bezier(.2,.8,.2,1); }
+        .card3d:hover {
+            transform:translateY(-6px) scale(1.015);
+            box-shadow:0 0 25px rgba(0,243,255,0.15);
+            border-color:#00f3ff;
         }
 
-        /* Efecto Glassmorphism */
-        .glass-card {
-            background: rgba(20, 20, 30, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .glass-nav {
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Efecto de texto degradado */
-        .text-gradient {
-            background: linear-gradient(to right, #00f3ff, #7000ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .text-gradient-alt {
-            background: linear-gradient(to right, #ff0055, #7000ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Utilidades para el canvas */
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Tarjetas de Proyecto con efecto Hover 3D sutil */
-        .project-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .project-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: #00f3ff;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
-        }
-
-        /* Skill tag hover */
-        .skill-tag:hover {
-            background: rgba(0, 243, 255, 0.1);
-            border-color: #00f3ff;
-            color: #00f3ff;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
-        }
+        /* Canvas */
+        canvas { position:fixed; inset:0; z-index:-1; width:100%; height:100%; }
     </style>
 </head>
-<body class="antialiased selection:bg-cyber-primary selection:text-black">
 
-    <!-- Canvas para el fondo interactivo -->
-    <canvas id="neural-canvas"></canvas>
+<body class="antialiased">
 
-    <!-- Navegación -->
-    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex-shrink-0 cursor-pointer group">
-                    <span class="text-2xl font-bold font-mono tracking-tighter text-white group-hover:text-cyber-primary transition-colors">
-                        DR<span class="text-cyber-primary">.DEV</span>
-                    </span>
-                </div>
-                
-                <!-- Desktop Menu -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#inicio" class="text-sm font-medium hover:text-cyber-primary transition-colors text-gray-300">HOME</a>
-                        <a href="#proyectos" class="text-sm font-medium hover:text-cyber-primary transition-colors text-gray-300">PROYECTOS</a>
-                        <a href="#skills" class="text-sm font-medium hover:text-cyber-primary transition-colors text-gray-300">STACK</a>
-                        <a href="#experiencia" class="text-sm font-medium hover:text-cyber-primary transition-colors text-gray-300">EXPERIENCIA</a>
-                        <a href="#contacto" class="px-4 py-2 rounded-full border border-cyber-primary text-cyber-primary hover:bg-cyber-primary hover:text-black transition-all duration-300 font-bold text-sm">CONTACTO</a>
-                    </div>
-                </div>
+<canvas id="bg-canvas"></canvas>
 
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden">
-                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-gray-300 hover:text-white">
-                        <i class="fas fa-bars text-2xl"></i>
-                    </button>
-                </div>
-            </div>
+<!-- NAV -->
+<nav id="nav" class="fixed top-0 w-full z-50 glass py-4 transition-all">
+    <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+        <div class="font-mono text-lg font-bold tracking-tight">DR<span class="text-cyber-cyan">.DEV</span></div>
+        <div class="hidden md:flex gap-8 text-sm text-gray-300">
+            <a href="#inicio" class="hover:text-cyber-cyan">Inicio</a>
+            <a href="#gemsy" class="hover:text-cyber-cyan">Gemsy</a>
+            <a href="#cyber" class="hover:text-cyber-cyan">Ciberseguridad</a>
+            <a href="#skills" class="hover:text-cyber-cyan">Stack</a>
+            <a href="#experiencia" class="hover:text-cyber-cyan">Experiencia</a>
+            <a href="#contacto" class="hover:text-cyber-cyan">Contacto</a>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden glass-card absolute w-full border-t-0">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#inicio" class="block px-3 py-2 rounded-md text-base font-medium hover:text-cyber-primary hover:bg-white/5">Inicio</a>
-                <a href="#proyectos" class="block px-3 py-2 rounded-md text-base font-medium hover:text-cyber-primary hover:bg-white/5">Proyectos</a>
-                <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium hover:text-cyber-primary hover:bg-white/5">Stack</a>
-                <a href="#experiencia" class="block px-3 py-2 rounded-md text-base font-medium hover:text-cyber-primary hover:bg-white/5">Experiencia</a>
-                <a href="#contacto" class="block px-3 py-2 rounded-md text-base font-medium text-cyber-primary font-bold">Contacto</a>
-            </div>
-        </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- HERO SECTION -->
-    <section id="inicio" class="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
-        <!-- Decoración de fondo -->
-        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-cyber-secondary rounded-full filter blur-[120px] opacity-20 animate-pulse-glow"></div>
-        <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-cyber-primary rounded-full filter blur-[120px] opacity-20 animate-pulse-glow" style="animation-delay: 2s;"></div>
+<!-- HERO -->
+<section id="inicio" class="min-h-screen flex items-center relative pt-32">
+    
+    <!-- multicolor blurred glow -->
+    <div class="absolute top-20 -left-10 w-96 h-96 rounded-full blur-[120px] opacity-30 animate-glow"
+         style="background:linear-gradient(90deg,#00f3ff,#7000ff);"></div>
+    <div class="absolute bottom-20 -right-16 w-96 h-96 rounded-full blur-[140px] opacity-30 animate-glow"
+         style="background:linear-gradient(90deg,#7000ff,#ff006a);"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
-                
-                <!-- Texto Hero -->
-                <div class="w-full md:w-3/5 space-y-8">
-                    <div class="inline-flex items-center px-3 py-1 rounded-full border border-cyber-border bg-white/5 backdrop-blur-sm">
-                        <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
-                        <span class="text-xs font-mono text-gray-300">DISPONIBLE PARA NUEVOS RETOS</span>
-                    </div>
-                    
-                    <h1 class="text-6xl md:text-8xl font-bold leading-tight tracking-tight">
-                        David <br>
-                        <span class="text-gradient">Rodríguez</span>
-                    </h1>
-                    
-                    <div class="text-xl md:text-2xl text-gray-400 font-light max-w-2xl">
-                        Perfil Híbrido: <span class="text-white font-semibold">Desarrollador Full Stack & IA</span> + <span class="text-white font-semibold">Ciberseguridad Ofensiva</span> + <span class="text-white font-semibold">Scouting Profesional</span>.
-                    </div>
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
 
-                    <div class="flex flex-wrap gap-4 pt-4">
-                        <a href="#proyectos" class="group relative px-8 py-4 bg-cyber-primary text-black font-bold rounded-lg overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(0,243,255,0.4)]">
-                            <span class="relative z-10">VER PROYECTOS <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></span>
-                        </a>
-                        <a href="#contacto" class="px-8 py-4 border border-white/20 hover:border-white hover:bg-white/5 rounded-lg font-bold transition-all">
-                            CONTACTAR
-                        </a>
-                        <a href="https://github.com/davidrscout" target="_blank" class="px-6 py-4 text-2xl hover:text-cyber-primary transition-colors"><i class="fab fa-github"></i></a>
-                        <a href="https://linkedin.com/in/davidrscout" target="_blank" class="px-6 py-4 text-2xl hover:text-cyber-primary transition-colors"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-
-                <!-- Elemento Visual Abstracto -->
-                <div class="w-full md:w-2/5 flex justify-center relative">
-                    <div class="relative w-72 h-72 md:w-96 md:h-96 animate-float">
-                        <!-- Círculos concéntricos decorativos -->
-                        <div class="absolute inset-0 border-2 border-dashed border-cyber-primary/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
-                        <div class="absolute inset-4 border border-cyber-secondary/30 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
-                        
-                        <!-- Imagen Central (Avatar o Logo) -->
-                        <div class="absolute inset-0 m-auto w-64 h-64 rounded-full overflow-hidden border-4 border-cyber-glass shadow-2xl bg-cyber-dark">
-                             <img src="https://ui-avatars.com/api/?name=David+R&background=000&color=fff&size=512&font-size=0.3" alt="David Rodriguez" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity">
-                        </div>
-
-                        <!-- Tarjetas flotantes -->
-                        <div class="absolute -right-4 top-10 glass-card p-3 rounded-lg flex items-center gap-3 animate-bounce" style="animation-duration: 3s;">
-                            <i class="fas fa-brain text-cyber-accent text-xl"></i>
-                            <div>
-                                <div class="text-xs text-gray-400">AI Powered</div>
-                                <div class="text-sm font-bold">Gemsy.es</div>
-                            </div>
-                        </div>
-
-                        <div class="absolute -left-8 bottom-20 glass-card p-3 rounded-lg flex items-center gap-3 animate-bounce" style="animation-duration: 4s;">
-                            <i class="fas fa-shield-alt text-cyber-primary text-xl"></i>
-                            <div>
-                                <div class="text-xs text-gray-400">Offensive Security</div>
-                                <div class="text-sm font-bold">HackTheBox</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PROYECTOS DESTACADOS (Gemsy & Cyber) -->
-    <section id="proyectos" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Proyectos <span class="text-gradient">Destacados</span></h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">Donde la inteligencia artificial se encuentra con el deporte y la seguridad informática.</p>
+        <!-- HERO TEXT -->
+        <div class="space-y-8">
+            <div class="inline-flex items-center px-3 py-1 rounded-full border border-cyber-border bg-white/5">
+                <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+                <span class="text-xs font-mono text-gray-300">DISPONIBLE</span>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                
-                <!-- GEMSY.ES - CARD PRINCIPAL -->
-                <article class="glass-card rounded-2xl overflow-hidden project-card group relative h-full flex flex-col">
-                    <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-100 transition-opacity">
-                        <i class="fas fa-external-link-alt text-2xl"></i>
-                    </div>
-                    <div class="h-64 bg-gradient-to-br from-gray-900 to-black relative overflow-hidden flex items-center justify-center">
-                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
-                        <!-- Mockup Visual -->
-                        <div class="text-center z-10">
-                            <h3 class="text-6xl font-bold text-white tracking-tighter">GEMSY</h3>
-                            <p class="text-cyber-accent font-mono mt-2">AI SCOUTING PLATFORM</p>
-                        </div>
-                    </div>
-                    
-                    <div class="p-8 flex-grow flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center gap-2 mb-4">
-                                <span class="px-3 py-1 bg-cyber-accent/20 text-cyber-accent text-xs font-bold rounded border border-cyber-accent/30">AI PRODUCT</span>
-                                <span class="px-3 py-1 bg-white/10 text-white text-xs font-bold rounded">2025 - PRESENTE</span>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-3 text-white">Gemsy.es - Plataforma de Scouting con IA</h3>
-                            <p class="text-gray-400 mb-6 text-sm leading-relaxed">
-                                Desarrollo completo (End-to-End) de una plataforma SaaS. Integra la API de GPT para consultas semánticas ("Soft Attribute Querying"), permitiendo a los usuarios buscar jugadores usando lenguaje natural.
-                            </p>
-                            
-                            <div class="space-y-2 mb-6">
-                                <div class="flex items-center gap-2 text-sm text-gray-300">
-                                    <i class="fas fa-check-circle text-cyber-primary"></i> Backend Modular & Automatización
-                                </div>
-                                <div class="flex items-center gap-2 text-sm text-gray-300">
-                                    <i class="fas fa-check-circle text-cyber-primary"></i> Google Cloud (App Engine, Firestore, SQL)
-                                </div>
-                                <div class="flex items-center gap-2 text-sm text-gray-300">
-                                    <i class="fas fa-check-circle text-cyber-primary"></i> Pasarela de pago & Suscripciones
-                                </div>
-                            </div>
-                        </div>
+            <h1 class="text-6xl md:text-7xl font-extrabold leading-tight">
+                David<br><span class="grad">Rodríguez</span>
+            </h1>
 
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="text-xs font-mono text-cyber-primary border border-cyber-primary/30 px-2 py-1 rounded">Python</span>
-                            <span class="text-xs font-mono text-cyber-primary border border-cyber-primary/30 px-2 py-1 rounded">GPT API</span>
-                            <span class="text-xs font-mono text-cyber-primary border border-cyber-primary/30 px-2 py-1 rounded">PostgreSQL</span>
-                            <span class="text-xs font-mono text-cyber-primary border border-cyber-primary/30 px-2 py-1 rounded">GCP</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- CIBERSEGURIDAD - CARD -->
-                <article class="glass-card rounded-2xl overflow-hidden project-card group relative h-full flex flex-col">
-                    <div class="h-64 bg-black relative overflow-hidden flex items-center justify-center border-b border-white/5">
-                        <div class="absolute inset-0 opacity-30">
-                            <!-- Efecto matriz simulado con CSS o imagen -->
-                            <div class="w-full h-full bg-[linear-gradient(0deg,transparent_24%,rgba(0,255,0,.3)_25%,rgba(0,255,0,.3)_26%,transparent_27%,transparent_74%,rgba(0,255,0,.3)_75%,rgba(0,255,0,.3)_76%,transparent_77%,transparent),linear-gradient(90deg,transparent_24%,rgba(0,255,0,.3)_25%,rgba(0,255,0,.3)_26%,transparent_27%,transparent_74%,rgba(0,255,0,.3)_75%,rgba(0,255,0,.3)_76%,transparent_77%,transparent)] bg-[length:30px_30px]"></div>
-                        </div>
-                        <div class="text-center z-10 font-mono">
-                            <i class="fas fa-terminal text-5xl text-green-500 mb-4"></i>
-                            <div class="text-green-500 font-bold">root@david:~# _</div>
-                        </div>
-                    </div>
-
-                    <div class="p-8 flex-grow flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center gap-2 mb-4">
-                                <span class="px-3 py-1 bg-green-500/20 text-green-500 text-xs font-bold rounded border border-green-500/30">OFFENSIVE SECURITY</span>
-                                <span class="px-3 py-1 bg-white/10 text-white text-xs font-bold rounded">HACKTHEBOX</span>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-3 text-white">Laboratorio de Ciberseguridad</h3>
-                            <p class="text-gray-400 mb-6 text-sm leading-relaxed">
-                                Práctica continua en entornos controlados y máquinas vulnerables. Enfoque en escalada de privilegios, enumeración de servicios y explotación web.
-                            </p>
-                            
-                            <div class="grid grid-cols-2 gap-4 mb-6">
-                                <div class="bg-white/5 p-3 rounded border border-white/5">
-                                    <div class="text-2xl font-bold text-white">20+</div>
-                                    <div class="text-xs text-gray-400">Máquinas HTB (Easy/Med)</div>
-                                </div>
-                                <div class="bg-white/5 p-3 rounded border border-white/5">
-                                    <div class="text-2xl font-bold text-white">WEB</div>
-                                    <div class="text-xs text-gray-400">Exploitation (LFI, RCE, SQLi)</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="text-xs font-mono text-green-400 border border-green-400/30 px-2 py-1 rounded">BurpSuite</span>
-                            <span class="text-xs font-mono text-green-400 border border-green-400/30 px-2 py-1 rounded">Nmap</span>
-                            <span class="text-xs font-mono text-green-400 border border-green-400/30 px-2 py-1 rounded">Python Scripting</span>
-                            <span class="text-xs font-mono text-green-400 border border-green-400/30 px-2 py-1 rounded">Linux</span>
-                        </div>
-                    </div>
-                </article>
-
-            </div>
-
-            <!-- DR SCOUT CARD (Horizontal Pequeña) -->
-            <div class="mt-10 glass-card rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 border border-white/10 hover:border-cyber-secondary transition-colors">
-                <div class="flex-1">
-                    <h3 class="text-xl font-bold flex items-center gap-3">
-                        <i class="fas fa-chart-line text-cyber-secondary"></i> DrScout.es
-                    </h3>
-                    <p class="text-gray-400 mt-2 text-sm">
-                        Plataforma de análisis técnico-táctico optimizada para SEO y rendimiento. Gestión de bases de datos y reportes técnicos para el departamento de scouting.
-                    </p>
-                </div>
-                <div class="flex gap-2">
-                    <span class="px-3 py-1 bg-white/5 rounded text-xs text-gray-300">SEO</span>
-                    <span class="px-3 py-1 bg-white/5 rounded text-xs text-gray-300">Web Performance</span>
-                    <span class="px-3 py-1 bg-white/5 rounded text-xs text-gray-300">Automation</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TECH STACK -->
-    <section id="skills" class="py-20 bg-black/40">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-12">Arsenal <span class="text-gradient-alt">Tecnológico</span></h2>
-            
-            <div class="flex flex-wrap justify-center gap-4">
-                <!-- Dev -->
-                <div class="skill-tag px-6 py-3 glass-card rounded-full cursor-default transition-all duration-300 border border-white/5">
-                    <i class="fab fa-python text-yellow-400 mr-2"></i> Python
-                </div>
-                <div class="skill-tag px-6 py-3 glass-card rounded-full cursor-default transition-all duration-300 border border-white/5">
-                    <i class="fas fa-brain text-pink-500 mr-2"></i> GPT / LLMs
-                </div>
-                <div class="skill-tag px-6 py-3 glass-card rounded-full cursor-default transition-all duration-300 border border-white/5">
-                    <i class="fab fa-google text-blue-400 mr-2"></i> Google Cloud
-                </div>
-                <div class="skill-tag px-6 py-3 glass-card rounded-full cursor-default transition-all duration-300 border border-white/5">
-                    <i class="fas fa-database text-blue-300 mr-2"></i> PostgreSQL / Firestore
-                </div>
-                <!-- Cyber -->
-                <div class="skill-tag px-6 py-3 glass-card rounded-full cursor-default transition-all duration-300 border border-white/5">
-                    <i class="fas fa-bug text-green-500 mr-2"></i> Offensive Security
-                </div>
-                <div class="skill-tag px-6 py-3 glass-card rounded-full cursor-default transition-all duration-300 border border-white/5">
-                    <i class="fas fa-ghost text-gray-300 mr-2"></i> BurpSuite
-                </div>
-                <div class="skill-tag px-6 py-3 glass-card rounded-full cursor-default transition-all duration-300 border border-white/5">
-                    <i class="fas fa-network-wired text-purple-400 mr-2"></i> Nmap / Recon
-                </div>
-                <!-- Web -->
-                <div class="skill-tag px-6 py-3 glass-card rounded-full cursor-default transition-all duration-300 border border-white/5">
-                    <i class="fab fa-html5 text-orange-500 mr-2"></i> HTML5 & CSS3
-                </div>
-                 <div class="skill-tag px-6 py-3 glass-card rounded-full cursor-default transition-all duration-300 border border-white/5">
-                    <i class="fab fa-wordpress text-blue-600 mr-2"></i> WordPress Adv.
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- EXPERIENCIA TIMELINE -->
-    <section id="experiencia" class="py-24">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold mb-16 text-center">Trayectoria <span class="text-white/50">Profesional</span></h2>
-            
-            <div class="relative border-l-2 border-white/10 ml-4 md:ml-0 space-y-16">
-                
-                <!-- Item 1 -->
-                <div class="relative pl-8 md:pl-0">
-                    <div class="md:w-1/2 md:ml-auto md:pl-12 relative group">
-                        <div class="absolute left-[-41px] md:left-[-53px] top-0 w-6 h-6 rounded-full bg-cyber-primary border-4 border-black shadow-[0_0_15px_#00f3ff]"></div>
-                        <span class="text-cyber-primary font-mono text-sm mb-2 block">2025 - Presente</span>
-                        <h3 class="text-xl font-bold text-white group-hover:text-cyber-primary transition-colors">Programmer & AI Developer</h3>
-                        <h4 class="text-gray-400 mb-4">gemsy.es</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed">
-                            Creación de la arquitectura completa. Implementación de capa de consultas semánticas con IA. Despliegue seguro en GCP y gestión de infraestructura backend.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="relative pl-8 md:pl-0">
-                    <div class="md:w-1/2 md:mr-auto md:pr-12 md:text-right relative group">
-                        <div class="absolute left-[-41px] md:right-[-53px] md:left-auto top-0 w-6 h-6 rounded-full bg-cyber-secondary border-4 border-black"></div>
-                        <span class="text-cyber-secondary font-mono text-sm mb-2 block">2024 - Presente</span>
-                        <h3 class="text-xl font-bold text-white group-hover:text-cyber-secondary transition-colors">Web Developer</h3>
-                        <h4 class="text-gray-400 mb-4">drscout.es</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed">
-                            Optimización SEO, rendimiento web y automatización parcial de procesos técnicos. Mantenimiento del sitio de análisis.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="relative pl-8 md:pl-0">
-                    <div class="md:w-1/2 md:ml-auto md:pl-12 relative group">
-                        <div class="absolute left-[-41px] md:left-[-53px] top-0 w-6 h-6 rounded-full bg-white border-4 border-black"></div>
-                        <span class="text-white font-mono text-sm mb-2 block">2022 - 2025</span>
-                        <h3 class="text-xl font-bold text-white">Football Scout & Coach</h3>
-                        <h4 class="text-gray-400 mb-4">CD Mensajero / F10 / Athletic Fuengirola</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed">
-                            Análisis de talento y rivales. Gestión de bases de datos deportivas. Esta experiencia me dio el conocimiento de dominio para construir Gemsy.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- EDUCACION & CERTIFICACIONES -->
-    <section class="py-16 bg-white/5">
-        <div class="max-w-5xl mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold mb-8">Formación & Certificaciones</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card p-6 rounded-lg border-t-2 border-cyber-primary">
-                    <div class="text-cyber-primary font-bold text-lg mb-1">2025</div>
-                    <div class="font-bold text-white">Cybersecurity in Business</div>
-                    <div class="text-sm text-gray-400">Centro Virtual Formación Murcia</div>
-                </div>
-                <div class="glass-card p-6 rounded-lg border-t-2 border-cyber-secondary">
-                    <div class="text-cyber-secondary font-bold text-lg mb-1">2023</div>
-                    <div class="font-bold text-white">Professional Scouting Certification</div>
-                    <div class="text-sm text-gray-400">AFEC</div>
-                </div>
-                <div class="glass-card p-6 rounded-lg border-t-2 border-white">
-                    <div class="text-white font-bold text-lg mb-1">2021</div>
-                    <div class="font-bold text-white">High School Diploma</div>
-                    <div class="text-sm text-gray-400">IES Los Boliches</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACTO -->
-    <section id="contacto" class="py-24 relative overflow-hidden">
-        <!-- Fondo radial sutil -->
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,243,255,0.1)_0%,transparent_70%)]"></div>
-        
-        <div class="max-w-3xl mx-auto px-4 text-center relative z-10">
-            <h2 class="text-5xl font-bold mb-8">¿Hablamos?</h2>
-            <p class="text-xl text-gray-300 mb-12">
-                Busco oportunidades como Junior en <span class="text-cyber-primary">Pentesting</span>, <span class="text-cyber-primary">Seguridad Ofensiva</span> o desarrollo con <span class="text-cyber-secondary">Python & AI</span>.
+            <p class="text-xl text-gray-300 max-w-xl leading-relaxed">
+                Desarrollador full stack, IA aplicada, ofensiva, automatización
+                y creador del ecosistema de scouting <span class="text-cyber-cyan font-semibold">Gemsy</span>.
             </p>
-            
-            <a href="mailto:davidrodriguezscout@gmail.com" class="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold rounded-lg hover:bg-cyber-primary transition-colors duration-300 shadow-xl">
-                <i class="fas fa-envelope"></i> davidrodriguezscout@gmail.com
-            </a>
 
-            <div class="mt-8 text-gray-400 font-mono">
-                +34 645 457 266
+            <div class="flex gap-4 pt-4">
+                <a href="#gemsy" class="px-6 py-3 bg-cyber-cyan text-black font-bold rounded-lg hover:scale-105 transition">Ver Gemsy</a>
+                <a href="https://github.com/davidrscout" target="_blank" class="text-3xl hover:text-cyber-cyan"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/davidrscout" target="_blank" class="text-3xl hover:text-cyber-cyan"><i class="fab fa-linkedin"></i></a>
             </div>
         </div>
-    </section>
 
-    <footer class="py-8 text-center text-xs text-gray-600 bg-black border-t border-white/5">
-        <p>&copy; 2025 David Rodríguez Ramírez. Construido con HTML5, Tailwind & Canvas.</p>
-    </footer>
-
-    <!-- SCRIPT PARA EL FONDO INTERACTIVO (CANVAS) -->
-    <script>
-        const canvas = document.getElementById('neural-canvas');
-        const ctx = canvas.getContext('2d');
-        
-        let width, height;
-        let particles = [];
-        
-        // Configuración
-        const config = {
-            particleColor: 'rgba(0, 243, 255, 0.5)', // Cyan
-            lineColor: 'rgba(112, 0, 255, 0.15)',    // Violeta muy sutil
-            particleAmount: window.innerWidth < 768 ? 40 : 80,
-            defaultSpeed: 0.5,
-            variantSpeed: 1,
-            linkRadius: 150,
-        };
-
-        // Ratón
-        let mouse = { x: -1000, y: -1000 };
-
-        // Clase Partícula
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * config.defaultSpeed;
-                this.vy = (Math.random() - 0.5) * config.defaultSpeed;
-                this.size = Math.random() * 2;
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // Rebote en bordes
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-
-                // Interacción con ratón (repulsión suave o atracción)
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx*dx + dy*dy);
+        <!-- AVATAR + DECORATION -->
+        <div class="relative flex justify-center">
+            <div class="relative w-72 h-72 md:w-96 md:h-96 animate-float">
                 
-                if (distance < 200) {
-                    const angle = Math.atan2(dy, dx);
-                    const force = (200 - distance) / 200; 
-                    // Efecto sutil de movimiento al pasar el ratón
-                    this.x -= Math.cos(angle) * force * 0.5;
-                    this.y -= Math.sin(angle) * force * 0.5;
-                }
-            }
+                <div class="absolute inset-0 border-2 border-dashed rounded-full 
+                            border-cyber-cyan/30 animate-[spin_12s_linear_infinite]"></div>
+                
+                <div class="absolute inset-4 border rounded-full 
+                            border-cyber-violet/40 animate-[spin_18s_linear_infinite_reverse]"></div>
 
-            draw() {
+                <div class="absolute inset-0 m-auto w-64 h-64 rounded-full overflow-hidden border-4 border-cyber-border glass">
+                    <img src="https://ui-avatars.com/api/?name=David+R&background=000&color=fff&size=512&font-size=0.32"
+                         class="w-full h-full object-cover opacity-90">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GEMSY -->
+<section id="gemsy" class="py-28">
+    <div class="max-w-6xl mx-auto px-6">
+
+        <h2 class="text-4xl font-bold mb-6">Gemsy <span class="grad">Platform</span></h2>
+        <p class="text-gray-300 max-w-2xl mb-12">
+            Plataforma de scouting inteligente basada en IA.  
+            Desarrollo completo de backend, arquitectura, infraestructura y motor semántico para consultas de jugadores.
+            Construida sobre Google Cloud, Firestore, SQL y un motor propio de IA para extracción de filtros, ranking y generación de informes.
+        </p>
+
+        <div class="glass rounded-2xl p-10 border border-white/10 card3d">
+
+            <h3 class="text-2xl font-bold mb-4">Qué hace Gemsy realmente</h3>
+
+            <ul class="space-y-3 text-gray-300 text-lg">
+                <li>• Consulta de jugadores en lenguaje natural (NLP → filtros reales).</li>
+                <li>• Motor de IA propio (Google Gemini + OpenAI según plan).</li>
+                <li>• Ranking inteligente según criterios del usuario.</li>
+                <li>• Generador de informes PDF integrando datos + IA.</li>
+                <li>• Mini-RAG para conocimiento técnico con embeddings.</li>
+                <li>• Usuarios, créditos y planes gestionados con Firestore + Stripe.</li>
+                <li>• Webhook de Stripe integrado para suscripciones reales.</li>
+                <li>• TransfermarktClient para normalización de posición en vivo.</li>
+            </ul>
+
+            <div class="flex gap-4 mt-8 text-sm font-mono">
+                <span class="px-3 py-1 bg-cyber-cyan/20 text-cyber-cyan rounded">Python</span>
+                <span class="px-3 py-1 bg-cyber-violet/20 text-cyber-violet rounded">GCP</span>
+                <span class="px-3 py-1 bg-cyber-pink/20 text-cyber-pink rounded">IA</span>
+                <span class="px-3 py-1 bg-white/10 rounded">PostgreSQL</span>
+                <span class="px-3 py-1 bg-white/10 rounded">Firestore</span>
+            </div>
+
+            <div class="mt-8 text-cyber-cyan">
+                <a href="https://gemsy.es" target="_blank" class="underline hover:text-white">gemsy.es</a> · 
+                <a href="https://drscout.es" target="_blank" class="underline hover:text-white">drscout.es</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CIBERSEGURIDAD -->
+<section id="cyber" class="py-24">
+    <div class="max-w-6xl mx-auto px-6">
+
+        <h2 class="text-4xl font-bold mb-10">Ciberseguridad <span class="grad">Ofensiva</span></h2>
+
+        <div class="grid md:grid-cols-2 gap-10">
+
+            <!-- CARD 1 -->
+            <div class="glass border border-white/10 rounded-2xl p-8 card3d">
+                <h3 class="text-xl font-bold mb-3">AutoScan Offensive Tool</h3>
+                <p class="text-gray-300 leading-relaxed">
+                    Herramienta ofensiva propia: reconocimiento, explotación real, 
+                    validación de payloads, plantillas, orquestador y lógica basada en impacto.
+                </p>
+                <div class="flex gap-2 mt-4">
+                    <span class="bg-white/10 text-xs px-3 py-1 rounded">Python</span>
+                    <span class="bg-white/10 text-xs px-3 py-1 rounded">Red Team</span>
+                    <span class="bg-white/10 text-xs px-3 py-1 rounded">Automation</span>
+                </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="glass border border-white/10 rounded-2xl p-8 card3d">
+                <h3 class="text-xl font-bold mb-3">Recon Toolkit</h3>
+                <p class="text-gray-300 leading-relaxed">
+                    Conjunto modular para reconocimiento avanzado: subdominios, rotación, evasión,
+                    footprinting y automatización OSINT real.
+                </p>
+                <div class="flex gap-2 mt-4">
+                    <span class="bg-white/10 text-xs px-3 py-1 rounded">OSINT</span>
+                    <span class="bg-white/10 text-xs px-3 py-1 rounded">Nmap</span>
+                    <span class="bg-white/10 text-xs px-3 py-1 rounded">Cyber</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- STACK -->
+<section id="skills" class="py-24 bg-white/5">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+
+        <h2 class="text-4xl font-bold mb-12">Tech <span class="grad">Stack</span></h2>
+
+        <div class="flex flex-wrap gap-4 justify-center">
+
+            <div class="glass px-5 py-3 rounded-full text-sm">Python</div>
+            <div class="glass px-5 py-3 rounded-full text-sm">LLMs / IA</div>
+            <div class="glass px-5 py-3 rounded-full text-sm">Google Cloud</div>
+            <div class="glass px-5 py-3 rounded-full text-sm">Firestore / SQL</div>
+            <div class="glass px-5 py-3 rounded-full text-sm">Offensive Security</div>
+            <div class="glass px-5 py-3 rounded-full text-sm">BurpSuite</div>
+            <div class="glass px-5 py-3 rounded-full text-sm">Nmap / Recon</div>
+            <div class="glass px-5 py-3 rounded-full text-sm">HTML / CSS</div>
+
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia" class="py-28">
+    <div class="max-w-4xl mx-auto px-6">
+
+        <h2 class="text-4xl font-bold text-center mb-16">Experiencia</h2>
+
+        <div class="border-l border-white/10 ml-4 space-y-16">
+
+            <div class="relative pl-8">
+                <div class="absolute -left-4 top-0 w-4 h-4 rounded-full bg-cyber-cyan"></div>
+                <h3 class="text-xl font-bold">Programmer & AI Developer</h3>
+                <p class="text-gray-300">Gemsy.es — 2025</p>
+                <p class="text-gray-400 mt-2">Arquitectura completa del ecosistema Gemsy: IA, backend, DB, Stripe, Firestore, RAG.</p>
+            </div>
+
+            <div class="relative pl-8">
+                <div class="absolute -left-4 top-0 w-4 h-4 rounded-full bg-cyber-violet"></div>
+                <h3 class="text-xl font-bold">Web Developer</h3>
+                <p class="text-gray-300">DRScout.es — 2024</p>
+                <p class="text-gray-400 mt-2">SEO, automatización y rendimiento para análisis técnico-táctico profesional.</p>
+            </div>
+
+            <div class="relative pl-8">
+                <div class="absolute -left-4 top-0 w-4 h-4 rounded-full bg-white"></div>
+                <h3 class="text-xl font-bold">Scouting Profesional</h3>
+                <p class="text-gray-300">CD Mensajero / F10 Scout / Athletic Fuengirola — 2022–2025</p>
+                <p class="text-gray-400 mt-2">Análisis de talento y rivales. Base conceptual para construir Gemsy.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="py-28">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+
+        <h2 class="text-5xl font-bold mb-8">Contacto</h2>
+        <p class="text-gray-300 text-lg mb-12">Disponible para roles en IA, Python, Ciberseguridad ofensiva o desarrollo.</p>
+
+        <a href="mailto:davidrodriguezscout@gmail.com"
+           class="px-8 py-4 bg-cyber-cyan text-black font-bold rounded-lg hover:scale-105 transition">
+            davidrodriguezscout@gmail.com
+        </a>
+
+        <div class="mt-6 text-gray-400 font-mono">+34 645 457 266</div>
+    </div>
+</section>
+
+<footer class="py-8 text-center text-xs text-gray-600 bg-black border-t border-white/5">
+    © 2025 David Rodríguez. Construido con Python, Tailwind y NeuralCanvas.
+</footer>
+
+<!-- CANVAS & JS -->
+<script>
+const canvas=document.getElementById("bg-canvas");
+const ctx=canvas.getContext("2d");
+
+let w,h,particles=[];
+let mouse={x:-9999,y:-9999};
+
+const cfg={
+    count: window.innerWidth<768?45:90,
+    speed:.4,
+    radius:130,
+    colors:[
+        "rgba(0,243,255,0.55)",
+        "rgba(112,0,255,0.35)",
+        "rgba(255,0,106,0.35)"
+    ]
+};
+
+class P{
+    constructor(){
+        this.x=Math.random()*w;
+        this.y=Math.random()*h;
+        this.vx=(Math.random()-.5)*cfg.speed;
+        this.vy=(Math.random()-.5)*cfg.speed;
+        this.size=Math.random()*2+1;
+        this.c=cfg.colors[Math.floor(Math.random()*cfg.colors.length)];
+    }
+    u(){
+        this.x+=this.vx;
+        this.y+=this.vy;
+        if(this.x<0||this.x>w) this.vx*=-1;
+        if(this.y<0||this.y>h) this.vy*=-1;
+        let dx=mouse.x-this.x, dy=mouse.y-this.y;
+        let d=Math.sqrt(dx*dx+dy*dy);
+        if(d<180){
+            this.x-=dx*(180-d)/180*.04;
+            this.y-=dy*(180-d)/180*.04;
+        }
+    }
+    d(){
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.size,0,2*Math.PI);
+        ctx.fillStyle=this.c;
+        ctx.fill();
+    }
+}
+
+function resize(){
+    w=canvas.width=window.innerWidth;
+    h=canvas.height=window.innerHeight;
+}
+function init(){
+    resize();
+    particles=[];
+    for(let i=0;i<cfg.count;i++) particles.push(new P());
+}
+function links(){
+    for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+            let p1=particles[i],p2=particles[j];
+            let dx=p1.x-p2.x,dy=p1.y-p2.y;
+            let d=Math.sqrt(dx*dx+dy*dy);
+            if(d<cfg.radius){
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = config.particleColor;
-                ctx.fill();
+                ctx.strokeStyle="rgba(255,255,255,"+(1-d/cfg.radius)*0.08+")";
+                ctx.lineWidth=.8;
+                ctx.moveTo(p1.x,p1.y);
+                ctx.lineTo(p2.x,p2.y);
+                ctx.stroke();
             }
         }
+    }
+}
+function anim(){
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p=>{p.u();p.d();});
+    links();
+    requestAnimationFrame(anim);
+}
 
-        // Inicializar
-        function init() {
-            resize();
-            particles = [];
-            for (let i = 0; i < config.particleAmount; i++) {
-                particles.push(new Particle());
-            }
-        }
+window.addEventListener("mousemove",e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
+window.addEventListener("resize",()=>{resize();init();});
 
-        // Redimensionar
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
+init();
+anim();
+</script>
 
-        // Dibujar líneas
-        function drawLinks() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    let p1 = particles[i];
-                    let p2 = particles[j];
-                    let dx = p1.x - p2.x;
-                    let dy = p1.y - p2.y;
-                    let distance = Math.sqrt(dx*dx + dy*dy);
-
-                    if (distance < config.linkRadius) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(112, 0, 255, ${1 - distance / config.linkRadius})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-                
-                // Conectar con el ratón
-                let dx = mouse.x - particles[i].x;
-                let dy = mouse.y - particles[i].y;
-                let distance = Math.sqrt(dx*dx + dy*dy);
-                if(distance < 200) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(0, 243, 255, ${1 - distance / 200})`; // Cyan con mouse
-                    ctx.lineWidth = 0.5;
-                    ctx.moveTo(mouse.x, mouse.y);
-                    ctx.lineTo(particles[i].x, particles[i].y);
-                    ctx.stroke();
-                }
-            }
-        }
-
-        // Bucle de animación
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            
-            drawLinks();
-            requestAnimationFrame(animate);
-        }
-
-        // Eventos
-        window.addEventListener('resize', () => {
-            resize();
-            init();
-        });
-        
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        // Iniciar
-        init();
-        animate();
-
-        // Navbar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('glass-nav');
-                navbar.classList.remove('bg-transparent');
-            } else {
-                // navbar.classList.remove('glass-nav');
-                // navbar.classList.add('bg-transparent');
-            }
-        });
-    </script>
 </body>
 </html>

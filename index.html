@@ -4,42 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NATU | Offensive Security & Systems Engineering</title>
-    
-    <!-- Tailwind CSS -->
+
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-    <!-- Chart.js (Radar skills) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        mono: ['Space Grotesk', 'monospace'],
-                    },
+                    fontFamily: { sans: ['Outfit'], mono: ['Space Grotesk'] },
                     colors: {
                         brand: {
                             gold: '#fbbf24',
                             blue: '#3b82f6',
-                            dark: '#050505',
                             htb: '#9fef00'
                         }
                     },
-                    animation: { 'blob': 'blob 10s infinite', 'spin-slow': 'spin 15s linear infinite' },
+                    animation: { blob: 'blob 10s infinite', 'spin-slow': 'spin 15s linear infinite' },
                     keyframes: {
                         blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '0%': { transform: 'translate(0,0) scale(1)' },
+                            '33%': { transform: 'translate(30px,-50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px,20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0,0) scale(1)' }
                         }
                     }
                 }
@@ -47,93 +36,81 @@
         }
     </script>
 
-    <style>
-        html, body {
-            margin: 0; padding: 0;
-            height: 100%; width: 100%;
-            overflow: hidden;
-            background-color: #050505; color: white;
-            touch-action: none;
-        }
+<style>
+html, body {
+    margin:0; padding:0;
+    height:100%; width:100%;
+    overflow:hidden;
+    background:#050505; color:white;
+    touch-action:none;
+}
 
-        #viewport { position: relative; width: 100%; height: 100%; overflow: hidden; }
+#viewport { position:relative; width:100%; height:100%; overflow:hidden; }
+.section-layer {
+    position:absolute; top:0; left:0;
+    width:100%; height:100%;
+    display:flex;
+    align-items:center; justify-content:center;
+    will-change:transform, opacity, clip-path;
+    padding-top:80px;
+}
 
-        .section-layer {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            display: flex;
-            align-items: center; justify-content: center;
-            will-change: transform, opacity, clip-path, filter;
-            padding-top: 80px;
-        }
+#layer-hero    { z-index:10; background:#050505; }
+#layer-gemsy   { z-index:20; background:#080808; transform:translateY(100%); }
+#layer-track   { z-index:30; background:#0a0a0a; clip-path:circle(0% at 50% 50%); }
+#layer-cyber   { z-index:40; background:#050505; clip-path:polygon(0 0,100% 0,100% 0,0 0); }
+#layer-contact { z-index:50; background:#000; transform:translateY(100%); }
 
-        #layer-hero    { z-index: 10; background: #050505; }
-        #layer-gemsy   { z-index: 20; background: #080808; transform: translateY(100%); } 
-        #layer-track   { z-index: 30; background: #0a0a0a; clip-path: circle(0% at 50% 50%); } 
-        #layer-cyber   { z-index: 40; background: #050505; clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); } 
-        #layer-contact { z-index: 50; background: #000; transform: translateY(100%); }
+.glass-card {
+    background:rgba(255,255,255,0.03);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.05);
+    transition:.3s;
+}
+.glass-card:hover { border-color:rgba(251,191,36,.3); transform:translateY(-5px); }
 
-        .glass-card {
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: .3s;
-        }
-        .glass-card:hover { border-color: rgba(251,191,36,0.3); transform: translateY(-5px); }
+.nav-dots {
+    position:fixed; right:30px; top:50%;
+    transform:translateY(-50%);
+    z-index:100;
+    display:flex; flex-direction:column; gap:16px;
+}
+.nav-dot {
+    width:6px; height:6px; border-radius:100%;
+    background:rgba(255,255,255,.2);
+    transition:.3s; cursor:pointer;
+}
+.nav-dot.active { background:#fbbf24; transform:scale(1.5); }
 
-        .nav-dots {
-            position: fixed; right: 30px; top: 50%;
-            transform: translateY(-50%); z-index: 100;
-            display: flex; flex-direction: column; gap: 16px;
-        }
-        .nav-dot {
-            width: 6px; height: 6px; background: rgba(255,255,255,.2);
-            border-radius: 100%; cursor: pointer; transition: .3s;
-        }
-        .nav-dot.active { background: #fbbf24; transform: scale(1.5); }
+/* THEMES */
+body.htb-theme {
+    background:#020302; color:#d7ffd7;
+}
+body.htb-theme .glass-card {
+    background:rgba(0,0,0,0.6);
+    border-color:rgba(159,239,0,0.35);
+    box-shadow:0 0 20px rgba(159,239,0,0.15);
+}
+body.htb-theme * { color:#d7ffd7; }
 
-        /* THEMES */
-        body.htb-theme {
-            background-color: #020302;
-            color: #e5ffe5;
-        }
-        body.htb-theme .glass-card {
-            background: rgba(0,0,0,0.6);
-            border-color: rgba(159,239,0,0.35);
-            box-shadow: 0 0 25px rgba(159,239,0,0.15);
-        }
-        body.htb-theme a, 
-        body.htb-theme .text-brand-htb {
-            color: #9fef00;
-        }
+body.dark-theme { background:#050505; color:white; }
 
-        body.dark-theme {
-            background-color: #050505;
-            color: #f5f5f5;
-        }
+body.white-theme { background:white !important; color:#111 !important; }
+body.white-theme * { color:#111 !important; }
+body.white-theme .glass-card {
+    background:white !important;
+    border-color:#ccc !important;
+}
 
-        body.white-theme {
-            background-color: #f9fafb;
-            color: #111827;
-        }
-        body.white-theme .glass-card {
-            background: rgba(255,255,255,0.9);
-            border-color: rgba(148,163,184,0.6);
-            box-shadow: 0 10px 30px rgba(15,23,42,0.08);
-        }
-        body.white-theme .nav-dots .nav-dot { background: rgba(15,23,42,0.3); }
-        body.white-theme .nav-dots .nav-dot.active { background: #0f172a; }
-    </style>
+</style>
 </head>
 
 <body class="htb-theme">
 
-<!-- NAV -->
-<nav class="fixed w-full z-[100] top-0 left-0 p-6 md:p-8 mix-blend-difference text-white">
+<nav class="fixed w-full z-[100] top-0 left-0 p-6 md:p-8 text-white mix-blend-difference">
     <div class="max-w-[1800px] mx-auto flex justify-between items-center">
-        <div class="text-2xl font-bold font-mono tracking-tighter cursor-pointer" onclick="scrollToSlide(0)">NATU</div>
-        <div class="hidden md:flex gap-8 text-xs tracking-widest uppercase text-gray-400">
+        <div class="text-2xl font-mono font-bold cursor-pointer" onclick="scrollToSlide(0)">NATU</div>
+        <div class="hidden md:flex gap-8 text-xs text-gray-300 tracking-widest uppercase">
             Scroll / Swipe to navigate
         </div>
         <button onclick="toggleMenu()" class="md:hidden text-white">
@@ -142,7 +119,6 @@
     </div>
 </nav>
 
-<!-- SIDE DOTS -->
 <div class="nav-dots hidden md:flex">
     <div class="nav-dot active" onclick="scrollToSlide(0)"></div>
     <div class="nav-dot" onclick="scrollToSlide(1)"></div>
@@ -151,64 +127,48 @@
     <div class="nav-dot" onclick="scrollToSlide(4)"></div>
 </div>
 
-<!-- THEME TOGGLES -->
 <div class="fixed bottom-6 right-6 z-[200] flex flex-col gap-2">
-    <button id="btn-htb" class="px-3 py-2 rounded-lg bg-black/70 border border-brand-htb text-brand-htb text-xs font-mono flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-brand-htb"></span> HTB
-    </button>
-    <button id="btn-dark" class="px-3 py-2 rounded-lg bg-black/50 border border-white/20 text-gray-200 text-xs font-mono">
-        Dark
-    </button>
-    <button id="btn-white" class="px-3 py-2 rounded-lg bg-white/90 border border-gray-300 text-gray-900 text-xs font-mono">
-        White
-    </button>
+    <button id="btn-htb" class="px-3 py-2 text-xs font-mono bg-black/70 border border-brand-htb text-brand-htb rounded">HTB</button>
+    <button id="btn-dark" class="px-3 py-2 text-xs font-mono bg-black/50 border border-white/20 text-gray-200 rounded">Dark</button>
+    <button id="btn-white" class="px-3 py-2 text-xs font-mono bg-white text-gray-900 border border-gray-400 rounded">White</button>
 </div>
 
-<!-- VIEWPORT -->
 <main id="viewport">
 
-<!-- ========================================================= -->
-<!-- HERO — OFFENSIVE SECURITY -->
-<!-- ========================================================= -->
 <section id="layer-hero" class="section-layer">
-
-    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-brand-blue/10 rounded-full blur-[120px] animate-blob"></div>
 
     <div class="max-w-7xl w-full px-6 grid lg:grid-cols-12 gap-8 items-center relative z-10">
 
         <div class="lg:col-span-8">
 
-            <!-- Badge -->
-            <div class="inline-flex items-center px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur mb-6">
+            <div class="inline-flex items-center px-3 py-1 mb-6 rounded-full border border-white/10 bg-white/5 backdrop-blur">
                 <span class="relative flex h-2 w-2 mr-3">
                     <span class="animate-ping absolute h-full w-full rounded-full bg-green-400 opacity-75"></span>
                     <span class="relative rounded-full h-2 w-2 bg-green-500"></span>
                 </span>
-                <span class="text-[10px] font-mono tracking-wider">AVAILABLE 2025 — OFFENSIVE SECURITY</span>
+                <span class="text-[10px] font-mono tracking-wider">AVAILABLE — OFFENSIVE SECURITY</span>
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-4">
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6">
                 OFFENSIVE SECURITY <br>
                 <span class="text-gray-500 font-light">&</span>
                 <span class="text-brand-blue">SYSTEMS ENGINEERING.</span>
             </h1>
 
-            <!-- Terminal / typewriter line -->
             <p id="typewriter" class="font-mono text-sm text-brand-htb mb-4"></p>
 
-            <p class="text-lg text-gray-300 max-w-xl mb-8 leading-relaxed font-light">
-                Pentester specializing in <strong>Active Directory attacks</strong>, 
+            <p class="text-lg text-gray-300 max-w-xl mb-8 leading-relaxed">
+                Pentester specialized in <strong>Active Directory attacks</strong>,
                 <strong>Kerberos abuse</strong>, <strong>Impacket tooling</strong>,
-                <strong>MSSQL exploitation</strong> and <strong>Post-Exploitation</strong>.  
-                Strong focus on troubleshooting, reconstructing broken attack paths and Python-based automation.
+                <strong>MSSQL exploitation</strong> and deep troubleshooting.
             </p>
 
             <div class="flex flex-wrap gap-3 mb-8 text-xs font-mono text-gray-400">
                 <span class="px-2 py-1 border border-white/10 rounded">ACTIVE DIRECTORY</span>
                 <span class="px-2 py-1 border border-white/10 rounded">KERBEROS</span>
                 <span class="px-2 py-1 border border-white/10 rounded">IMPACKET</span>
-                <span class="px-2 py-1 border border-white/10 rounded">MSSQL</span>
                 <span class="px-2 py-1 border border-white/10 rounded">PYTHON AUTOMATION</span>
             </div>
 
@@ -216,504 +176,485 @@
                 <button onclick="scrollToSlide(1)" class="px-8 py-3 bg-white text-black font-bold rounded hover:bg-gray-200 transition flex items-center gap-2">
                     Engineering Work <i class="fas fa-arrow-down"></i>
                 </button>
-                <a href="./david-rodriguez-cyber-en.pdf" target="_blank"
-                   class="px-6 py-3 border border-white/20 text-sm font-bold rounded hover:bg-white hover:text-black transition flex items-center gap-2">
+                <a href="./david-rodriguez-cyber-en.pdf" class="px-6 py-3 border border-white/20 text-sm font-bold rounded hover:bg-white hover:text-black transition flex items-center gap-2">
                     <i class="fas fa-file"></i> CV (EN)
                 </a>
-                <a href="./david-rodriguez-cyber-es.pdf" target="_blank"
-                   class="px-6 py-3 border border-white/20 text-sm font-bold rounded hover:bg-white hover:text-black transition flex items-center gap-2">
+                <a href="./david-rodriguez-cyber-es.pdf" class="px-6 py-3 border border-white/20 text-sm font-bold rounded hover:bg-white hover:text-black transition flex items-center gap-2">
                     <i class="fas fa-file-alt"></i> CV (ES)
                 </a>
             </div>
         </div>
 
-        <!-- IMAGE -->
         <div class="lg:col-span-4 hidden lg:flex justify-center">
             <div class="relative w-72 h-72">
-                <div class="absolute inset-0 m-auto w-60 h-60 bg-[#0a0a0a] rounded-full border border-white/10 flex items-center justify-center overflow-hidden z-20 shadow-xl">
-                    <img src="https://ui-avatars.com/api/?name=Natu&background=0a0a0a&color=fff&size=512&font-size=0.33" class="w-full h-full object-cover opacity-90">
+                <div class="absolute inset-0 m-auto w-60 h-60 rounded-full border border-white/10 shadow-xl overflow-hidden z-20 bg-[#0a0a0a]">
+                    <img src="./natu.png" class="w-full h-full object-cover rounded-full opacity-95">
                 </div>
                 <div class="absolute inset-0 border border-brand-gold/20 rounded-full animate-spin-slow"></div>
             </div>
         </div>
+
     </div>
-
 </section>
-
-<!-- ========================================================= -->
-<!-- LAYER 2 — GEMSY ENGINEERING -->
-<!-- ========================================================= -->
+    <!-- LAYER 2: GEMSY & ENGINEERING -->
 <section id="layer-gemsy" class="section-layer">
-
     <div class="max-w-7xl w-full px-6 grid lg:grid-cols-12 gap-8 items-center h-full max-h-[90vh] overflow-y-auto">
 
+        <!-- LEFT: GEMSY -->
         <div class="lg:col-span-7 flex flex-col justify-center">
+            <div class="text-brand-gold font-mono text-xs tracking-[0.3em] uppercase mb-2">FLAGSHIP PROJECT</div>
 
-            <div class="text-brand-gold font-mono text-xs tracking-[0.3em] uppercase mb-2">Engineering Project</div>
-
-            <h2 class="text-5xl md:text-6xl font-bold mb-4">GEMSY<span class="text-brand-gold">.ES</span></h2>
+            <h2 class="text-5xl md:text-6xl font-bold text-white mb-4">
+                GEMSY<span class="text-brand-gold">.ES</span>
+            </h2>
 
             <p class="text-lg text-gray-300 leading-relaxed mb-6 border-l-2 border-brand-gold pl-4">
-                Large-scale platform integrating <strong>data extraction</strong>, 
-                <strong>cloud infrastructure</strong> and <strong>AI-driven automation</strong>.  
-                Built with Python, SQL, Docker and deployed fully on Google Cloud.
+                Professional scouting platform used by real scouts and analysts, featuring
+                <strong>massive scraping pipelines</strong>, <strong>data-engineering workflows</strong>,
+                <strong>AI-driven reporting</strong>, and complete <strong>Google Cloud deployment</strong>.
             </p>
 
-            <div class="grid grid-cols-2 gap-3 mb-6">
+            <div class="grid grid-cols-2 gap-4 mb-6">
                 <div class="glass-card p-4 rounded-lg">
-                    <div class="text-brand-gold font-bold mb-1"><i class="fas fa-code"></i> Backend Architecture</div>
-                    <p class="text-xs text-gray-400">Modular systems, secure APIs, Python pipelines, production-level engineering.</p>
+                    <div class="text-brand-gold font-bold mb-1">
+                        <i class="fas fa-spider"></i> Mass Scraping
+                    </div>
+                    <p class="text-xs text-gray-400">
+                        Playwright + BS4 industrial pipelines, running 24–72h for full-league extraction.
+                    </p>
                 </div>
+
                 <div class="glass-card p-4 rounded-lg">
-                    <div class="text-brand-blue font-bold mb-1"><i class="fas fa-cloud"></i> Cloud Infrastructure</div>
-                    <p class="text-xs text-gray-400">App Engine, Firestore, Cloud SQL, IAM, SSL — full cloud lifecycle.</p>
+                    <div class="text-brand-blue font-bold mb-1">
+                        <i class="fas fa-server"></i> Cloud Architecture
+                    </div>
+                    <p class="text-xs text-gray-400">
+                        GCP: App Engine, Cloud SQL, Firestore, Storage, Secret Manager, CI/CD.
+                    </p>
                 </div>
             </div>
 
-            <a href="https://gemsy.es" target="_blank" class="px-6 py-2 border border-brand-gold text-brand-gold rounded hover:bg-brand-gold hover:text-black font-bold transition text-sm uppercase inline-block">
-                Visit Platform
-            </a>
-
+            <div class="flex gap-4">
+                <a href="https://gemsy.es" target="_blank"
+                   class="px-6 py-2 border border-brand-gold text-brand-gold rounded hover:bg-brand-gold hover:text-black font-bold transition-all text-sm uppercase">
+                    Visit Platform
+                </a>
+            </div>
         </div>
 
-        <div class="lg:col-span-5 space-y-4">
+        <!-- RIGHT: Engineering Cards -->
+        <div class="lg:col-span-5 space-y-5">
 
+            <!-- AUTOMATION -->
             <div class="glass-card p-6 rounded-xl border-l-4 border-l-green-500">
-                <h3 class="text-xl font-bold mb-2">⚙️ Automation Engineering</h3>
-                <p class="text-sm text-gray-400 mb-3">Python agents, task orchestrators, cloud-triggered automations, WhatsApp/Sheets integrations.</p>
+                <h3 class="text-xl font-bold text-white mb-2">⚙️ Operational Automation</h3>
+                <p class="text-sm text-gray-400 mb-3">
+                    Autonomous WhatsApp Business bots, Google Sheets/Drive/Calendar integration,
+                    and zero-touch pipelines built in Python.
+                </p>
+                <div class="flex gap-2">
+                    <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">Python Bots</span>
+                    <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">Automation</span>
+                </div>
             </div>
 
+            <!-- SCRAPING -->
             <div class="glass-card p-6 rounded-xl border-l-4 border-l-purple-500">
-                <h3 class="text-xl font-bold mb-2">🕷️ Distributed Scraping</h3>
-                <p class="text-sm text-gray-400 mb-3">Long-running pipelines (24–72h), Playwright, BS4, structured SQL dataset generation.</p>
+                <h3 class="text-xl font-bold text-white mb-2">🕷️ Advanced Scrapers</h3>
+                <p class="text-sm text-gray-400 mb-3">
+                    Transfermarkt-scale scrapers with anti-bot handling, cookie rotation,
+                    captcha evasion, fail-safe storage and SQL normalization.
+                </p>
+                <div class="flex gap-2">
+                    <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">ETL</span>
+                    <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">Data Engineering</span>
+                </div>
             </div>
 
         </div>
 
     </div>
-
 </section>
 
-<!-- ========================================================= -->
-<!-- LAYER 3 — PROFESSIONAL TRACK -->
-<!-- ========================================================= -->
+<!-- LAYER 3: CAREER TRACK -->
 <section id="layer-track" class="section-layer">
+    <div class="max-w-7xl w-full px-6 h-full flex flex-col justify-center">
 
-    <div class="max-w-7xl w-full px-6 flex flex-col justify-center">
-
-        <h2 class="text-4xl md:text-6xl font-bold text-center mb-10">
-            PROFESSIONAL <span class="text-gray-500">TRACK</span>
+        <h2 class="text-4xl md:text-6xl font-bold text-center text-white mb-10">
+            PROFESSIONAL <span class="text-gray-600">TRACK</span>
         </h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-left">
 
+            <!-- GEMSY -->
             <div class="glass-card p-5 rounded-lg border-t-2 border-t-brand-gold">
-                <div class="flex justify-between mb-2">
-                    <span class="text-brand-gold font-bold">OFFENSIVE SECURITY</span>
-                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2024–PRESENT</span>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-brand-gold font-bold">FOUNDER & ENGINEER</span>
+                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2025-PRES</span>
                 </div>
-                <p class="text-xs text-gray-400">Active Directory attacks · Kerberos · Impacket · Lateral Movement · Post-Exploitation.</p>
+                <p class="text-xs text-gray-400 uppercase tracking-wider mb-2">GEMSY.ES</p>
+                <p class="text-xs text-gray-500 leading-snug">
+                    Full-Stack development, cloud infrastructure, AI integration and product execution.
+                </p>
             </div>
 
-            <div class="glass-card p-5 rounded-lg border-t-2 border-t-brand-blue">
-                <div class="flex justify-between mb-2">
-                    <span class="text-brand-blue font-bold">AD / KERBEROS ENGINEERING</span>
-                    <span class="text-[10px] font-mono bg_white/5 px-1 rounded">2025</span>
-                </div>
-                <p class="text-xs text-gray-400">SPN abuse · ACL misconfigurations · ticket forging · WinRM exploitation.</p>
-            </div>
-
-            <div class="glass-card p-5 rounded-lg border-t-2 border-t-purple-500">
-                <div class="flex justify-between mb-2">
-                    <span class="text-purple-400 font-bold">PYTHON AUTOMATION</span>
-                    <span class="text-[10px] font-mono bg_white/5 px-1 rounded">2024–PRESENT</span>
-                </div>
-                <p class="text-xs text-gray-400">Red-team tooling · scrapers · ETL pipelines · API agents.</p>
-            </div>
-
+            <!-- DRSCOUT -->
             <div class="glass-card p-5 rounded-lg border-t-2 border-t-white">
-                <div class="flex justify-between mb-2">
-                    <span class="text-white font-bold">CLOUD ENGINEERING</span>
-                    <span class="text-[10px] font-mono bg_white/5 px-1 rounded">2023–PRESENT</span>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-white font-bold">WEB DEVELOPER</span>
+                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2024-PRES</span>
                 </div>
-                <p class="text-xs text-gray-400">App Engine · Cloud SQL · IAM · Secret Manager · secure deployments.</p>
+                <p class="text-xs text-gray-400 uppercase tracking-wider mb-2">DRSCOUT.ES</p>
+                <p class="text-xs text-gray-500 leading-snug">
+                    Performance engineering, SEO, cache optimization and deployment.
+                </p>
             </div>
 
+            <!-- ENERGY -->
+            <div class="glass-card p-5 rounded-lg border-t-2 border-t-gray-500">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-gray-300 font-bold">SPECIALIZED AGENT</span>
+                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2025-PRES</span>
+                </div>
+                <p class="text-xs text-gray-400 uppercase tracking-wider mb-2">ENERGY SECTOR</p>
+                <p class="text-xs text-gray-500 leading-snug">
+                    Consultative resolution, system troubleshooting and process optimization.
+                </p>
+            </div>
+
+            <!-- F10 -->
+            <div class="glass-card p-5 rounded-lg border-t-2 border-t-brand-blue">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-brand-blue font-bold">SCOUT</span>
+                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2023-PRES</span>
+                </div>
+                <p class="text-xs text-gray-400 uppercase tracking-wider mb-2">F10 SCOUT</p>
+                <p class="text-xs text-gray-500 leading-snug">
+                    Talent evaluation, technical profiling and statistical validation.
+                </p>
+            </div>
+
+            <!-- MENSAJERO -->
+            <div class="glass-card p-5 rounded-lg border-t-2 border-t-purple-500">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-purple-400 font-bold">COORD / SCOUT</span>
+                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2022-2025</span>
+                </div>
+                <p class="text-xs text-gray-400 uppercase tracking-wider mb-2">CD MENSAJERO</p>
+                <p class="text-xs text-gray-500 leading-snug">
+                    Department coordination, player DB management, analysis workflows.
+                </p>
+            </div>
+
+            <!-- FUENGIROLA -->
             <div class="glass-card p-5 rounded-lg border-t-2 border-t-green-500">
-                <div class="flex justify-between mb-2">
-                    <span class="text-green-400 font-bold">GEMSY ENGINEER</span>
-                    <span class="text-[10px] font-mono bg_white/5 px-1 rounded">2024–PRESENT</span>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-green-400 font-bold">COACH</span>
+                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2022-2025</span>
                 </div>
-                <p class="text-xs text-gray-400">Backend design · automation · cloud infra · production engineering.</p>
-            </div>
-
-            <div class="glass-card p-5 rounded-lg border-t-2 border-t-brand-htb">
-                <div class="flex justify-between mb-2">
-                    <span class="text-brand-htb font-bold">HTB PROGRESSION</span>
-                    <span class="text-[10px] font-mono bg_white/5 px-1 rounded">20+ Machines</span>
-                </div>
-                <p class="text-xs text-gray-400">Gavel · MonitorsFour · Editor · Eighteen · Previous · DarkZero · Giveback.</p>
+                <p class="text-xs text-gray-400 uppercase tracking-wider mb-2">ATH. FUENGIROLA</p>
+                <p class="text-xs text-gray-500 leading-snug">
+                    Tactical preparation, squad roles, opponent study.
+                </p>
             </div>
 
         </div>
-
     </div>
-
 </section>
 
-<!-- ========================================================= -->
-<!-- LAYER 4 — CYBERSECURITY -->
-<!-- ========================================================= -->
+<!-- LAYER 4: CYBERSECURITY -->
 <section id="layer-cyber" class="section-layer">
-
-    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
 
     <div class="max-w-7xl w-full px-6 grid lg:grid-cols-2 gap-12 items-center h-full max-h-[90vh] overflow-y-auto">
 
-        <!-- Left -->
+        <!-- LEFT: Offensive Security -->
         <div>
 
             <div class="flex items-center gap-4 mb-6">
                 <i class="fas fa-terminal text-4xl text-brand-htb"></i>
-                <h2 class="text-5xl font-bold">OFFENSIVE <br> SECURITY</h2>
+                <h2 class="text-5xl font-bold text-white leading-tight">
+                    OFFENSIVE <br> SECURITY
+                </h2>
             </div>
 
-            <!-- Stats Box -->
             <div class="p-6 bg-[#151515] border border-brand-htb/30 rounded-xl shadow-[0_0_30px_rgba(159,239,0,0.05)]">
 
                 <div class="flex gap-8 mb-6 border-b border-white/5 pb-4">
                     <div>
                         <div class="text-4xl font-bold">20+</div>
-                        <div class="text-xs text-brand-htb tracking-widest mt-1">HTB MACHINES</div>
+                        <div class="text-xs text-brand-htb uppercase tracking-widest mt-1">HTB Machines</div>
                     </div>
                     <div>
-                        <div class="text-4xl font-bold">AD</div>
-                        <div class="text-xs text-gray-400 tracking-widest mt-1">SPECIALISATION</div>
+                        <div class="text-4xl font-bold">WEB</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-widest mt-1">Primary Focus</div>
                     </div>
                 </div>
 
-                <!-- HTB cards -->
-                <div class="grid grid-cols-3 gap-3 mb-6 text-center text-xs text-gray-300">
-                    <div class="glass-card p-3 rounded-lg">
-                        <div class="font-bold text-brand-htb text-sm">AD</div>
-                        <div class="text-[10px]">Kerberos · SPN · ACL</div>
+                <div class="space-y-5 mb-8">
+                    <div>
+                        <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">🔍 Enumeration</h4>
+                        <p class="text-xs text-gray-400">Fingerprinting, service mapping, route discovery.</p>
+                        <div class="text-[10px] font-mono text-gray-500 mt-1">Tools: Nmap, ffuf, Gobuster</div>
                     </div>
-                    <div class="glass-card p-3 rounded-lg">
-                        <div class="font-bold text-brand-htb text-sm">WEB</div>
-                        <div class="text-[10px]">LFI · RCE · SQLi · Upload</div>
+
+                    <div>
+                        <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">💥 Exploitation</h4>
+                        <p class="text-xs text-gray-400">SQLi, LFI, RFI, upload vulns, input bypass.</p>
+                        <div class="text-[10px] font-mono text-gray-500 mt-1">
+                            Tools: BurpSuite, custom Python, MSSQL abuse
+                        </div>
                     </div>
-                    <div class="glass-card p-3 rounded-lg">
-                        <div class="font-bold text-brand-htb text-sm">POST</div>
-                        <div class="text-[10px]">PrivEsc · Tokens · Pivot</div>
+
+                    <div>
+                        <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">🏁 Post-Exploitation</h4>
+                        <p class="text-xs text-gray-400">
+                            PrivEsc (Windows/Linux), service hijacking, PATH abuse, credential extraction, Impacket chains.
+                        </p>
                     </div>
                 </div>
 
-                <div class="space-y-4 mb-6">
-
-                    <div>
-                        <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">Active Directory Attacks</h4>
-                        <p class="text-xs text-gray-300">Kerberos (TGT/ST), SPN enumeration, AS-REP, S4U2Self, ACL abuse, ticket forging.</p>
-                    </div>
-
-                    <div>
-                        <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">Post-Exploitation</h4>
-                        <p class="text-xs text-gray-300">Credential extraction, token abuse, misconfigurations, local privilege escalation in Windows and Linux.</p>
-                    </div>
-
-                    <div>
-                        <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">Tooling & Workflows</h4>
-                        <p class="text-xs text-gray-300">Impacket suite · Evil-WinRM · Ligolo-ng · Kerbrute · LDAP · MSSQL · PowerShell.</p>
-                    </div>
-
-                    <div>
-                        <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">Troubleshooting</h4>
-                        <p class="text-xs text-gray-300">Kerberos failures, Impacket errors, clock skew, broken exploit chains and non-intended paths.</p>
-                    </div>
-
-                </div>
-
-                <a href="https://app.hackthebox.com/users/2807257" target="_blank" class="block text-center py-3 bg-brand-htb/10 border border-brand-htb/50 text-brand-htb rounded hover:bg-brand-htb hover:text-black transition font-bold uppercase text-sm">
+                <a href="https://app.hackthebox.com/users/2807257" target="_blank"
+                   class="w-full block text-center py-3 bg-brand-htb/10 border border-brand-htb/50 text-brand-htb rounded hover:bg-brand-htb hover:text-black transition font-bold uppercase text-sm">
                     <i class="fas fa-external-link-alt"></i> View HTB Profile
                 </a>
 
             </div>
-
         </div>
 
-        <!-- Right: Radar + Roadmap + Education -->
+        <!-- RIGHT: Radar Chart -->
         <div class="space-y-6">
-
-            <!-- Radar chart -->
-            <div class="glass-card p-6 rounded-xl">
-                <h3 class="text-lg font-bold mb-4">Skill Radar</h3>
-                <canvas id="skillsRadar" width="350" height="350"></canvas>
-            </div>
-
             <div class="glass-card p-6 rounded-xl border-l-4 border-l-brand-blue">
-                <h3 class="text-xl font-bold mb-4">2025 ROADMAP</h3>
-                <ul class="space-y-3 text-sm text-gray-200">
-                    <li class="flex items-center gap-3"><span class="w-2 h-2 bg-brand-blue rounded-full"></span>Advanced Web Exploitation</li>
-                    <li class="flex items-center gap-3"><span class="w-2 h-2 bg-brand-blue rounded-full"></span>Windows & Linux Privilege Escalation</li>
-                    <li class="flex items-center gap-3"><span class="w-2 h-2 bg-brand-blue rounded-full"></span>Python Red Team Tools</li>
-                    <li class="flex items-center gap-3"><span class="w-2 h-2 bg-brand-blue rounded-full"></span><strong>OSCP Preparation</strong></li>
-                </ul>
+                <h3 class="text-xl font-bold text-white mb-4">📊 SKILL RADAR</h3>
+                <canvas id="skillsRadar" width="400" height="400"></canvas>
             </div>
-
-            <div class="glass-card p-6 rounded-xl">
-                <h3 class="text-lg font-bold mb-4">Education</h3>
-                <ul class="space-y-4 text-sm">
-                    <li class="flex justify-between">
-                        <div>
-                            <div class="font-bold">Cybersecurity in Business</div>
-                            <div class="text-xs text-gray-400">CVF Murcia</div>
-                        </div>
-                        <div class="text-brand-htb font-mono text-xs">2025</div>
-                    </li>
-                    <li class="flex justify-between">
-                        <div>
-                            <div class="font-bold">SQL & Data Engineering</div>
-                            <div class="text-xs text-gray-400">Independent Study</div>
-                        </div>
-                        <div class="text-brand-blue font-mono text-xs">2024</div>
-                    </li>
-                </ul>
-            </div>
-
         </div>
 
     </div>
-
 </section>
-
-<!-- ========================================================= -->
-<!-- LAYER 5 — CONTACT -->
-<!-- ========================================================= -->
+<!-- LAYER 5: CONTACT -->
 <section id="layer-contact" class="section-layer">
-    <div class="max-w-4xl px-6 text-center z-10">
-
-        <h2 class="text-6xl md:text-8xl font-bold mb-8">
+    <div class="max-w-4xl px-6 w-full text-center relative z-10">
+        
+        <h2 class="text-6xl md:text-8xl font-bold text-white mb-8">
             READY TO <span class="text-brand-gold">START?</span>
         </h2>
 
-        <p class="text-gray-300 text-xl md:text-2xl mb-12 font-light">
-            Open to roles in <strong>Offensive Security</strong>, <strong>Pentesting</strong>,  
-            <strong>Python Automation</strong> and <strong>Cloud Engineering</strong>.
+        <p class="text-gray-400 text-xl md:text-2xl mb-12 font-light">
+            Seeking opportunities in <strong>Penetration Testing</strong>, 
+            <strong>Python Automation</strong>, or <strong>Cloud/Data Engineering</strong>.
         </p>
 
         <div class="flex flex-col items-center gap-6 mb-16">
             <div class="flex flex-col md:flex-row gap-6">
-                <a href="mailto:davidrodriguezscout@gmail.com" class="px-10 py-5 bg-white text-black font-bold rounded hover:bg-gray-200 transition text-lg flex items-center justify-center gap-2 min-w-[250px]">
+                <a href="mailto:davidrodriguezscout@gmail.com"
+                   class="px-10 py-5 bg-white text-black font-bold rounded hover:bg-gray-200 transition-all text-lg flex items-center justify-center gap-2 min-w-[250px]">
                     <i class="fas fa-envelope"></i> Contact Me
                 </a>
-                <a href="https://linkedin.com/in/davidrscout" target="_blank" class="px-10 py-5 border border-white/20 text-white font-bold rounded hover:bg-white hover:text-black transition text-lg flex items-center justify-center gap-2 min-w-[250px]">
+
+                <a href="https://linkedin.com/in/david-rodriguez-ramirez-7738241ab" target="_blank"
+                   class="px-10 py-5 border border-white/20 text-white font-bold rounded hover:bg-white hover:text-black transition-all text-lg flex items-center justify-center gap-2 min-w-[250px]">
                     <i class="fab fa-linkedin"></i> LinkedIn
                 </a>
             </div>
 
-            <div class="flex flex-wrap gap-4 justify-center">
-                <a href="./david-rodriguez-cyber-en.pdf" target="_blank" class="text-sm text-gray-300 hover:text-white underline decoration-dotted">
-                    Download Cybersecurity CV (EN)
-                </a>
-                <a href="./david-rodriguez-cyber-es.pdf" target="_blank" class="text-sm text-gray-300 hover:text-white underline decoration-dotted">
-                    Download Cybersecurity CV (ES)
-                </a>
-            </div>
+            <a href="./DavidRodriguez-CV-2025-EN.pdf" download
+               class="text-sm text-gray-400 hover:text-white underline decoration-dotted">
+                Download Resume (PDF)
+            </a>
         </div>
 
-        <div class="text-xs text-gray-500 font-mono">© 2025 NATU — OFFENSIVE SECURITY · SPAIN</div>
-
+        <div class="text-xs text-gray-600 font-mono">
+            © 2025 DAVID RODRÍGUEZ RAMÍREZ · MURCIA, SPAIN
+        </div>
     </div>
 </section>
 
 </main>
 
-<!-- ========================================================= -->
-<!-- SCROLL ENGINE + THEME & EFFECTS -->
-<!-- ========================================================= -->
+<!-- ============================= -->
+<!-- THEME SWITCHER (3 MODES)      -->
+<!-- ============================= -->
 <script>
-    let virtualScroll = 0;
-    let targetScroll = 0;
-    const speedFactor = 0.15;
+const root = document.documentElement;
+const themeBtn = document.getElementById("theme-toggle");
 
-    const layerHero    = document.getElementById('layer-hero');
-    const layerGemsy   = document.getElementById('layer-gemsy');
-    const layerTrack   = document.getElementById('layer-track');
-    const layerCyber   = document.getElementById('layer-cyber');
-    const layerContact = document.getElementById('layer-contact');
-    const dots         = document.querySelectorAll('.nav-dot');
-
-    function animate() {
-        virtualScroll += (targetScroll - virtualScroll) * speedFactor;
-
-        if (virtualScroll < 0) virtualScroll = 0;
-        if (virtualScroll > 400) virtualScroll = 400;
-        if (targetScroll < 0) targetScroll = 0;
-        if (targetScroll > 400) targetScroll = 400;
-
-        // HERO → GEMSY
-        if (virtualScroll <= 100) {
-            const p = virtualScroll / 100;
-
-            layerHero.style.transform = `scale(${1 - p * 0.15})`;
-            layerHero.style.filter   = `blur(${p * 20}px)`;
-            layerHero.style.opacity  = `${1 - p}`;
-
-            layerGemsy.style.transform = `translateY(${(1 - p) * 100}%)`;
-
-            layerTrack.style.clipPath = `circle(0% at 50% 50%)`;
-        }
-        // GEMSY → TRACK
-        else if (virtualScroll > 100 && virtualScroll <= 200) {
-            layerHero.style.opacity = 0;
-            layerGemsy.style.transform = `translateY(0%)`;
-
-            const p = (virtualScroll - 100) / 100;
-            layerTrack.style.clipPath = `circle(${p * 150}% at 50% 50%)`;
-
-            layerCyber.style.clipPath = `polygon(0 0, 100% 0, 100% 0, 0 0)`;
-        }
-        // TRACK → CYBER
-        else if (virtualScroll > 200 && virtualScroll <= 300) {
-            layerTrack.style.clipPath = `circle(150% at 50% 50%)`;
-
-            const p = (virtualScroll - 200) / 100;
-            layerCyber.style.clipPath =
-                `polygon(0 0, 100% 0, 100% ${p * 100}%, 0 ${p * 100 + 20}%)`;
-
-            layerContact.style.transform = `translateY(100%)`;
-        }
-        // CYBER → CONTACT
-        else if (virtualScroll > 300) {
-            layerCyber.style.clipPath = `polygon(0 0, 100% 0, 100% 100%, 0 100%)`;
-
-            const p = (virtualScroll - 300) / 100;
-            layerContact.style.transform = `translateY(${(1 - p) * 100}%)`;
-        }
-
-        updateDots();
-        requestAnimationFrame(animate);
+function setTheme(mode) {
+    if (mode === "matrix") {
+        root.style.setProperty("--fg", "#9fef00");
+        root.style.setProperty("--bg", "#000");
+        root.style.setProperty("--accent", "#9fef00");
+        document.body.classList.add("matrix");
+    } 
+    else if (mode === "white") {
+        root.style.setProperty("--fg", "#000");
+        root.style.setProperty("--bg", "#fff");
+        root.style.setProperty("--accent", "#3b82f6");
+        document.body.classList.remove("matrix");
+    } 
+    else {
+        root.style.setProperty("--fg", "#fff");
+        root.style.setProperty("--bg", "#050505");
+        root.style.setProperty("--accent", "#fbbf24");
+        document.body.classList.remove("matrix");
     }
 
-    function updateDots() {
-        let activeIndex = Math.round(virtualScroll / 100);
-        dots.forEach((dot, index) => {
-            dot.classList.toggle("active", index === activeIndex);
-        });
-    }
+    localStorage.setItem("theme", mode);
+}
 
-    window.addEventListener("wheel", (e) => {
-        targetScroll += e.deltaY * 0.15;
-    });
+// Load saved theme
+setTheme(localStorage.getItem("theme") || "dark");
 
-    let touchStart = 0;
-    window.addEventListener("touchstart", (e) => {
-        touchStart = e.touches[0].clientY;
-    });
-    window.addEventListener("touchmove", (e) => {
-        const touchY = e.touches[0].clientY;
-        const delta  = touchStart - touchY;
-        targetScroll += delta * 0.2;
-        touchStart = touchY;
-    });
-
-    function scrollToSlide(i) {
-        targetScroll = i * 100;
-    }
-
-    function toggleMenu() {
-        const menu = document.getElementById("mobile-menu");
-        menu.classList.toggle("hidden");
-    }
-
-    // THEME TOGGLES
-    const btnHTB   = document.getElementById('btn-htb');
-    const btnDark  = document.getElementById('btn-dark');
-    const btnWhite = document.getElementById('btn-white');
-
-    btnHTB.onclick = () => {
-        document.body.classList.add('htb-theme');
-        document.body.classList.remove('dark-theme', 'white-theme');
-    };
-    btnDark.onclick = () => {
-        document.body.classList.add('dark-theme');
-        document.body.classList.remove('htb-theme', 'white-theme');
-    };
-    btnWhite.onclick = () => {
-        document.body.classList.add('white-theme');
-        document.body.classList.remove('htb-theme', 'dark-theme');
-    };
-
-    // TYPEWRITER EFFECT
-    const typeText = "initializing offensive profile... OK · loading AD / Kerberos stack... OK";
-    let typeIndex = 0;
-    function typeWriter() {
-        const el = document.getElementById("typewriter");
-        if (!el) return;
-        if (typeIndex <= typeText.length) {
-            el.innerHTML = typeText.substring(0, typeIndex) + "<span class='opacity-50'>|</span>";
-            typeIndex++;
-            setTimeout(typeWriter, 35);
-        } else {
-            el.innerHTML = typeText + " <span class='opacity-50'>|</span>";
-        }
-    }
-
-    // RADAR CHART INIT
-    function initRadar() {
-        const ctx = document.getElementById("skillsRadar");
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: ["Python", "AD Attacks", "Web Exploitation", "SQL", "Cloud", "Automation"],
-                datasets: [{
-                    label: "Skill Level",
-                    data: [90, 80, 75, 70, 80, 95],
-                    fill: true,
-                    backgroundColor: "rgba(159,239,0,0.15)",
-                    borderColor: "#9fef00",
-                    pointBackgroundColor: "#9fef00",
-                    pointBorderColor: "#9fef00",
-                    pointRadius: 3
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } },
-                scales: {
-                    r: {
-                        angleLines: { color: "#374151" },
-                        grid: { color: "#1f2937" },
-                        suggestedMin: 0,
-                        suggestedMax: 100,
-                        ticks: { display: false },
-                        pointLabels: {
-                            color: "#e5e7eb",
-                            font: { size: 11 }
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    window.addEventListener('load', () => {
-        typeWriter();
-        initRadar();
-        animate();
-    });
+// Toggle button
+themeBtn.addEventListener("click", () => {
+    const current = localStorage.getItem("theme") || "dark";
+    const next = current === "dark" ? "matrix" : current === "matrix" ? "white" : "dark";
+    setTheme(next);
+});
 </script>
 
+
+<!-- ============================= -->
+<!-- RADAR CHART                   -->
+<!-- ============================= -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById("skillsRadar");
+
+new Chart(ctx, {
+    type: "radar",
+    data: {
+        labels: [
+            "Enumeration", 
+            "Web Exploitation", 
+            "Privilege Escalation", 
+            "Python Automation", 
+            "Cloud Engineering",
+            "Data Engineering"
+        ],
+        datasets: [{
+            label: "Skill Level",
+            data: [85, 80, 75, 90, 70, 65],
+            borderColor: "rgba(159, 239, 0, 0.8)",
+            backgroundColor: "rgba(159, 239, 0, 0.15)",
+            borderWidth: 2,
+            pointBackgroundColor: "#9fef00"
+        }]
+    },
+    options: {
+        scales: {
+            r: {
+                ticks: { display: false },
+                grid: { color: "rgba(255,255,255,0.1)" },
+                angleLines: { color: "rgba(255,255,255,0.1)" },
+                suggestedMin: 0,
+                suggestedMax: 100
+            }
+        },
+        plugins: { legend: { display: false } }
+    }
+});
+</script>
+
+
+<!-- ============================= -->
+<!-- SCROLL-TELLING ENGINE         -->
+<!-- ============================= -->
+<script>
+let virtualScroll = 0;
+let targetScroll = 0;
+const speed = 0.12;
+
+// Layer references
+const heroL  = document.getElementById("layer-hero");
+const gemsyL = document.getElementById("layer-gemsy");
+const trackL = document.getElementById("layer-track");
+const cyberL = document.getElementById("layer-cyber");
+const contactL = document.getElementById("layer-contact");
+const dots = document.querySelectorAll(".nav-dot");
+
+function animate() {
+    virtualScroll += (targetScroll - virtualScroll) * speed;
+
+    virtualScroll = Math.max(0, Math.min(400, virtualScroll));
+    targetScroll  = Math.max(0, Math.min(400, targetScroll));
+
+    const p1 = virtualScroll / 100;
+
+    if (virtualScroll <= 100) {
+        heroL.style.opacity = 1 - p1;
+        heroL.style.transform = `scale(${1 - p1 * 0.25})`;
+        heroL.style.filter = `blur(${p1 * 25}px)`;
+        gemsyL.style.transform = `translateY(${(1 - p1) * 100}%)`;
+        trackL.style.clipPath = "circle(0% at 50% 50%)";
+    } 
+    else if (virtualScroll <= 200) {
+        gemsyL.style.transform = "translateY(0)";
+        const p = (virtualScroll - 100) / 100;
+        trackL.style.clipPath = `circle(${p * 150}% at 50% 50%)`;
+        cyberL.style.clipPath = "polygon(0 0, 100% 0, 100% 0, 0 0)";
+    }
+    else if (virtualScroll <= 300) {
+        trackL.style.clipPath = "circle(150% at 50% 50%)";
+        const p = (virtualScroll - 200) / 100;
+        cyberL.style.clipPath = `polygon(0 0, 100% 0, 100% ${p * 100}%, 0 ${p * 100 + 20}%)`;
+        contactL.style.transform = "translateY(100%)";
+    }
+    else {
+        cyberL.style.clipPath = "polygon(0 0, 100% 0, 100% 100%, 0 100%)";
+        const p = (virtualScroll - 300) / 100;
+        contactL.style.transform = `translateY(${(1 - p) * 100}%)`;
+    }
+
+    // Update dots
+    let active = Math.round(virtualScroll / 100);
+    dots.forEach((dot, i) => dot.classList.toggle("active", i === active));
+
+    requestAnimationFrame(animate);
+}
+
+window.addEventListener("wheel", e => {
+    targetScroll += e.deltaY * 0.12;
+});
+
+let touchStart = 0;
+window.addEventListener("touchstart", e => {
+    touchStart = e.touches[0].clientY;
+});
+window.addEventListener("touchmove", e => {
+    const delta = touchStart - e.touches[0].clientY;
+    targetScroll += delta * 0.2;
+    touchStart = e.touches[0].clientY;
+});
+
+function scrollToSlide(i) {
+    targetScroll = i * 100;
+}
+
+animate();
+</script>
+
+
 <!-- MOBILE MENU -->
-<div id="mobile-menu" class="hidden fixed inset-0 bg-black/95 z-[200] flex flex-col items-center justify-center space-y-8 backdrop-blur-xl">
+<div id="mobile-menu"
+     class="hidden fixed inset-0 bg-black/95 z-[200] flex flex-col items-center justify-center space-y-8 backdrop-blur-xl transition-opacity duration-300">
+    
     <button onclick="toggleMenu()" class="absolute top-6 right-6 text-white text-4xl">&times;</button>
 
     <div onclick="toggleMenu(); scrollToSlide(0)" class="text-4xl font-bold text-white cursor-pointer">Home</div>
-    <div onclick="toggleMenu(); scrollToSlide(1)" class="text-4xl font-bold text-white cursor-pointer">Engineering</div>
+    <div onclick="toggleMenu(); scrollToSlide(1)" class="text-4xl font-bold text-white cursor-pointer">Projects</div>
     <div onclick="toggleMenu(); scrollToSlide(2)" class="text-4xl font-bold text-white cursor-pointer">Track</div>
     <div onclick="toggleMenu(); scrollToSlide(3)" class="text-4xl font-bold text-white cursor-pointer">Cyber</div>
     <div onclick="toggleMenu(); scrollToSlide(4)" class="text-4xl font-bold text-brand-gold cursor-pointer">Contact</div>
 </div>
 
+<script>
+function toggleMenu() {
+    document.getElementById("mobile-menu").classList.toggle("hidden");
+}
+</script>
+
 </body>
 </html>
+

@@ -14,6 +14,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
 
+    <!-- Chart.js (Radar skills) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -62,13 +65,13 @@
             display: flex;
             align-items: center; justify-content: center;
             will-change: transform, opacity, clip-path, filter;
-            padding-top: 80px; 
+            padding-top: 80px;
         }
 
-        #layer-hero { z-index: 10; background: #050505; }
-        #layer-gemsy { z-index: 20; background: #080808; transform: translateY(100%); } 
-        #layer-track { z-index: 30; background: #0a0a0a; clip-path: circle(0% at 50% 50%); } 
-        #layer-cyber { z-index: 40; background: #050505; clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); } 
+        #layer-hero    { z-index: 10; background: #050505; }
+        #layer-gemsy   { z-index: 20; background: #080808; transform: translateY(100%); } 
+        #layer-track   { z-index: 30; background: #0a0a0a; clip-path: circle(0% at 50% 50%); } 
+        #layer-cyber   { z-index: 40; background: #050505; clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); } 
         #layer-contact { z-index: 50; background: #000; transform: translateY(100%); }
 
         .glass-card {
@@ -89,17 +92,53 @@
             border-radius: 100%; cursor: pointer; transition: .3s;
         }
         .nav-dot.active { background: #fbbf24; transform: scale(1.5); }
+
+        /* THEMES */
+        body.htb-theme {
+            background-color: #020302;
+            color: #e5ffe5;
+        }
+        body.htb-theme .glass-card {
+            background: rgba(0,0,0,0.6);
+            border-color: rgba(159,239,0,0.35);
+            box-shadow: 0 0 25px rgba(159,239,0,0.15);
+        }
+        body.htb-theme a, 
+        body.htb-theme .text-brand-htb {
+            color: #9fef00;
+        }
+
+        body.dark-theme {
+            background-color: #050505;
+            color: #f5f5f5;
+        }
+
+        body.white-theme {
+            background-color: #f9fafb;
+            color: #111827;
+        }
+        body.white-theme .glass-card {
+            background: rgba(255,255,255,0.9);
+            border-color: rgba(148,163,184,0.6);
+            box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+        }
+        body.white-theme .nav-dots .nav-dot { background: rgba(15,23,42,0.3); }
+        body.white-theme .nav-dots .nav-dot.active { background: #0f172a; }
     </style>
 </head>
 
-<body>
+<body class="htb-theme">
 
 <!-- NAV -->
 <nav class="fixed w-full z-[100] top-0 left-0 p-6 md:p-8 mix-blend-difference text-white">
     <div class="max-w-[1800px] mx-auto flex justify-between items-center">
         <div class="text-2xl font-bold font-mono tracking-tighter cursor-pointer" onclick="scrollToSlide(0)">NATU</div>
-        <div class="hidden md:flex gap-8 text-xs tracking-widest uppercase text-gray-500">Scroll / Swipe to navigate</div>
-        <button onclick="toggleMenu()" class="md:hidden text-white"><i class="fas fa-bars text-2xl"></i></button>
+        <div class="hidden md:flex gap-8 text-xs tracking-widest uppercase text-gray-400">
+            Scroll / Swipe to navigate
+        </div>
+        <button onclick="toggleMenu()" class="md:hidden text-white">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
     </div>
 </nav>
 
@@ -110,6 +149,19 @@
     <div class="nav-dot" onclick="scrollToSlide(2)"></div>
     <div class="nav-dot" onclick="scrollToSlide(3)"></div>
     <div class="nav-dot" onclick="scrollToSlide(4)"></div>
+</div>
+
+<!-- THEME TOGGLES -->
+<div class="fixed bottom-6 right-6 z-[200] flex flex-col gap-2">
+    <button id="btn-htb" class="px-3 py-2 rounded-lg bg-black/70 border border-brand-htb text-brand-htb text-xs font-mono flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-brand-htb"></span> HTB
+    </button>
+    <button id="btn-dark" class="px-3 py-2 rounded-lg bg-black/50 border border-white/20 text-gray-200 text-xs font-mono">
+        Dark
+    </button>
+    <button id="btn-white" class="px-3 py-2 rounded-lg bg-white/90 border border-gray-300 text-gray-900 text-xs font-mono">
+        White
+    </button>
 </div>
 
 <!-- VIEWPORT -->
@@ -133,35 +185,46 @@
                     <span class="animate-ping absolute h-full w-full rounded-full bg-green-400 opacity-75"></span>
                     <span class="relative rounded-full h-2 w-2 bg-green-500"></span>
                 </span>
-                <span class="text-[10px] font-mono tracking-wider">AVAILABLE FOR 2025 — OFFENSIVE SECURITY</span>
+                <span class="text-[10px] font-mono tracking-wider">AVAILABLE 2025 — OFFENSIVE SECURITY</span>
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6">
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-4">
                 OFFENSIVE SECURITY <br>
-                <span class="text-gray-600 font-light">&</span>
+                <span class="text-gray-500 font-light">&</span>
                 <span class="text-brand-blue">SYSTEMS ENGINEERING.</span>
             </h1>
 
-            <p class="text-lg text-gray-400 max-w-xl mb-8 leading-relaxed font-light">
+            <!-- Terminal / typewriter line -->
+            <p id="typewriter" class="font-mono text-sm text-brand-htb mb-4"></p>
+
+            <p class="text-lg text-gray-300 max-w-xl mb-8 leading-relaxed font-light">
                 Pentester specializing in <strong>Active Directory attacks</strong>, 
-                <strong>Kerberos abuse</strong>, 
-                <strong>Impacket tooling</strong>, 
-                <strong>MSSQL exploitation</strong> and 
-                <strong>Post-Exploitation</strong>.
-                Strong focus on troubleshooting, exploit reconstruction, and Python-based automation.
+                <strong>Kerberos abuse</strong>, <strong>Impacket tooling</strong>,
+                <strong>MSSQL exploitation</strong> and <strong>Post-Exploitation</strong>.  
+                Strong focus on troubleshooting, reconstructing broken attack paths and Python-based automation.
             </p>
 
-            <div class="flex flex-wrap gap-3 mb-8 text-xs font-mono text-gray-500">
+            <div class="flex flex-wrap gap-3 mb-8 text-xs font-mono text-gray-400">
                 <span class="px-2 py-1 border border-white/10 rounded">ACTIVE DIRECTORY</span>
                 <span class="px-2 py-1 border border-white/10 rounded">KERBEROS</span>
                 <span class="px-2 py-1 border border-white/10 rounded">IMPACKET</span>
-                <span class="px-2 py-1 border border-white/10 rounded">PRIVESC</span>
+                <span class="px-2 py-1 border border-white/10 rounded">MSSQL</span>
                 <span class="px-2 py-1 border border-white/10 rounded">PYTHON AUTOMATION</span>
             </div>
 
-            <button onclick="scrollToSlide(1)" class="px-8 py-3 bg-white text-black font-bold rounded hover:bg-gray-200 transition flex items-center gap-2">
-                Engineering Work <i class="fas fa-arrow-down"></i>
-            </button>
+            <div class="flex flex-wrap gap-4">
+                <button onclick="scrollToSlide(1)" class="px-8 py-3 bg-white text-black font-bold rounded hover:bg-gray-200 transition flex items-center gap-2">
+                    Engineering Work <i class="fas fa-arrow-down"></i>
+                </button>
+                <a href="./david-rodriguez-cyber-en.pdf" target="_blank"
+                   class="px-6 py-3 border border-white/20 text-sm font-bold rounded hover:bg-white hover:text-black transition flex items-center gap-2">
+                    <i class="fas fa-file"></i> CV (EN)
+                </a>
+                <a href="./david-rodriguez-cyber-es.pdf" target="_blank"
+                   class="px-6 py-3 border border-white/20 text-sm font-bold rounded hover:bg-white hover:text-black transition flex items-center gap-2">
+                    <i class="fas fa-file-alt"></i> CV (ES)
+                </a>
+            </div>
         </div>
 
         <!-- IMAGE -->
@@ -177,7 +240,6 @@
 
 </section>
 
-
 <!-- ========================================================= -->
 <!-- LAYER 2 — GEMSY ENGINEERING -->
 <!-- ========================================================= -->
@@ -192,7 +254,7 @@
             <h2 class="text-5xl md:text-6xl font-bold mb-4">GEMSY<span class="text-brand-gold">.ES</span></h2>
 
             <p class="text-lg text-gray-300 leading-relaxed mb-6 border-l-2 border-brand-gold pl-4">
-                Large-scale engineering platform integrating <strong>data extraction</strong>, 
+                Large-scale platform integrating <strong>data extraction</strong>, 
                 <strong>cloud infrastructure</strong> and <strong>AI-driven automation</strong>.  
                 Built with Python, SQL, Docker and deployed fully on Google Cloud.
             </p>
@@ -208,7 +270,9 @@
                 </div>
             </div>
 
-            <a href="https://gemsy.es" target="_blank" class="px-6 py-2 border border-brand-gold text-brand-gold rounded hover:bg-brand-gold hover:text-black font-bold transition text-sm uppercase inline-block">Visit Platform</a>
+            <a href="https://gemsy.es" target="_blank" class="px-6 py-2 border border-brand-gold text-brand-gold rounded hover:bg-brand-gold hover:text-black font-bold transition text-sm uppercase inline-block">
+                Visit Platform
+            </a>
 
         </div>
 
@@ -230,7 +294,6 @@
 
 </section>
 
-
 <!-- ========================================================= -->
 <!-- LAYER 3 — PROFESSIONAL TRACK -->
 <!-- ========================================================= -->
@@ -239,7 +302,7 @@
     <div class="max-w-7xl w-full px-6 flex flex-col justify-center">
 
         <h2 class="text-4xl md:text-6xl font-bold text-center mb-10">
-            PROFESSIONAL <span class="text-gray-600">TRACK</span>
+            PROFESSIONAL <span class="text-gray-500">TRACK</span>
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -249,47 +312,47 @@
                     <span class="text-brand-gold font-bold">OFFENSIVE SECURITY</span>
                     <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2024–PRESENT</span>
                 </div>
-                <p class="text-xs text-gray-500">Active Directory Attacks · Kerberos · Impacket · Lateral Movement · Post-Exploitation.</p>
+                <p class="text-xs text-gray-400">Active Directory attacks · Kerberos · Impacket · Lateral Movement · Post-Exploitation.</p>
             </div>
 
             <div class="glass-card p-5 rounded-lg border-t-2 border-t-brand-blue">
                 <div class="flex justify-between mb-2">
                     <span class="text-brand-blue font-bold">AD / KERBEROS ENGINEERING</span>
-                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2025</span>
+                    <span class="text-[10px] font-mono bg_white/5 px-1 rounded">2025</span>
                 </div>
-                <p class="text-xs text-gray-500">SPN Abuse · ACL Misconfigurations · Ticket Forging · WinRM Exploitation.</p>
+                <p class="text-xs text-gray-400">SPN abuse · ACL misconfigurations · ticket forging · WinRM exploitation.</p>
             </div>
 
             <div class="glass-card p-5 rounded-lg border-t-2 border-t-purple-500">
                 <div class="flex justify-between mb-2">
                     <span class="text-purple-400 font-bold">PYTHON AUTOMATION</span>
-                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2024–PRESENT</span>
+                    <span class="text-[10px] font-mono bg_white/5 px-1 rounded">2024–PRESENT</span>
                 </div>
-                <p class="text-xs text-gray-500">Red-Team tooling · scrapers · ETL pipelines · API agents.</p>
+                <p class="text-xs text-gray-400">Red-team tooling · scrapers · ETL pipelines · API agents.</p>
             </div>
 
             <div class="glass-card p-5 rounded-lg border-t-2 border-t-white">
                 <div class="flex justify-between mb-2">
                     <span class="text-white font-bold">CLOUD ENGINEERING</span>
-                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2023–PRESENT</span>
+                    <span class="text-[10px] font-mono bg_white/5 px-1 rounded">2023–PRESENT</span>
                 </div>
-                <p class="text-xs text-gray-500">App Engine · Cloud SQL · IAM · Secret Manager · secure deployments.</p>
+                <p class="text-xs text-gray-400">App Engine · Cloud SQL · IAM · Secret Manager · secure deployments.</p>
             </div>
 
             <div class="glass-card p-5 rounded-lg border-t-2 border-t-green-500">
                 <div class="flex justify-between mb-2">
                     <span class="text-green-400 font-bold">GEMSY ENGINEER</span>
-                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">2024–PRESENT</span>
+                    <span class="text-[10px] font-mono bg_white/5 px-1 rounded">2024–PRESENT</span>
                 </div>
-                <p class="text-xs text-gray-500">Backend design · automation · cloud infra · production engineering.</p>
+                <p class="text-xs text-gray-400">Backend design · automation · cloud infra · production engineering.</p>
             </div>
 
             <div class="glass-card p-5 rounded-lg border-t-2 border-t-brand-htb">
                 <div class="flex justify-between mb-2">
                     <span class="text-brand-htb font-bold">HTB PROGRESSION</span>
-                    <span class="text-[10px] font-mono bg-white/5 px-1 rounded">20+ Machines</span>
+                    <span class="text-[10px] font-mono bg_white/5 px-1 rounded">20+ Machines</span>
                 </div>
-                <p class="text-xs text-gray-500">Gavel · MonitorsFour · Eighteen · Previous · DarkZero · Giveback.</p>
+                <p class="text-xs text-gray-400">Gavel · MonitorsFour · Editor · Eighteen · Previous · DarkZero · Giveback.</p>
             </div>
 
         </div>
@@ -297,7 +360,6 @@
     </div>
 
 </section>
-
 
 <!-- ========================================================= -->
 <!-- LAYER 4 — CYBERSECURITY -->
@@ -326,7 +388,23 @@
                     </div>
                     <div>
                         <div class="text-4xl font-bold">AD</div>
-                        <div class="text-xs text-gray-500 tracking-widest mt-1">SPECIALIZATION</div>
+                        <div class="text-xs text-gray-400 tracking-widest mt-1">SPECIALISATION</div>
+                    </div>
+                </div>
+
+                <!-- HTB cards -->
+                <div class="grid grid-cols-3 gap-3 mb-6 text-center text-xs text-gray-300">
+                    <div class="glass-card p-3 rounded-lg">
+                        <div class="font-bold text-brand-htb text-sm">AD</div>
+                        <div class="text-[10px]">Kerberos · SPN · ACL</div>
+                    </div>
+                    <div class="glass-card p-3 rounded-lg">
+                        <div class="font-bold text-brand-htb text-sm">WEB</div>
+                        <div class="text-[10px]">LFI · RCE · SQLi · Upload</div>
+                    </div>
+                    <div class="glass-card p-3 rounded-lg">
+                        <div class="font-bold text-brand-htb text-sm">POST</div>
+                        <div class="text-[10px]">PrivEsc · Tokens · Pivot</div>
                     </div>
                 </div>
 
@@ -334,22 +412,22 @@
 
                     <div>
                         <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">Active Directory Attacks</h4>
-                        <p class="text-xs text-gray-400">Kerberos (TGT/ST), SPN Enumeration, AS-REP, ACL Abuse, Ticket Forgery, S4U2Self.</p>
+                        <p class="text-xs text-gray-300">Kerberos (TGT/ST), SPN enumeration, AS-REP, S4U2Self, ACL abuse, ticket forging.</p>
                     </div>
 
                     <div>
-                        <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">Windows / Linux Post-Exploitation</h4>
-                        <p class="text-xs text-gray-400">Token abuse, credential extraction, misconfigurations, reverse shells, local privesc.</p>
+                        <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">Post-Exploitation</h4>
+                        <p class="text-xs text-gray-300">Credential extraction, token abuse, misconfigurations, local privilege escalation in Windows and Linux.</p>
                     </div>
 
                     <div>
-                        <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">Tools & Workflows</h4>
-                        <p class="text-xs text-gray-400">Impacket · Evil-WinRM · Ligolo-ng · Kerbrute · LDAP · MSSQL · PowerShell.</p>
+                        <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">Tooling & Workflows</h4>
+                        <p class="text-xs text-gray-300">Impacket suite · Evil-WinRM · Ligolo-ng · Kerbrute · LDAP · MSSQL · PowerShell.</p>
                     </div>
 
                     <div>
                         <h4 class="text-brand-htb text-sm font-bold uppercase mb-1">Troubleshooting</h4>
-                        <p class="text-xs text-gray-400">Kerberos failures, Impacket errors, clock skew, broken exploit chains.</p>
+                        <p class="text-xs text-gray-300">Kerberos failures, Impacket errors, clock skew, broken exploit chains and non-intended paths.</p>
                     </div>
 
                 </div>
@@ -362,33 +440,39 @@
 
         </div>
 
-        <!-- Right -->
+        <!-- Right: Radar + Roadmap + Education -->
         <div class="space-y-6">
+
+            <!-- Radar chart -->
+            <div class="glass-card p-6 rounded-xl">
+                <h3 class="text-lg font-bold mb-4">Skill Radar</h3>
+                <canvas id="skillsRadar" width="350" height="350"></canvas>
+            </div>
 
             <div class="glass-card p-6 rounded-xl border-l-4 border-l-brand-blue">
                 <h3 class="text-xl font-bold mb-4">2025 ROADMAP</h3>
-                <ul class="space-y-3 text-sm text-gray-300">
+                <ul class="space-y-3 text-sm text-gray-200">
                     <li class="flex items-center gap-3"><span class="w-2 h-2 bg-brand-blue rounded-full"></span>Advanced Web Exploitation</li>
-                    <li class="flex items-center gap-3"><span class="w-2 h-2 bg-brand-blue rounded-full"></span>Windows & Linux PrivEsc</li>
+                    <li class="flex items-center gap-3"><span class="w-2 h-2 bg-brand-blue rounded-full"></span>Windows & Linux Privilege Escalation</li>
                     <li class="flex items-center gap-3"><span class="w-2 h-2 bg-brand-blue rounded-full"></span>Python Red Team Tools</li>
                     <li class="flex items-center gap-3"><span class="w-2 h-2 bg-brand-blue rounded-full"></span><strong>OSCP Preparation</strong></li>
                 </ul>
             </div>
 
             <div class="glass-card p-6 rounded-xl">
-                <h3 class="text-lg font-bold mb-4">EDUCATION</h3>
-                <ul class="space-y-4">
+                <h3 class="text-lg font-bold mb-4">Education</h3>
+                <ul class="space-y-4 text-sm">
                     <li class="flex justify-between">
                         <div>
-                            <div class="text-white font-bold text-sm">Cybersecurity in Business</div>
-                            <div class="text-xs text-gray-500">CVF Murcia</div>
+                            <div class="font-bold">Cybersecurity in Business</div>
+                            <div class="text-xs text-gray-400">CVF Murcia</div>
                         </div>
                         <div class="text-brand-htb font-mono text-xs">2025</div>
                     </li>
                     <li class="flex justify-between">
                         <div>
-                            <div class="text-white font-bold text-sm">SQL & Data Engineering</div>
-                            <div class="text-xs text-gray-500">Independent Study</div>
+                            <div class="font-bold">SQL & Data Engineering</div>
+                            <div class="text-xs text-gray-400">Independent Study</div>
                         </div>
                         <div class="text-brand-blue font-mono text-xs">2024</div>
                     </li>
@@ -401,7 +485,6 @@
 
 </section>
 
-
 <!-- ========================================================= -->
 <!-- LAYER 5 — CONTACT -->
 <!-- ========================================================= -->
@@ -412,9 +495,9 @@
             READY TO <span class="text-brand-gold">START?</span>
         </h2>
 
-        <p class="text-gray-400 text-xl md:text-2xl mb-12 font-light">
-            Available for <strong>Offensive Security</strong>, <strong>Pentesting</strong>,  
-            <strong>Python Automation</strong> and <strong>Cloud Engineering</strong> roles.
+        <p class="text-gray-300 text-xl md:text-2xl mb-12 font-light">
+            Open to roles in <strong>Offensive Security</strong>, <strong>Pentesting</strong>,  
+            <strong>Python Automation</strong> and <strong>Cloud Engineering</strong>.
         </p>
 
         <div class="flex flex-col items-center gap-6 mb-16">
@@ -427,10 +510,17 @@
                 </a>
             </div>
 
-            <a href="./david-rodriguez-cv-2025.pdf" download class="text-sm text-gray-400 hover:text-white underline decoration-dotted">Download Full Resume (PDF)</a>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="./david-rodriguez-cyber-en.pdf" target="_blank" class="text-sm text-gray-300 hover:text-white underline decoration-dotted">
+                    Download Cybersecurity CV (EN)
+                </a>
+                <a href="./david-rodriguez-cyber-es.pdf" target="_blank" class="text-sm text-gray-300 hover:text-white underline decoration-dotted">
+                    Download Cybersecurity CV (ES)
+                </a>
+            </div>
         </div>
 
-        <div class="text-xs text-gray-600 font-mono">© 2025 NATU — OFFENSIVE SECURITY · SPAIN</div>
+        <div class="text-xs text-gray-500 font-mono">© 2025 NATU — OFFENSIVE SECURITY · SPAIN</div>
 
     </div>
 </section>
@@ -438,19 +528,19 @@
 </main>
 
 <!-- ========================================================= -->
-<!-- SCROLL ENGINE — VIRTUAL SCROLLTELLING -->
+<!-- SCROLL ENGINE + THEME & EFFECTS -->
 <!-- ========================================================= -->
 <script>
     let virtualScroll = 0;
     let targetScroll = 0;
     const speedFactor = 0.15;
 
-    const layerHero = document.getElementById('layer-hero');
-    const layerGemsy = document.getElementById('layer-gemsy');
-    const layerTrack = document.getElementById('layer-track');
-    const layerCyber = document.getElementById('layer-cyber');
+    const layerHero    = document.getElementById('layer-hero');
+    const layerGemsy   = document.getElementById('layer-gemsy');
+    const layerTrack   = document.getElementById('layer-track');
+    const layerCyber   = document.getElementById('layer-cyber');
     const layerContact = document.getElementById('layer-contact');
-    const dots = document.querySelectorAll('.nav-dot');
+    const dots         = document.querySelectorAll('.nav-dot');
 
     function animate() {
         virtualScroll += (targetScroll - virtualScroll) * speedFactor;
@@ -460,57 +550,43 @@
         if (targetScroll < 0) targetScroll = 0;
         if (targetScroll > 400) targetScroll = 400;
 
-        /* ---------------------------------------------------
-           STAGE 1 — HERO → ENGINEERING
-        --------------------------------------------------- */
+        // HERO → GEMSY
         if (virtualScroll <= 100) {
             const p = virtualScroll / 100;
 
             layerHero.style.transform = `scale(${1 - p * 0.15})`;
-            layerHero.style.filter = `blur(${p * 20}px)`;
-            layerHero.style.opacity = `${1 - p}`;
+            layerHero.style.filter   = `blur(${p * 20}px)`;
+            layerHero.style.opacity  = `${1 - p}`;
 
             layerGemsy.style.transform = `translateY(${(1 - p) * 100}%)`;
 
             layerTrack.style.clipPath = `circle(0% at 50% 50%)`;
         }
-
-        /* ---------------------------------------------------
-           STAGE 2 — ENGINEERING → PROFESSIONAL TRACK
-        --------------------------------------------------- */
+        // GEMSY → TRACK
         else if (virtualScroll > 100 && virtualScroll <= 200) {
             layerHero.style.opacity = 0;
             layerGemsy.style.transform = `translateY(0%)`;
 
             const p = (virtualScroll - 100) / 100;
-
             layerTrack.style.clipPath = `circle(${p * 150}% at 50% 50%)`;
 
             layerCyber.style.clipPath = `polygon(0 0, 100% 0, 100% 0, 0 0)`;
         }
-
-        /* ---------------------------------------------------
-           STAGE 3 — TRACK → CYBER
-        --------------------------------------------------- */
+        // TRACK → CYBER
         else if (virtualScroll > 200 && virtualScroll <= 300) {
             layerTrack.style.clipPath = `circle(150% at 50% 50%)`;
 
             const p = (virtualScroll - 200) / 100;
-
             layerCyber.style.clipPath =
                 `polygon(0 0, 100% 0, 100% ${p * 100}%, 0 ${p * 100 + 20}%)`;
 
             layerContact.style.transform = `translateY(100%)`;
         }
-
-        /* ---------------------------------------------------
-           STAGE 4 — CYBER → CONTACT
-        --------------------------------------------------- */
+        // CYBER → CONTACT
         else if (virtualScroll > 300) {
             layerCyber.style.clipPath = `polygon(0 0, 100% 0, 100% 100%, 0 100%)`;
 
             const p = (virtualScroll - 300) / 100;
-
             layerContact.style.transform = `translateY(${(1 - p) * 100}%)`;
         }
 
@@ -525,25 +601,18 @@
         });
     }
 
-    /* ---------------------------------------------------
-       USER INPUT — Wheel, Touch, Manual Navigation
-    --------------------------------------------------- */
     window.addEventListener("wheel", (e) => {
         targetScroll += e.deltaY * 0.15;
     });
 
     let touchStart = 0;
-
     window.addEventListener("touchstart", (e) => {
         touchStart = e.touches[0].clientY;
     });
-
     window.addEventListener("touchmove", (e) => {
         const touchY = e.touches[0].clientY;
-        const delta = touchStart - touchY;
-
+        const delta  = touchStart - touchY;
         targetScroll += delta * 0.2;
-
         touchStart = touchY;
     });
 
@@ -556,12 +625,86 @@
         menu.classList.toggle("hidden");
     }
 
-    animate();
+    // THEME TOGGLES
+    const btnHTB   = document.getElementById('btn-htb');
+    const btnDark  = document.getElementById('btn-dark');
+    const btnWhite = document.getElementById('btn-white');
+
+    btnHTB.onclick = () => {
+        document.body.classList.add('htb-theme');
+        document.body.classList.remove('dark-theme', 'white-theme');
+    };
+    btnDark.onclick = () => {
+        document.body.classList.add('dark-theme');
+        document.body.classList.remove('htb-theme', 'white-theme');
+    };
+    btnWhite.onclick = () => {
+        document.body.classList.add('white-theme');
+        document.body.classList.remove('htb-theme', 'dark-theme');
+    };
+
+    // TYPEWRITER EFFECT
+    const typeText = "initializing offensive profile... OK · loading AD / Kerberos stack... OK";
+    let typeIndex = 0;
+    function typeWriter() {
+        const el = document.getElementById("typewriter");
+        if (!el) return;
+        if (typeIndex <= typeText.length) {
+            el.innerHTML = typeText.substring(0, typeIndex) + "<span class='opacity-50'>|</span>";
+            typeIndex++;
+            setTimeout(typeWriter, 35);
+        } else {
+            el.innerHTML = typeText + " <span class='opacity-50'>|</span>";
+        }
+    }
+
+    // RADAR CHART INIT
+    function initRadar() {
+        const ctx = document.getElementById("skillsRadar");
+        if (!ctx) return;
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ["Python", "AD Attacks", "Web Exploitation", "SQL", "Cloud", "Automation"],
+                datasets: [{
+                    label: "Skill Level",
+                    data: [90, 80, 75, 70, 80, 95],
+                    fill: true,
+                    backgroundColor: "rgba(159,239,0,0.15)",
+                    borderColor: "#9fef00",
+                    pointBackgroundColor: "#9fef00",
+                    pointBorderColor: "#9fef00",
+                    pointRadius: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    r: {
+                        angleLines: { color: "#374151" },
+                        grid: { color: "#1f2937" },
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        ticks: { display: false },
+                        pointLabels: {
+                            color: "#e5e7eb",
+                            font: { size: 11 }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    window.addEventListener('load', () => {
+        typeWriter();
+        initRadar();
+        animate();
+    });
 </script>
 
-<!-- ========================================================= -->
-<!-- MOBILE MENU OVERLAY -->
-<!-- ========================================================= -->
+<!-- MOBILE MENU -->
 <div id="mobile-menu" class="hidden fixed inset-0 bg-black/95 z-[200] flex flex-col items-center justify-center space-y-8 backdrop-blur-xl">
     <button onclick="toggleMenu()" class="absolute top-6 right-6 text-white text-4xl">&times;</button>
 

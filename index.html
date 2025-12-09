@@ -10,6 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Highlight.js for code syntax -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 
     <!-- Tailwind Config -->
     <script>
@@ -21,13 +24,17 @@
                         brand: {
                             gold: '#fbbf24',
                             blue: '#3b82f6',
-                            htb: '#9fef00'
+                            htb: '#9fef00',
+                            red: '#ef4444',
+                            dark: '#050505'
                         }
                     },
                     animation: { 
                         blob: 'blob 10s infinite', 
                         'spin-slow': 'spin 15s linear infinite',
-                        cursor: 'cursor .75s step-end infinite'
+                        cursor: 'cursor .75s step-end infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'terminal-cursor': 'terminal-cursor .75s step-end infinite'
                     },
                     keyframes: {
                         blob: {
@@ -37,6 +44,10 @@
                             '100%': { transform: 'translate(0,0) scale(1)' }
                         },
                         cursor: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0' }
+                        },
+                        'terminal-cursor': {
                             '0%, 100%': { opacity: '1' },
                             '50%': { opacity: '0' }
                         }
@@ -69,7 +80,7 @@ html, body {
 }
 
 /* Default Dark Layer Styles */
-#layer-hero    { z-index:10; background:transparent; }
+#layer-hero      { z-index:10; background:transparent; }
 #layer-gemsy   { z-index:20; background:#080808; transform:translateY(100%); }
 #layer-track   { z-index:30; background:#0a0a0a; clip-path:circle(0% at 50% 50%); }
 #layer-cyber   { z-index:40; background:#050505; clip-path:polygon(0 0,100% 0,100% 0,0 0); }
@@ -103,9 +114,46 @@ html, body {
 }
 .nav-dot.active { background:#fbbf24; transform:scale(1.5); }
 
+/* --- TERMINAL SIMULATION --- */
+#terminal-output {
+    min-height: 200px;
+    overflow-y: auto;
+    max-height: 35vh;
+    font-size: 10px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-all;
+    padding-right: 1rem;
+}
+.terminal-line {
+    font-family: 'Space Grotesk', monospace;
+    color: #d7ffd7;
+}
+.prompt {
+    color: #9fef00; /* HTB Green */
+}
+.command {
+    color: #fff;
+}
+.output-success {
+    color: #4ade80; /* Green output */
+}
+.output-error {
+    color: #f87171; /* Red output */
+}
+.terminal-cursor {
+    display: inline-block;
+    width: 6px;
+    height: 12px;
+    background-color: #9fef00;
+    vertical-align: middle;
+    margin-left: 2px;
+    animation: terminal-cursor .75s step-end infinite;
+}
+
 
 /* ========================================= */
-/* THEME ENGINES               */
+/* THEME ENGINES          */
 /* ========================================= */
 
 /* --- HTB (Hacker) THEME --- */
@@ -134,15 +182,10 @@ body.white-theme .text-gray-500 { color:#666 !important; }
 body.white-theme .border-white\/10 { border-color: rgba(0,0,0,0.1) !important; }
 body.white-theme .bg-white\/5 { background-color: rgba(0,0,0,0.05) !important; }
 body.white-theme .mix-blend-difference { mix-blend-mode: normal !important; color: #000 !important; }
-
 body.white-theme .glass-card {
     background: #ffffff !important;
     border: 1px solid #e5e7eb !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
-}
-body.white-theme .glass-card:hover {
-    border-color: #fbbf24 !important;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
 }
 
 body.white-theme #layer-hero { background: #f8f9fa; }
@@ -150,8 +193,6 @@ body.white-theme #layer-gemsy { background: #ffffff; }
 body.white-theme #layer-track { background: #f3f4f6; }
 body.white-theme #layer-cyber { background: #ffffff; }
 body.white-theme #layer-contact { background: #f8f9fa; }
-body.white-theme .nav-dot { background: #ccc; }
-body.white-theme .nav-dot.active { background: #fbbf24; }
 
 </style>
 </head>
@@ -222,17 +263,16 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                 </div>
 
                 <p class="text-lg text-gray-300 max-w-xl mb-8 leading-relaxed">
-                    Specialized in <strong>Active Directory attacks</strong> (Kerberos/SPN), 
-                    <strong>Red Team Infrastructure</strong>, and <strong>Automated Data Pipelines</strong>. 
-                    Reconstructing broken exploit paths and building production-grade tools.
+                    Bridging the gap between <strong>Red Team Operations</strong> and <strong>Software Engineering</strong>.
+                    Specialized in automating attack infrastructure, custom tooling development, and complex Active Directory scenarios.
                 </p>
 
                 <!-- Tags -->
                 <div class="flex flex-wrap gap-3 mb-8 text-xs font-mono text-gray-400">
-                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fab fa-windows"></i> AD ATTACKS</span>
-                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fas fa-ticket-alt"></i> KERBEROS</span>
-                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fab fa-python"></i> PYTHON</span>
-                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fab fa-google"></i> CLOUD</span>
+                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fab fa-windows"></i> AD ENGINEERING</span>
+                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fas fa-code-branch"></i> AUTOMATION</span>
+                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fab fa-python"></i> PYTHON/GO</span>
+                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fab fa-google"></i> INFRA-AS-CODE</span>
                 </div>
 
                 <!-- CTAs with BOTH CVs -->
@@ -256,12 +296,8 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                     <div class="absolute inset-4 border border-brand-blue/20 rounded-full animate-spin-slow" style="animation-direction:reverse; animation-duration:20s"></div>
                     <div class="absolute inset-8 rounded-full border-2 border-white/10 shadow-2xl overflow-hidden z-20 bg-[#0a0a0a]">
                         <img src="./natu.jpg" 
-                             onerror="this.src='https://ui-avatars.com/api/?name=N+A&background=000&color=fff&size=512'"
-                             class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="absolute bottom-10 -left-4 z-30 bg-black/80 backdrop-blur border border-white/20 px-4 py-2 rounded-lg glass-card animate-bounce" style="animation-duration: 3s;">
-                        <div class="text-[10px] text-gray-400 uppercase tracking-widest">Techniques</div>
-                        <div class="text-xl font-bold text-brand-htb">MANUAL</div>
+                            onerror="this.src='https://ui-avatars.com/api/?name=N+A&background=000&color=fff&size=512'"
+                            class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-500">
                     </div>
                 </div>
             </div>
@@ -385,16 +421,6 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                     </ul>
                 </div>
 
-                <!-- ENERGY -->
-                <div class="glass-card p-6 rounded-lg border-t-2 border-t-gray-500">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="text-gray-300 font-bold text-lg">TECH AGENT</span>
-                        <span class="text-[10px] font-mono bg-white/10 px-2 py-1 rounded">2025</span>
-                    </div>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-2 font-bold">ENERGY SECTOR</p>
-                    <p class="text-sm text-gray-500">Tier 2 Technical troubleshooting and complex case resolution.</p>
-                </div>
-
                 <!-- F10 -->
                 <div class="glass-card p-6 rounded-lg border-t-2 border-t-brand-blue">
                     <div class="flex justify-between items-start mb-3">
@@ -419,171 +445,133 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
         </div>
     </section>
 
-    <!-- LAYER 4: CYBERSECURITY -->
+    <!-- LAYER 4: CYBERSECURITY (REMODELED - ADVANCED ADVERSARY ENGINEERING) -->
     <section id="layer-cyber" class="section-layer">
         <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
 
         <div class="max-w-7xl w-full px-6 grid lg:grid-cols-2 gap-12 items-center h-full max-h-[90vh] overflow-y-auto">
 
-            <!-- STATS & INFO -->
-            <div class="lg:col-span-2">
+            <!-- COL 1: ADVANCED ADVERSARY SIMULATION & DEEP DIVE -->
+            <div class="lg:col-span-1">
                 <div class="flex items-center gap-4 mb-6">
-                    <i class="fas fa-terminal text-4xl text-brand-htb"></i>
-                    <h2 class="text-5xl font-bold text-white leading-tight mb-6">
-                    OFFENSIVE <br> SECURITY
-                </h2>
+                    <i class="fas fa-satellite-dish text-4xl text-brand-htb"></i> 
+                    <div>
+                        <h2 class="text-4xl font-bold text-white leading-none">ADVERSARY SIMULATION</h2>
+                        <div class="text-sm text-gray-500 font-mono">ACTIVE DIRECTORY DEEP DIVE</div>
+                    </div>
+                </div>
+
+                <!-- NEW: ATTACK PATH & TROUBLESHOOTING CARD -->
+                <div class="glass-card p-6 rounded-xl border-l-4 border-l-brand-red mb-6">
+                    <h3 class="text-lg font-bold text-white mb-2"><i class="fas fa-bug text-brand-red mr-2"></i> Exploit Path Reconstruction</h3>
+                    <p class="text-sm text-gray-400 mb-3">
+                        Core strength in manually troubleshooting complex attack failures (e.g., Kerberos clock skew, Impacket protocol errors) and <strong>reconstructing non-obvious, multi-stage exploit chains from scratch (no reliance on frameworks like Metasploit).</strong>
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-xs font-mono">
+                        <span class="px-2 py-1 bg-brand-red/10 rounded text-brand-red">Troubleshooting</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-gray-300">Manual Exploit</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-gray-300">PrivEsc Chaining</span>
+                    </div>
+                </div>
+
+                <!-- REPLACEMENT CARD: C2 INFRASTRUCTURE & OPSEC -->
+                <div class="glass-card p-6 rounded-xl border-l-4 border-l-brand-blue mb-6 border-b-2 border-b-brand-blue/50">
+                    <h3 class="text-lg font-bold text-white mb-2"><i class="fas fa-server text-brand-blue mr-2"></i> C2 Infrastructure & OpSec</h3>
+                    <p class="text-sm text-gray-400 mb-3">
+                        Design and deployment of highly resilient C2 environments using Cloud providers (GCP/AWS). Expertise in operational security (OpSec), custom redirectors, and channel separation for long-haul persistence.
+                    </p>
+                    <div class="flex flex-wrap gap-2 text-xs font-mono">
+                        <span class="px-2 py-1 bg-brand-blue/10 rounded text-brand-blue">Evasive Redirectors</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-gray-300">Ligolo-ng Tunnels</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-gray-300">Infra-as-Code (IaC)</span>
+                        <span class="px-2 py-1 bg-white/5 rounded text-gray-300">Dockerized C2</span>
+                    </div>
+                </div>
                 
-                <div class="p-8 bg-[#151515] border border-brand-htb/30 rounded-xl shadow-[0_0_30px_rgba(159,239,0,0.05)] relative overflow-hidden">
-                
-                    <!-- GRID SUPERIOR: MÉTRICAS + RADAR -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-                
-                        <!-- MÉTRICAS -->
-                        <div class="col-span-1 flex flex-col justify-center space-y-6">
-                            <div>
-                                <div class="text-4xl font-bold text-white">HACKER</div>
-                                <div class="text-xs text-brand-htb uppercase tracking-widest">Current HTB Rank</div>
-                            </div>
-                
-                            <div>
-                                <div class="text-4xl font-bold text-white">20+</div>
-                                <div class="text-xs text-brand-htb uppercase tracking-widest">Machines Pwned</div>
-                            </div>
-                
-                            <div>
-                                <div class="text-4xl font-bold text-white">AD / WEB</div>
-                                <div class="text-xs text-gray-500 uppercase tracking-widest">Primary Focus</div>
-                            </div>
-                        </div>
-                
-                        <!-- RADAR CHART -->
-                        <div class="col-span-2 bg-black/20 rounded-xl p-5 border border-white/5 relative">
-                            <canvas id="radarSkills"></canvas>
-                            <script>
-                                setTimeout(() => {
-                                    new Chart(document.getElementById('radarSkills'), {
-                                        type: 'radar',
-                                        data: {
-                                            labels: ['AD/Kerberos', 'Web Exploitation', 'Privilege Escalation', 'Post-Exploitation', 'Pivoting', 'Troubleshooting'],
-                                            datasets: [{
-                                                label: 'Skill Profile',
-                                                data: [95, 80, 85, 90, 75, 95],
-                                                backgroundColor: 'rgba(159, 239, 0, 0.15)',
-                                                borderColor: '#9fef00',
-                                                pointBackgroundColor: '#9fef00',
-                                                borderWidth: 2
-                                            }]
-                                        },
-                                        options: {
-                                            responsive: true,
-                                            scales: {
-                                                r: {
-                                                    angleLines: { color: 'rgba(255,255,255,0.1)' },
-                                                    grid: { color: 'rgba(255,255,255,0.1)' },
-                                                    pointLabels: { color: 'white', font: { size: 10 } },
-                                                    suggestedMin: 0,
-                                                    suggestedMax: 100
-                                                }
-                                            },
-                                            plugins: {
-                                                legend: { display: false }
-                                            }
-                                        }
-                                    });
-                                }, 500);
-                            </script>
+                <!-- HTB LINK -->
+                <a href="https://app.hackthebox.com/users/2807257" target="_blank"
+                    class="group flex items-center justify-between w-full p-4 bg-brand-htb/10 border border-brand-htb/20 rounded-lg hover:bg-brand-htb/20 transition-all">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-cube text-brand-htb text-xl"></i>
+                        <div>
+                            <div class="text-sm font-bold text-white">HackTheBox Profile & Methodology</div>
+                            <div class="text-[10px] text-gray-400">Verified Skills: ACLs, Pivoting (Ligolo-ng), MSSQL</div>
                         </div>
                     </div>
+                    <i class="fas fa-external-link-alt text-brand-htb group-hover:scale-110 transition"></i>
+                </a>
+            </div>
+
+            <!-- COL 2: RED TEAM INFRASTRUCTURE & PROTOCOL TOOLING -->
+            <div class="lg:col-span-1 space-y-6">
                 
-                    <!-- SECCIÓN DETALLADA DE TÉCNICAS -->
-                    <div class="space-y-8 mb-10">
-                
-                        <div>
-                            <h4 class="text-brand-htb text-sm font-bold uppercase mb-2 flex items-center gap-2">
-                                <i class="fab fa-windows"></i> Active Directory & Kerberos
-                            </h4>
-                            <ul class="text-sm text-gray-400 space-y-1">
-                                <li>• TGT/ST manipulation, AS-REP Roasting.</li>
-                                <li>• SPN Hijacking and constrained delegation (S4U2Self).</li>
-                                <li>• Abuse of service accounts, misconfigurations, weak ACLs.</li>
-                                <li>• Enumeration of LDAP, users, policies, tickets.</li>
-                                <li>• Impacket tooling: GetUserSPNs, Kerberoast, etc.</li>
-                            </ul>
-                        </div>
-                
-                        <div>
-                            <h4 class="text-brand-htb text-sm font-bold uppercase mb-2 flex items-center gap-2">
-                                <i class="fas fa-network-wired"></i> Red Teaming, Pivoting & Lateral Movement
-                            </h4>
-                            <ul class="text-sm text-gray-400 space-y-1">
-                                <li>• Manual exploitation (no Metasploit).</li>
-                                <li>• Ligolo-ng pivoting through internal networks.</li>
-                                <li>• MSSQL exploitation (xp_cmdshell, impersonation).</li>
-                                <li>• WinRM takeover & custom payloads.</li>
-                                <li>• Host reconnaissance & service profiling.</li>
-                            </ul>
-                        </div>
-                
-                        <div>
-                            <h4 class="text-brand-htb text-sm font-bold uppercase mb-2 flex items-center gap-2">
-                                <i class="fas fa-laptop-code"></i> Post-Exploitation & Privilege Escalation
-                            </h4>
-                            <ul class="text-sm text-gray-400 space-y-1">
-                                <li>• Credential extraction (LSA, SAM, Impacket, pass-the-hash).</li>
-                                <li>• Reverse shells (PS, Python, Bash) and session persistence.</li>
-                                <li>• Linux PrivEsc: capabilities, SUID, PATH hijacking, services.</li>
-                                <li>• Windows PrivEsc: vulnerable services, token abuse, service accounts.</li>
-                            </ul>
-                        </div>
-                
-                        <div>
-                            <h4 class="text-brand-htb text-sm font-bold uppercase mb-2 flex items-center gap-2">
-                                <i class="fas fa-bug"></i> Troubleshooting & Investigations
-                            </h4>
-                            <ul class="text-sm text-gray-400 space-y-1">
-                                <li>• Reconstruction of failed exploit paths.</li>
-                                <li>• Identification of clock skew & Kerberos ticket errors.</li>
-                                <li>• Analysis of real corporate misconfigurations.</li>
-                                <li>• Deep inspection of logs, permissions & policies.</li>
-                            </ul>
+                <!-- TITLE BLOCK -->
+                <div class="flex items-end border-b border-white/10 pb-4">
+                    <div>
+                        <div class="text-[10px] font-mono text-brand-gold uppercase tracking-widest mb-1">C2 Infrastructure & Code</div>
+                        <h3 class="text-2xl font-bold text-white">PROTOCOL-LEVEL TOOLING</h3>
+                    </div>
+                    <div class="ml-auto text-[10px] bg-brand-gold/10 px-2 py-1 rounded text-brand-gold border border-brand-gold/20">Python/Impacket/Cloud</div>
+                </div>
+
+                <!-- CORE COMPETENCIES (More formal) -->
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="text-white text-sm font-bold uppercase mb-2">
+                            Active Directory & Identity
+                        </h4>
+                        <ul class="text-xs text-gray-400 space-y-1 font-mono">
+                            <li class="flex items-start"><i class="fas fa-angle-right text-brand-htb mt-1 mr-2 text-[8px]"></i> Kerberos (TGT/ST, S4U2Self) and Misconfigured ACL Exploitation.</li>
+                            <li class="flex items-start"><i class="fas fa-angle-right text-brand-htb mt-1 mr-2 text-[8px]"></i> Credential Extraction and LSA Secrets via Impacket protocols.</li>
+                            <li class="flex items-start"><i class="fas fa-angle-right text-brand-htb mt-1 mr-2 text-[8px]"></i> Extensive use of LDAP, SMB, and RPC for low-level internal recon.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-white text-sm font-bold uppercase mb-2">
+                            Infrastructure & Post-Exploitation
+                        </h4>
+                        <ul class="text-xs text-gray-400 space-y-1 font-mono">
+                            <li class="flex items-start"><i class="fas fa-angle-right text-brand-gold mt-1 mr-2 text-[8px]"></i> Establishing tunnels: Pivoting using <span class="text-white">Ligolo-ng</span> and Chisel for C2 channel isolation.</li>
+                            <li class="flex items-start"><i class="fas fa-angle-right text-brand-gold mt-1 mr-2 text-[8px]"></i> Lateral Movement via WinRM, WMI, and token impersonation.</li>
+                            <li class="flex items-start"><i class="fas fa-angle-right text-brand-gold mt-1 mr-2 text-[8px]"></i> Linux Privilege Escalation via PATH hijacking, SUID, and capabilities.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Custom Tooling Description -->
+                <p class="text-sm text-gray-400 leading-relaxed border-t border-white/10 pt-4">
+                    Leveraging my background in <span class="text-brand-gold">production-grade development (Gemsy.es)</span> to create reliable, cloud-integrated offensive tools and automation agents that streamline reporting and complex operational workflows.
+                </p>
+
+                <!-- NEW: INTERACTIVE TERMINAL SIMULATION -->
+                <div class="bg-gray-900 rounded-lg border border-brand-htb/20 overflow-hidden shadow-2xl relative group">
+                    <div class="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-white/5">
+                        <span class="text-[10px] font-mono text-gray-400">natu@kali: ~$ Impacket Protocol Execution</span>
+                        <div class="flex gap-1">
+                            <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                            <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                            <div class="w-2 h-2 rounded-full bg-green-500"></div>
                         </div>
                     </div>
-                
-                    <!-- MINI TERMINAL ANIMADO -->
-                    <div class="bg-black/30 border border-black/40 rounded-lg p-4 font-mono text-xs text-brand-htb mb-6 overflow-hidden">
-                        <div id="terminalAnim"></div>
-                        <script>
-                            const terminalLines = [
-                                'nmap -sV -p- 10.10.11.150',
-                                '└─ Detected Windows Server + MSSQL',
-                                'python mssql_enum.py --auth windows',
-                                '└─ Found xp_cmdshell enabled',
-                                'xp_cmdshell whoami',
-                                '└─ nt authority\\system'
-                            ];
-                            let i = 0;
-                            function animTerm() {
-                                if (i < terminalLines.length) {
-                                    document.getElementById('terminalAnim').innerHTML += terminalLines[i] + '<br>';
-                                    i++;
-                                    setTimeout(animTerm, 600);
-                                }
-                            }
-                            animTerm();
-                        </script>
+                    
+                    <div class="p-4 overflow-x-auto relative z-10">
+                        <div id="terminal-output">
+                            <!-- Output will be generated here by JavaScript -->
+                        </div>
                     </div>
-                
-                    <!-- MÁQUINAS RESUELTAS -->
-                    <div class="text-xs font-mono text-gray-400 mb-6">
-                        <span class="text-brand-htb font-bold">PWNED:</span>
-                        Gavel · MonitorsFour · Editor · Eighteen · Previous · DarkZero · HackNet · Giveback · Outbound
+                </div>
+
+                <!-- STATS GRID -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-white/5 p-3 rounded border border-white/5">
+                        <div class="text-xs text-gray-500 font-mono mb-1">ENGINEERING CORE</div>
+                        <div class="text-xl font-bold text-white">PYTHON / CLOUD</div>
                     </div>
-                
-                    <!-- BOTÓN -->
-                    <a href="https://app.hackthebox.com/users/2807257" target="_blank"
-                       class="w-full block text-center py-3 bg-brand-htb/10 border border-brand-htb/50 text-brand-htb rounded hover:bg-brand-htb hover:text-black transition font-bold uppercase text-sm">
-                        View HTB Profile
-                    </a>
+                    <div class="bg-white/5 p-3 rounded border border-white/5">
+                        <div class="text-xs text-gray-500 font-mono mb-1">AD RATING</div>
+                        <div class="text-xl font-bold text-white">EXPERT <span class="text-brand-red text-sm">Kerb/ACL</span></div>
+                    </div>
                 </div>
             </div>
 
@@ -621,7 +609,7 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                 </div>
 
                 <div class="flex gap-4 mt-4">
-                     <a href="./david-rodriguez-cyber-en.pdf" download class="text-sm text-gray-500 hover:text-white underline decoration-dotted">
+                    <a href="./david-rodriguez-cyber-en.pdf" download class="text-sm text-gray-500 hover:text-white underline decoration-dotted">
                         Download CV (English)
                     </a>
                     <span class="text-gray-600">|</span>
@@ -652,29 +640,98 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
 
 <!-- JAVASCRIPT -->
 <script>
-    // --- TYPEWRITER ---
+    // Activate syntax highlighting
+    hljs.highlightAll();
+
+    // --- TYPEWRITER (HERO SECTION) ---
     const words = ["Active Directory Attacks", "Python Automation", "Cloud Engineering", "Red Teaming"];
-    let i = 0;
+    let wordIndex = 0;
     
     function typeWriter() {
         const heading = document.getElementById("typewriter");
-        const word = words[i];
-        let n = 0;
+        const word = words[wordIndex];
+        let charIdx = 0;
         heading.innerHTML = "";
         
         let typeInterval = setInterval(() => {
-            heading.innerHTML += word.charAt(n);
-            n++;
-            if (n >= word.length) {
+            heading.innerHTML += word.charAt(charIdx);
+            charIdx++;
+            if (charIdx >= word.length) {
                 clearInterval(typeInterval);
                 setTimeout(() => {
-                    i = (i + 1) % words.length;
+                    wordIndex = (wordIndex + 1) % words.length;
                     typeWriter();
                 }, 2000);
             }
         }, 100);
     }
     document.addEventListener("DOMContentLoaded", typeWriter);
+
+    // --- TERMINAL SIMULATION (CYBER SECTION) ---
+    const terminalOutput = document.getElementById('terminal-output');
+    // NOTE: Prompt changed from c2_agent@kali to natu@kali
+    const terminalCommands = [
+        { cmd: "klist", type: "cmd", delay: 1500, output: "<span class='output-success'>Cached Tickets: 1 (TGT for user@DOMAIN.LOCAL)</span>" },
+        { cmd: "python3 asreproast.py -domain DOMAIN.LOCAL -target TARGET_USER", type: "cmd", delay: 2500, output: "<span class='output-success'>[*] Hash extracted: $krb5asrep$23$...$TARGET_HASH</span>" },
+        { cmd: "impacket-getST -spn 'HTTP/DC01.DOMAIN.LOCAL' -hashes :TARGET_HASH DOMAIN.LOCAL/USER:TARGET_PASS", type: "cmd", delay: 3000, output: "<span class='output-success'>[*] Ticket granted for 'HTTP/DC01' (Silver Ticket). Exported to /tmp/DC01.ccache</span>" },
+        { cmd: "export KRB5CCNAME=/tmp/DC01.ccache", type: "cmd", delay: 1000, output: "<span class='output-success'>[+] Pivoting to internal network via Ligolo-ng channel...</span>" },
+        { cmd: "impacket-psexec DOMAIN/USER@DC01.DOMAIN.LOCAL -k -no-pass", type: "cmd", delay: 2000, output: "<span class='output-success'>[+] CMD session established on DC01. Access granted.</span>" },
+        { cmd: "secretsdump.py -no-pass -k 'DC01.DOMAIN.LOCAL'", type: "cmd", delay: 2500, output: "<span class='output-success'>[+] Administrator NTLM hash: <span class='text-brand-gold'>AAD3B435...</span>. DOMAIN DOMINATION COMPLETE.</span>" },
+    ];
+    let commandIndex = 0;
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function typeTerminal() {
+        if (commandIndex >= terminalCommands.length) {
+            commandIndex = 0; // Loop the sequence
+            terminalOutput.innerHTML = ""; // Clear for restart
+            await sleep(3000);
+        }
+
+        const current = terminalCommands[commandIndex];
+        // NOTE: Prompt changed to natu@kali
+        const promptText = "<span class='prompt'>natu@kali:~$ </span>";
+        
+        // Add current line wrapper
+        const lineElement = document.createElement('div');
+        lineElement.classList.add('terminal-line');
+        lineElement.innerHTML = promptText + "<span id='typing-cmd-" + commandIndex + "' class='command'></span><span class='terminal-cursor'></span>";
+        terminalOutput.appendChild(lineElement);
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
+        const cmdElement = document.getElementById('typing-cmd-' + commandIndex);
+        const cursorElement = lineElement.querySelector('.terminal-cursor');
+        
+        for (let i = 0; i < current.cmd.length; i++) {
+            cmdElement.textContent += current.cmd.charAt(i);
+            await sleep(50); // Typing speed
+        }
+
+        // Wait for execution delay
+        cursorElement.style.animation = 'none'; // Stop blinking while waiting
+        await sleep(current.delay);
+
+        // Remove cursor and add output
+        cursorElement.remove();
+        
+        const outputElement = document.createElement('div');
+        outputElement.classList.add('terminal-line');
+        outputElement.innerHTML = current.output;
+        terminalOutput.appendChild(outputElement);
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
+        commandIndex++;
+        await sleep(2000); // Pause before next command
+        typeTerminal();
+    }
+    
+    // --- GRAPH INTERACTIVITY (REMOVED) ---
+    // Removed all graph-related JS functions (stepMap, highlightGraph)
+    // and removed event listeners as the HTML elements are gone.
+
 
     // --- THEME ---
     function setTheme(mode) {
@@ -683,17 +740,6 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
         if (mode === 'white') document.body.classList.add('white-theme');
         if (mode === 'dark')  document.body.classList.add('dark-theme');
     }
-
-    // --- RADAR CHART ---
-    // Note: I removed the chart as per the 'serious' instruction to focus on text data and removed arbitrary percentages, 
-    // but if you prefer the chart with adjusted data, I can restore it. 
-    // The previous instruction implied the chart itself felt fake. I focused on the textual representation above.
-    // However, to keep the visual balance, I will re-init it with the serious data if needed.
-    // For now, let's keep the code block but effectively disabled or clean if the HTML structure above removed the canvas.
-    // Actually, looking at the Cyber section above, I removed the right column with the chart to make it more serious/focused on the text stats.
-    
-    // If you want the chart back with specific 'realistic' numbers, let me know. 
-    // For now, the JS for the scroll engine remains.
 
     // --- SCROLL ENGINE ---
     let virtualScroll = 0;
@@ -774,6 +820,18 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
     function toggleMenu() {
         document.getElementById("mobile-menu").classList.toggle("hidden");
     }
+
+    // Start terminal simulation when DOM is ready
+    document.addEventListener("DOMContentLoaded", () => {
+        // Only start terminal simulation if we're on the cyber slide (index 3) or near it on load
+        if (Math.round(virtualScroll / 100) === 3) {
+            typeTerminal();
+        } else {
+            // Optional: Start typing when user reaches the slide 
+            // (Requires adjusting scroll logic, but we'll stick to a simple start for now)
+            typeTerminal();
+        }
+    });
 </script>
 </body>
 </html>

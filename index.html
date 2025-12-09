@@ -53,7 +53,7 @@ html, body {
     height:100%; width:100%;
     overflow:hidden;
     background:#050505; color:white;
-    touch-action:none; /* Prevent native scroll on mobile to handle it via JS */
+    touch-action:none;
     transition: background 0.5s ease, color 0.5s ease;
 }
 
@@ -65,7 +65,7 @@ html, body {
     display:flex;
     align-items:center; justify-content:center;
     will-change:transform, opacity, clip-path;
-    padding-top:80px; /* Offset for Navbar */
+    padding-top:80px;
 }
 
 /* Default Dark Layer Styles */
@@ -127,7 +127,6 @@ body.white-theme {
     background:#f8f9fa !important; 
     color:#1a1a1a !important; 
 }
-/* Force text colors in White Theme */
 body.white-theme .text-white { color:#111 !important; }
 body.white-theme .text-gray-300 { color:#333 !important; }
 body.white-theme .text-gray-400 { color:#555 !important; }
@@ -136,7 +135,6 @@ body.white-theme .border-white\/10 { border-color: rgba(0,0,0,0.1) !important; }
 body.white-theme .bg-white\/5 { background-color: rgba(0,0,0,0.05) !important; }
 body.white-theme .mix-blend-difference { mix-blend-mode: normal !important; color: #000 !important; }
 
-/* White Theme Cards */
 body.white-theme .glass-card {
     background: #ffffff !important;
     border: 1px solid #e5e7eb !important;
@@ -147,38 +145,29 @@ body.white-theme .glass-card:hover {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* White Theme Layers */
 body.white-theme #layer-hero { background: #f8f9fa; }
 body.white-theme #layer-gemsy { background: #ffffff; }
 body.white-theme #layer-track { background: #f3f4f6; }
 body.white-theme #layer-cyber { background: #ffffff; }
 body.white-theme #layer-contact { background: #f8f9fa; }
-
-/* White Theme Dots */
 body.white-theme .nav-dot { background: #ccc; }
 body.white-theme .nav-dot.active { background: #fbbf24; }
 
 </style>
 </head>
 
-<!-- Default Class -->
 <body class="htb-theme">
 
 <!-- NAVIGATION -->
 <nav class="fixed w-full z-[100] top-0 left-0 p-6 md:p-8 text-white mix-blend-difference">
     <div class="max-w-[1800px] mx-auto flex justify-between items-center">
-        <!-- Logo -->
         <div class="text-2xl font-mono font-bold cursor-pointer flex items-center gap-2 group" onclick="scrollToSlide(0)">
             <span>NATU</span>
             <span class="w-2 h-2 rounded-full bg-brand-gold group-hover:animate-ping"></span>
         </div>
-        
-        <!-- Desktop Hint -->
         <div class="hidden md:flex gap-8 text-xs font-bold tracking-widest uppercase opacity-70">
             Scroll to Navigate
         </div>
-        
-        <!-- Mobile Menu Button -->
         <button onclick="toggleMenu()" class="md:hidden text-2xl z-[201]">
             <i class="fas fa-bars"></i>
         </button>
@@ -194,7 +183,7 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
     <div class="nav-dot" onclick="scrollToSlide(4)"></div>
 </div>
 
-<!-- THEME SWITCHER (Fixed Bottom Right) -->
+<!-- THEME SWITCHER -->
 <div class="fixed bottom-6 right-6 z-[200] flex flex-col gap-2">
     <button onclick="setTheme('htb')"   class="px-3 py-2 text-xs font-mono bg-black/80 border border-brand-htb text-brand-htb rounded hover:bg-brand-htb hover:text-black transition">HTB</button>
     <button onclick="setTheme('dark')"  class="px-3 py-2 text-xs font-mono bg-gray-900 border border-gray-700 text-gray-200 rounded hover:bg-white hover:text-black transition">Dark</button>
@@ -206,16 +195,11 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
 
     <!-- LAYER 1: HERO -->
     <section id="layer-hero" class="section-layer">
-        <!-- Noise Texture -->
         <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none"></div>
-        <!-- Animated Blob -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-brand-blue/10 rounded-full blur-[120px] animate-blob pointer-events-none"></div>
 
         <div class="max-w-7xl w-full px-6 grid lg:grid-cols-12 gap-12 items-center relative z-10">
-
-            <!-- TEXT CONTENT -->
             <div class="lg:col-span-8 order-2 lg:order-1">
-                <!-- Status Badge -->
                 <div class="inline-flex items-center px-3 py-1 mb-6 rounded-full border border-white/10 bg-white/5 backdrop-blur">
                     <span class="relative flex h-2 w-2 mr-3">
                         <span class="animate-ping absolute h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -238,52 +222,49 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                 </div>
 
                 <p class="text-lg text-gray-300 max-w-xl mb-8 leading-relaxed">
-                    Specialized in <strong>Active Directory attacks</strong>, 
+                    Specialized in <strong>Active Directory attacks</strong> (Kerberos/SPN), 
                     <strong>Red Team Infrastructure</strong>, and <strong>Automated Data Pipelines</strong>. 
-                    I build systems to break them, and break systems to build them better.
+                    Reconstructing broken exploit paths and building production-grade tools.
                 </p>
 
                 <!-- Tags -->
                 <div class="flex flex-wrap gap-3 mb-8 text-xs font-mono text-gray-400">
-                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5">ACTIVE DIRECTORY</span>
-                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5">KERBEROS</span>
-                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5">IMPACKET</span>
-                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5">GCP / CLOUD</span>
+                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fab fa-windows"></i> AD ATTACKS</span>
+                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fas fa-ticket-alt"></i> KERBEROS</span>
+                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fab fa-python"></i> PYTHON</span>
+                    <span class="px-2 py-1 border border-white/10 rounded bg-white/5"><i class="fab fa-google"></i> CLOUD</span>
                 </div>
 
-                <!-- CTAs -->
+                <!-- CTAs with BOTH CVs -->
                 <div class="flex flex-wrap gap-4">
-                    <button onclick="scrollToSlide(1)" class="px-8 py-3 bg-white text-black font-bold rounded hover:bg-gray-200 transition flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                    <button onclick="scrollToSlide(1)" class="px-6 py-3 bg-white text-black font-bold rounded hover:bg-gray-200 transition flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                         Explore Work <i class="fas fa-arrow-down"></i>
                     </button>
-                    <a href="#" class="px-6 py-3 border border-white/20 text-sm font-bold rounded hover:bg-white hover:text-black transition flex items-center gap-2">
-                        <i class="fas fa-file-pdf"></i> Resume (CV)
+                    <a href="./Resume Cyber David Rodriguez EN.pdf" download class="px-5 py-3 border border-white/20 text-sm font-bold rounded hover:bg-white hover:text-black transition flex items-center gap-2">
+                        <i class="fas fa-file-pdf"></i> CV (EN)
+                    </a>
+                    <a href="./DavidRodriguez-CV-ES.pdf" download class="px-5 py-3 border border-white/20 text-sm font-bold rounded hover:bg-white hover:text-black transition flex items-center gap-2">
+                        <i class="fas fa-file-pdf"></i> CV (ES)
                     </a>
                 </div>
             </div>
 
-            <!-- HERO IMAGE (NATU.PNG) -->
+            <!-- HERO IMAGE -->
             <div class="lg:col-span-4 order-1 lg:order-2 flex justify-center lg:justify-end mb-8 lg:mb-0">
                 <div class="relative w-72 h-72 lg:w-96 lg:h-96 group">
-                    <!-- Spinning Rings -->
                     <div class="absolute inset-0 border border-brand-gold/20 rounded-full animate-spin-slow"></div>
                     <div class="absolute inset-4 border border-brand-blue/20 rounded-full animate-spin-slow" style="animation-direction:reverse; animation-duration:20s"></div>
-                    
-                    <!-- Main Image with Fallback -->
                     <div class="absolute inset-8 rounded-full border-2 border-white/10 shadow-2xl overflow-hidden z-20 bg-[#0a0a0a]">
-                        <img src="./natu.png" 
+                        <img src="./natu.jpg" 
                              onerror="this.src='https://ui-avatars.com/api/?name=N+A&background=000&color=fff&size=512'"
                              class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-500">
                     </div>
-
-                    <!-- Badge -->
                     <div class="absolute bottom-10 -left-4 z-30 bg-black/80 backdrop-blur border border-white/20 px-4 py-2 rounded-lg glass-card animate-bounce" style="animation-duration: 3s;">
-                        <div class="text-[10px] text-gray-400 uppercase tracking-widest">HackTheBox</div>
-                        <div class="text-xl font-bold text-brand-htb">TOP 1%</div>
+                        <div class="text-[10px] text-gray-400 uppercase tracking-widest">Techniques</div>
+                        <div class="text-xl font-bold text-brand-htb">MANUAL</div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -297,25 +278,28 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                     <i class="fas fa-star"></i> FLAGSHIP PROJECT
                 </div>
 
+                <!-- ADDED GEMSY LOGO -->
+                <img src="./GEMSYLOGO1.png" class="h-16 w-auto mb-4 object-contain opacity-90" alt="Gemsy Logo">
+
                 <h2 class="text-5xl md:text-7xl font-bold text-white mb-6">
                     GEMSY<span class="text-brand-gold">.ES</span>
                 </h2>
 
                 <p class="text-lg text-gray-300 leading-relaxed mb-6 border-l-4 border-brand-gold pl-6">
-                    A professional scouting platform used by real analysts. 
-                    Orchestrated with <strong>massive scraping pipelines</strong>, <strong>data-engineering workflows</strong>, 
-                    and complete <strong>Google Cloud</strong> deployment.
+                    A professional SaaS platform used by football scouts worldwide.
+                    Combines <strong>large-scale scraping pipelines</strong> (Transfermarkt) with <strong>AI-driven analysis</strong> 
+                    to evaluate players automatically.
                 </p>
 
                 <!-- Feature Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                     <div class="glass-card p-5 rounded-lg">
-                        <div class="text-brand-gold font-bold mb-2 text-sm"><i class="fas fa-spider mr-2"></i> Industrial Scraping</div>
-                        <p class="text-xs text-gray-400">Playwright + BS4 pipelines. Handling captcha evasion, rotating proxies, and 1M+ rows/day.</p>
+                        <div class="text-brand-gold font-bold mb-2 text-sm"><i class="fas fa-spider mr-2"></i> Massive Scraping</div>
+                        <p class="text-xs text-gray-400">24–72h continuous extraction pipelines using Playwright + BS4. Automatic normalization and cleaning.</p>
                     </div>
                     <div class="glass-card p-5 rounded-lg">
-                        <div class="text-brand-blue font-bold mb-2 text-sm"><i class="fas fa-server mr-2"></i> Cloud Architecture</div>
-                        <p class="text-xs text-gray-400">GCP App Engine, Cloud SQL, Firestore for real-time sync, and CI/CD via GitHub Actions.</p>
+                        <div class="text-brand-blue font-bold mb-2 text-sm"><i class="fas fa-microchip mr-2"></i> AI Integration</div>
+                        <p class="text-xs text-gray-400">GPT integration for semantic filtering and intelligent player reports based on raw data.</p>
                     </div>
                 </div>
 
@@ -331,25 +315,25 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
             <div class="lg:col-span-5 space-y-5">
                 <!-- Automation -->
                 <div class="glass-card p-6 rounded-xl border-l-4 border-l-green-500 hover:scale-105 transition-transform">
-                    <h3 class="text-xl font-bold text-white mb-2"><i class="fab fa-python text-green-500 mr-2"></i> Operational Bots</h3>
+                    <h3 class="text-xl font-bold text-white mb-2"><i class="fab fa-python text-green-500 mr-2"></i> Offensive Automation</h3>
                     <p class="text-sm text-gray-400 mb-3">
-                        Autonomous WhatsApp Business bots & Google Workspace integrations (Sheets/Drive) built in Python to remove 20+ hours of manual labor per week.
+                        Developing internal pipeline orchestration, cloud-triggered tools, and automated report generation bots (WhatsApp/Telegram).
                     </p>
                     <div class="flex gap-2">
-                        <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">Meta API</span>
-                        <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">Flask</span>
+                        <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">Agents</span>
+                        <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">APIs</span>
                     </div>
                 </div>
 
-                <!-- Web Performance -->
+                <!-- Cloud -->
                 <div class="glass-card p-6 rounded-xl border-l-4 border-l-purple-500 hover:scale-105 transition-transform">
-                    <h3 class="text-xl font-bold text-white mb-2"><i class="fas fa-tachometer-alt text-purple-500 mr-2"></i> Performance Eng.</h3>
+                    <h3 class="text-xl font-bold text-white mb-2"><i class="fas fa-cloud text-purple-500 mr-2"></i> Cloud Engineering</h3>
                     <p class="text-sm text-gray-400 mb-3">
-                        Optimization of high-traffic web assets. Reduced First Contentful Paint (FCP) by 40% via image optimization and caching strategies.
+                        Google Cloud architecture (App Engine, Cloud SQL, Firestore) with Dockerized environments and automated deployment workflows.
                     </p>
                     <div class="flex gap-2">
-                        <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">Lighthouse</span>
-                        <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">SEO</span>
+                        <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">GCP</span>
+                        <span class="text-[10px] bg-white/5 px-2 py-1 rounded text-gray-300">Docker</span>
                     </div>
                 </div>
             </div>
@@ -371,44 +355,44 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                 <div class="glass-card p-6 rounded-lg border-t-2 border-t-brand-gold relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-3 opacity-10"><i class="fas fa-crown text-4xl"></i></div>
                     <div class="flex justify-between items-start mb-3">
-                        <span class="text-brand-gold font-bold text-lg">FOUNDER & DEV</span>
+                        <span class="text-brand-gold font-bold text-lg">CREATOR & DEV</span>
                         <span class="text-[10px] font-mono bg-white/10 px-2 py-1 rounded">2025-PRES</span>
                     </div>
                     <p class="text-xs text-gray-400 uppercase tracking-wider mb-2 font-bold">GEMSY.ES</p>
-                    <p class="text-sm text-gray-500">Full-Stack dev & Product Lead. From bare-metal code to cloud deployment.</p>
+                    <p class="text-sm text-gray-500">Founder. Created the entire system: Scraping pipelines, AI core, and Cloud infra.</p>
                 </div>
 
                 <!-- DRSCOUT -->
                 <div class="glass-card p-6 rounded-lg border-t-2 border-t-white">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="text-white font-bold text-lg">WEB ENGINEER</span>
+                        <span class="text-white font-bold text-lg">WEB DEVELOPER</span>
                         <span class="text-[10px] font-mono bg-white/10 px-2 py-1 rounded">2024-PRES</span>
                     </div>
                     <p class="text-xs text-gray-400 uppercase tracking-wider mb-2 font-bold">DRSCOUT.ES</p>
-                    <p class="text-sm text-gray-500">Frontend architecture and technical SEO optimization.</p>
+                    <p class="text-sm text-gray-500">Performance optimization, SEO improvements, and technical automation.</p>
                 </div>
 
                 <!-- EDUCATION -->
                 <div class="glass-card p-6 rounded-lg border-t-2 border-t-brand-htb bg-brand-htb/5">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="text-brand-htb font-bold text-lg">CERTIFICATIONS</span>
+                        <span class="text-brand-htb font-bold text-lg">EDUCATION</span>
                         <i class="fas fa-graduation-cap text-brand-htb"></i>
                     </div>
                     <ul class="text-sm text-gray-400 space-y-2">
-                        <li><i class="fas fa-check text-brand-htb text-xs mr-2"></i> HackTheBox (Hacker Rank)</li>
-                        <li><i class="fas fa-check text-brand-htb text-xs mr-2"></i> Google Cybersecurity Cert (WIP)</li>
-                        <li><i class="fas fa-check text-brand-htb text-xs mr-2"></i> Continuous Self-Learning</li>
+                        <li><i class="fas fa-check text-brand-htb text-xs mr-2"></i> Cybersecurity in Enterprise (2025)</li>
+                        <li><i class="fas fa-check text-brand-htb text-xs mr-2"></i> High School Diploma (2021)</li>
+                        <li><i class="fas fa-check text-brand-htb text-xs mr-2"></i> Self-Taught (OffSec/Cloud)</li>
                     </ul>
                 </div>
 
                 <!-- ENERGY -->
                 <div class="glass-card p-6 rounded-lg border-t-2 border-t-gray-500">
                     <div class="flex justify-between items-start mb-3">
-                        <span class="text-gray-300 font-bold text-lg">TECH SUPPORT</span>
+                        <span class="text-gray-300 font-bold text-lg">TECH AGENT</span>
                         <span class="text-[10px] font-mono bg-white/10 px-2 py-1 rounded">2025</span>
                     </div>
                     <p class="text-xs text-gray-400 uppercase tracking-wider mb-2 font-bold">ENERGY SECTOR</p>
-                    <p class="text-sm text-gray-500">Tier 2 Technical troubleshooting and CRM management.</p>
+                    <p class="text-sm text-gray-500">Tier 2 Technical troubleshooting and complex case resolution.</p>
                 </div>
 
                 <!-- F10 -->
@@ -418,7 +402,7 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                         <span class="text-[10px] font-mono bg-white/10 px-2 py-1 rounded">2023-25</span>
                     </div>
                     <p class="text-xs text-gray-400 uppercase tracking-wider mb-2 font-bold">F10 SCOUT</p>
-                    <p class="text-sm text-gray-500">Statistical validation and talent identification using data models.</p>
+                    <p class="text-sm text-gray-500">Statistical validation and talent identification.</p>
                 </div>
 
                 <!-- MENSAJERO -->
@@ -428,7 +412,7 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                         <span class="text-[10px] font-mono bg-white/10 px-2 py-1 rounded">2022-25</span>
                     </div>
                     <p class="text-xs text-gray-400 uppercase tracking-wider mb-2 font-bold">CD MENSAJERO</p>
-                    <p class="text-sm text-gray-500">Department coordination and player database management.</p>
+                    <p class="text-sm text-gray-500">Department coordination and database management.</p>
                 </div>
 
             </div>
@@ -454,11 +438,11 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                     
                     <div class="flex gap-8 mb-8 border-b border-white/5 pb-6">
                         <div>
-                            <div class="text-5xl font-bold">20+</div>
-                            <div class="text-xs text-brand-htb uppercase tracking-widest mt-1">HTB Machines</div>
+                            <div class="text-4xl font-bold">TOP 1%</div>
+                            <div class="text-xs text-brand-htb uppercase tracking-widest mt-1">HTB Rank</div>
                         </div>
                         <div>
-                            <div class="text-5xl font-bold">WEB</div>
+                            <div class="text-4xl font-bold">AD/WEB</div>
                             <div class="text-xs text-gray-500 uppercase tracking-widest mt-1">Focus</div>
                         </div>
                     </div>
@@ -466,22 +450,32 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                     <div class="space-y-6 mb-8">
                         <div>
                             <h4 class="text-brand-htb text-sm font-bold uppercase mb-1 flex items-center gap-2">
-                                <i class="fas fa-search"></i> Enumeration
+                                <i class="fab fa-windows"></i> Active Directory & Kerberos
                             </h4>
-                            <p class="text-sm text-gray-400">Advanced fingerprinting. Nmap scripting, Ffuf directory fuzzing, and VHost discovery.</p>
+                            <p class="text-sm text-gray-400">
+                                Kerberos TGT/ST manipulation, AS-REP Roasting, SPN Hijacking, S4U2Self abuse, and ACL exploitation.
+                            </p>
                         </div>
                         <div>
                             <h4 class="text-brand-htb text-sm font-bold uppercase mb-1 flex items-center gap-2">
-                                <i class="fas fa-bomb"></i> Exploitation
+                                <i class="fas fa-network-wired"></i> Red Teaming & Pivoting
                             </h4>
-                            <p class="text-sm text-gray-400">SQL Injection (Manual & Automated), LFI/RFI chains, Server-Side Template Injection (SSTI).</p>
+                            <p class="text-sm text-gray-400">
+                                Ligolo-ng pivoting, Manual exploitation (no Metasploit), MSSQL (xp_cmdshell), and WinRM takeover.
+                            </p>
                         </div>
                         <div>
                             <h4 class="text-brand-htb text-sm font-bold uppercase mb-1 flex items-center gap-2">
-                                <i class="fas fa-user-secret"></i> Post-Exploitation
+                                <i class="fas fa-laptop-code"></i> Post-Exploitation
                             </h4>
-                            <p class="text-sm text-gray-400">Windows PrivEsc (Kernel, Service abuse), Linux Capability abuse, Active Directory Lateral Movement.</p>
+                            <p class="text-sm text-gray-400">
+                                Credential extraction (Impacket), Service analysis, Reverse shells (Python/PS), and Linux Capabilities/SUID.
+                            </p>
                         </div>
+                    </div>
+
+                    <div class="text-xs font-mono text-gray-500 mb-4">
+                        <span class="text-brand-htb">PWNED:</span> Gavel · MonitorsFour · Editor · Eighteen · Previous · DarkZero · HackNet
                     </div>
 
                     <a href="https://app.hackthebox.com/users/2807257" target="_blank"
@@ -518,7 +512,7 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
 
             <p class="text-gray-400 text-xl md:text-2xl mb-12 font-light">
                 Open to opportunities in <strong>Penetration Testing</strong>, 
-                <strong>Python Automation</strong>, or <strong>Systems Engineering</strong>.
+                <strong>Red Teaming</strong>, or <strong>Systems Engineering</strong>.
             </p>
 
             <div class="flex flex-col items-center gap-6 mb-16">
@@ -528,16 +522,21 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                         <i class="fas fa-envelope"></i> Contact Me
                     </a>
 
-                    <a href="https://linkedin.com/in/david-rodriguez-ramirez-7738241ab" target="_blank"
+                    <a href="https://linkedin.com/in/davidrscout" target="_blank"
                        class="px-10 py-5 border border-white/20 text-white font-bold rounded hover:bg-white hover:text-black transition-all text-lg flex items-center justify-center gap-2 min-w-[250px]">
                         <i class="fab fa-linkedin"></i> LinkedIn
                     </a>
                 </div>
 
-                <a href="./DavidRodriguez-CV-2025-EN.pdf" download
-                   class="text-sm text-gray-500 hover:text-white underline decoration-dotted mt-4">
-                    Download Full Resume (PDF)
-                </a>
+                <div class="flex gap-4 mt-4">
+                     <a href="./Resume Cyber David Rodriguez EN.pdf" download class="text-sm text-gray-500 hover:text-white underline decoration-dotted">
+                        Download CV (English)
+                    </a>
+                    <span class="text-gray-600">|</span>
+                    <a href="./DavidRodriguez-CV-ES.pdf" download class="text-sm text-gray-500 hover:text-white underline decoration-dotted">
+                        Descargar CV (Español)
+                    </a>
+                </div>
             </div>
 
             <div class="text-xs text-gray-600 font-mono">
@@ -548,7 +547,7 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
 
 </main>
 
-<!-- MOBILE MENU OVERLAY -->
+<!-- MOBILE MENU -->
 <div id="mobile-menu" 
      class="hidden fixed inset-0 bg-black/95 z-[200] flex flex-col items-center justify-center space-y-8 backdrop-blur-xl transition-opacity duration-300">
     <button onclick="toggleMenu()" class="absolute top-6 right-6 text-white text-4xl">&times;</button>
@@ -559,21 +558,16 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
     <div onclick="toggleMenu(); scrollToSlide(4)" class="text-3xl font-bold text-brand-gold cursor-pointer">Contact</div>
 </div>
 
-<!-- ============================================== -->
-<!--                  JAVASCRIPT                    -->
-<!-- ============================================== -->
+<!-- JAVASCRIPT -->
 <script>
-    // --- TYPEWRITER EFFECT ---
-    const words = ["Pentester", "Systems Engineer", "Cloud Architect", "Automation Expert"];
+    // --- TYPEWRITER ---
+    const words = ["Active Directory Attacks", "Python Automation", "Cloud Engineering", "Red Teaming"];
     let i = 0;
-    let timer;
-
+    
     function typeWriter() {
         const heading = document.getElementById("typewriter");
         const word = words[i];
         let n = 0;
-        
-        // Clear previous
         heading.innerHTML = "";
         
         let typeInterval = setInterval(() => {
@@ -582,7 +576,6 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
             if (n >= word.length) {
                 clearInterval(typeInterval);
                 setTimeout(() => {
-                    // Delete effect could go here, for now we just clear and swap
                     i = (i + 1) % words.length;
                     typeWriter();
                 }, 2000);
@@ -591,25 +584,23 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
     }
     document.addEventListener("DOMContentLoaded", typeWriter);
 
-
-    // --- THEME LOGIC ---
+    // --- THEME ---
     function setTheme(mode) {
-        document.body.className = ''; // Clear all
+        document.body.className = '';
         if (mode === 'htb')   document.body.classList.add('htb-theme');
         if (mode === 'white') document.body.classList.add('white-theme');
-        if (mode === 'dark')  document.body.classList.add('dark-theme'); // Default style handled by CSS reset
+        if (mode === 'dark')  document.body.classList.add('dark-theme');
     }
-
 
     // --- RADAR CHART ---
     const ctx = document.getElementById("skillsRadar");
     new Chart(ctx, {
         type: "radar",
         data: {
-            labels: ["Enumeration", "Web Exploitation", "Privilege Esc", "Python", "Cloud Arch", "Data Eng"],
+            labels: ["AD/Kerberos", "Web Exploitation", "Privilege Esc", "Python/Dev", "Cloud/GCP", "Pivoting"],
             datasets: [{
                 label: "Skill Level",
-                data: [85, 80, 75, 90, 70, 65],
+                data: [90, 85, 80, 95, 75, 85],
                 borderColor: "#9fef00",
                 backgroundColor: "rgba(159, 239, 0, 0.2)",
                 borderWidth: 2,
@@ -622,7 +613,7 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
                     angleLines: { color: 'rgba(255,255,255,0.1)' },
                     grid: { color: 'rgba(255,255,255,0.1)' },
                     pointLabels: { color: '#999', font: { size: 10, family: 'Space Grotesk' } },
-                    ticks: { display: false, backdropColor: 'transparent' },
+                    ticks: { display: false, backdropColor: 'transparent', max: 100 },
                     suggestedMin: 0,
                     suggestedMax: 100
                 }
@@ -632,75 +623,65 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
         }
     });
 
-
     // --- SCROLL ENGINE ---
     let virtualScroll = 0;
     let targetScroll = 0;
-    const speed = 0.08; // Smoother
+    const speed = 0.08;
 
-    const heroL = document.getElementById("layer-hero");
-    const gemsyL = document.getElementById("layer-gemsy");
+    const layers = [
+        document.getElementById("layer-hero"),
+        document.getElementById("layer-gemsy"),
+        document.getElementById("layer-track"),
+        document.getElementById("layer-cyber"),
+        document.getElementById("layer-contact")
+    ];
     const trackL = document.getElementById("layer-track");
     const cyberL = document.getElementById("layer-cyber");
-    const contactL = document.getElementById("layer-contact");
     const dots = document.querySelectorAll(".nav-dot");
 
     function animateScroll() {
         virtualScroll += (targetScroll - virtualScroll) * speed;
-        
-        // Clamp
         virtualScroll = Math.max(0, Math.min(400, virtualScroll));
         
         const p1 = Math.max(0, virtualScroll / 100);
 
-        // LAYER 1 -> 2
         if (virtualScroll <= 100) {
             let op = 1 - (p1 * 1.5);
-            heroL.style.opacity = op > 0 ? op : 0;
-            heroL.style.transform = `scale(${1 - p1 * 0.1})`;
-            heroL.style.filter = `blur(${p1 * 10}px)`;
+            layers[0].style.opacity = op > 0 ? op : 0;
+            layers[0].style.transform = `scale(${1 - p1 * 0.1})`;
+            layers[0].style.filter = `blur(${p1 * 10}px)`;
             
             let y = (1 - p1) * 100;
-            gemsyL.style.transform = `translateY(${y}%)`;
-            gemsyL.style.opacity = 1;
-            
+            layers[1].style.transform = `translateY(${y}%)`;
+            layers[1].style.opacity = 1;
             trackL.style.clipPath = "circle(0% at 50% 50%)";
         } 
-        // LAYER 2 -> 3
         else if (virtualScroll <= 200) {
-            heroL.style.opacity = 0;
-            gemsyL.style.transform = "translateY(0%)";
-            
-            const p = (virtualScroll - 100) / 100; // 0 to 1
+            layers[0].style.opacity = 0;
+            layers[1].style.transform = "translateY(0%)";
+            const p = (virtualScroll - 100) / 100;
             trackL.style.clipPath = `circle(${p * 150}% at 50% 50%)`;
             cyberL.style.clipPath = "polygon(0 0, 100% 0, 100% 0, 0 0)";
         }
-        // LAYER 3 -> 4
         else if (virtualScroll <= 300) {
             trackL.style.clipPath = "circle(150% at 50% 50%)";
             const p = (virtualScroll - 200) / 100;
-            // Reveal cyber layer from top with slant
             cyberL.style.clipPath = `polygon(0 0, 100% 0, 100% ${p * 100}%, 0 ${p * 100 + 20}%)`;
-            contactL.style.transform = "translateY(100%)";
+            layers[4].style.transform = "translateY(100%)";
         }
-        // LAYER 4 -> 5
         else {
             cyberL.style.clipPath = "polygon(0 0, 100% 0, 100% 100%, 0 100%)";
             const p = (virtualScroll - 300) / 100;
-            contactL.style.transform = `translateY(${(1 - p) * 100}%)`;
+            layers[4].style.transform = `translateY(${(1 - p) * 100}%)`;
         }
 
-        // Update Dots
         let activeIndex = Math.round(virtualScroll / 100);
-        dots.forEach((dot, i) => {
-            dot.classList.toggle("active", i === activeIndex);
-        });
+        dots.forEach((dot, i) => dot.classList.toggle("active", i === activeIndex));
 
         requestAnimationFrame(animateScroll);
     }
     animateScroll();
 
-    // Event Listeners
     window.addEventListener("wheel", e => {
         targetScroll += e.deltaY * 0.15;
         targetScroll = Math.max(0, Math.min(400, targetScroll));
@@ -721,7 +702,6 @@ body.white-theme .nav-dot.active { background: #fbbf24; }
     function toggleMenu() {
         document.getElementById("mobile-menu").classList.toggle("hidden");
     }
-
 </script>
 </body>
 </html>

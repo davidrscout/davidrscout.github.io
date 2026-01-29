@@ -32,40 +32,182 @@
     </script>
 
     <style>
-        /* Estilos base (Mantenidos de tu versión original) */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { background-color: #050505; height: 100%; }
-        body { background-color: transparent; color: #e8e8e8; font-family: 'Archivo', sans-serif; overflow-x: hidden; min-height: 100vh; position: relative; }
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-        .content-layer { position: relative; z-index: 1; }
-        .frost { background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(12px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
-        .frost:hover { background: rgba(15, 15, 15, 0.90); border-color: rgba(20, 241, 149, 0.4); }
-        
-        /* Animaciones */
-        .glitch { position: relative; }
-        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8; }
-        .glitch::before { animation: glitch-1 2.5s infinite; color: #14f195; z-index: -1; }
-        .glitch::after { animation: glitch-2 2.5s infinite; color: #9945ff; z-index: -2; }
-        @keyframes glitch-1 { 0%, 100% { transform: translate(0); } 33% { transform: translate(-2px, 2px); } 66% { transform: translate(2px, -2px); } }
-        @keyframes glitch-2 { 0%, 100% { transform: translate(0); } 33% { transform: translate(2px, -2px); } 66% { transform: translate(-2px, 2px); } }
-        
-        .holo { background: linear-gradient(135deg, #14f195, #9945ff, #14f195); background-size: 200% 200%; animation: holo-shift 4s ease infinite; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        @keyframes holo-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-        
-        .fade-in { animation: fadeInUp 1s ease forwards; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* CONFIGURACIÓN CRÍTICA PARA EL FONDO */
+        html {
+            background-color: #050505;
+            height: 100%;
+        }
+
+        body {
+            background-color: transparent;
+            color: #e8e8e8;
+            font-family: 'Archivo', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Efecto vidrio esmerilado */
+        .frost {
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .frost:hover {
+            background: rgba(15, 15, 15, 0.90);
+            border-color: rgba(20, 241, 149, 0.4);
+            box-shadow: 0 0 20px rgba(20, 241, 149, 0.15);
+        }
+
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .glitch::before {
+            animation: glitch-1 2.5s infinite;
+            color: #14f195;
+            z-index: -1;
+        }
+
+        .glitch::after {
+            animation: glitch-2 2.5s infinite;
+            color: #9945ff;
+            z-index: -2;
+        }
+
+        @keyframes glitch-1 {
+            0%, 100% { transform: translate(0); }
+            33% { transform: translate(-2px, 2px); }
+            66% { transform: translate(2px, -2px); }
+        }
+
+        @keyframes glitch-2 {
+            0%, 100% { transform: translate(0); }
+            33% { transform: translate(2px, -2px); }
+            66% { transform: translate(-2px, 2px); }
+        }
+
+        .holo {
+            background: linear-gradient(135deg, #14f195, #9945ff, #14f195);
+            background-size: 200% 200%;
+            animation: holo-shift 4s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes holo-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeInUp 1s ease forwards;
+        }
+
         .d1 { animation-delay: 0.1s; opacity: 0; }
         .d2 { animation-delay: 0.2s; opacity: 0; }
         .d3 { animation-delay: 0.3s; opacity: 0; }
+        .d4 { animation-delay: 0.4s; opacity: 0; }
+        .d5 { animation-delay: 0.5s; opacity: 0; }
 
-        .border-grad { position: relative; border: 1px solid transparent; }
-        .border-grad::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(45deg, #14f195, #9945ff, #14f195, #9945ff); background-size: 400% 400%; border-radius: inherit; opacity: 0; transition: opacity 0.3s; animation: border-flow 4s ease infinite; z-index: -1; }
-        .border-grad:hover::before { opacity: 1; }
-        @keyframes border-flow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        ::selection {
+            background: rgba(20, 241, 149, 0.3);
+            color: #fff;
+        }
 
-        .project-card-image {
-            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0d0d0d; }
+        ::-webkit-scrollbar-thumb { background: #14f195; border-radius: 3px; }
+
+        .underline-fx {
+            position: relative;
+            display: inline-block;
+        }
+
+        .underline-fx::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #14f195;
+            transition: width 0.3s ease;
+        }
+
+        .underline-fx:hover::after {
+            width: 100%;
+        }
+
+        .mono-num {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .border-grad {
+            position: relative;
+            border: 1px solid transparent;
+        }
+
+        .border-grad::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #14f195, #9945ff, #14f195, #9945ff);
+            background-size: 400% 400%;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.3s;
+            animation: border-flow 4s ease infinite;
+            z-index: -1;
+        }
+
+        .border-grad:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes border-flow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
     </style>
 </head>
@@ -74,6 +216,7 @@
     <canvas id="bg-canvas"></canvas>
 
     <div class="content-layer">
+
         <nav class="fixed top-0 left-0 w-full z-50 frost border-b border-white/5">
             <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#" class="font-mono text-sm font-bold tracking-tight">
@@ -81,30 +224,33 @@
                 </a>
                 
                 <div class="hidden md:flex items-center gap-8 text-xs uppercase tracking-wider font-mono">
-                    <a href="#work" class="hover:text-accent transition-colors" data-i18n="nav_work">work</a>
-                    <a href="#projects" class="hover:text-accent transition-colors" data-i18n="nav_projects">projects</a>
-                    <a href="#skills" class="hover:text-accent transition-colors" data-i18n="nav_skills">skills</a>
-                    <a href="#contact" class="hover:text-accent transition-colors" data-i18n="nav_contact">contact</a>
+                    <a href="#work" class="underline-fx hover:text-white transition-colors" data-i18n="nav_work">work</a>
+                    <a href="#projects" class="underline-fx hover:text-white transition-colors" data-i18n="nav_projects">projects</a>
+                    <a href="#skills" class="underline-fx hover:text-white transition-colors" data-i18n="nav_skills">skills</a>
+                    <a href="#contact" class="underline-fx hover:text-white transition-colors" data-i18n="nav_contact">contact</a>
                 </div>
 
-                <button onclick="toggleLanguage()" class="flex items-center gap-2 text-xs px-4 py-2 frost border-accent/50 hover:border-accent transition-all font-mono group">
+                <!-- BOTON DE IDIOMA -->
+                <button onclick="toggleLanguage()" class="text-xs px-3 py-1 frost hover:border-accent transition-all font-mono group flex items-center gap-2">
                     <i class="fas fa-globe text-accent group-hover:rotate-180 transition-transform duration-500"></i>
-                    <span id="lang-text" class="font-bold">EN</span>
+                    <span id="lang-text">EN</span>
                 </button>
             </div>
         </nav>
 
         <section class="min-h-screen flex items-center justify-center px-6 pt-20 relative">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-dark/50 to-dark/90 pointer-events-none"></div>
+
             <div class="max-w-6xl w-full relative z-10">
                 <div class="mb-12 fade-in d1">
                     <p class="text-xs uppercase tracking-widest mb-4 text-gray-500 font-mono">
                         <span class="text-accent">#</span> <span data-i18n="hero_label">Junior Security Analyst</span>
                     </p>
-                    <h1 class="text-7xl md:text-9xl font-black leading-[0.85] mb-8 glitch" data-text="DAVID RODRÍGUEZ">
+                    <h1 class="text-7xl md:text-9xl font-black leading-[0.85] mb-8 glitch drop-shadow-2xl" data-text="DAVID RODRÍGUEZ">
                         DAVID<br>
                         <span class="holo">RODRÍGUEZ</span>
                     </h1>
-                    <p class="text-xl md:text-2xl max-w-3xl leading-relaxed text-gray-300 font-mono" data-i18n="hero_desc">
+                    <p class="text-xl md:text-2xl max-w-3xl leading-relaxed text-gray-300 font-mono drop-shadow-md" data-i18n="hero_desc">
                         offensive_security + full_stack_dev + ai_integration
                     </p>
                 </div>
@@ -113,9 +259,101 @@
                     <a href="#projects" class="px-8 py-4 frost hover:bg-accent hover:text-dark transition-all text-sm uppercase tracking-wider font-bold">
                         <span data-i18n="hero_btn_projects">VIEW WORK</span>
                     </a>
-                    <a id="cv-download-link" href="david-rodriguez-cyber-en.pdf" download class="px-8 py-4 frost border-white/20 hover:bg-white/10 transition-all text-sm uppercase tracking-wider font-bold">
-                        <i class="fas fa-download mr-2 text-accent"></i><span data-i18n="hero_btn_cv">DOWNLOAD CV</span>
+                    
+                    <!-- BOTÓN DOWNLOAD CV CONFIGURADO CON ID PARA CAMBIO DE IDIOMA -->
+                    <a id="btn-cv" href="./david-rodriguez-cyber-en.pdf" download class="px-8 py-4 frost hover:bg-gray-800 transition-all text-sm uppercase tracking-wider font-bold">
+                        <i class="fas fa-download mr-2"></i><span data-i18n="hero_btn_cv">DOWNLOAD CV</span>
                     </a>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 fade-in d3">
+                    <div class="frost p-6 border-grad">
+                        <p class="text-5xl font-black text-accent mono-num">20+</p>
+                        <p class="text-xs uppercase tracking-wider text-gray-400 mt-2 font-mono" data-i18n="stat_machines">HTB MACHINES</p>
+                    </div>
+                    <div class="frost p-6 border-grad">
+                        <p class="text-5xl font-black text-accent2 mono-num">60K+</p>
+                        <p class="text-xs uppercase tracking-wider text-gray-400 mt-2 font-mono" data-i18n="stat_records">DB RECORDS</p>
+                    </div>
+                    <div class="frost p-6 border-grad">
+                        <p class="text-5xl font-black text-white mono-num">2025</p>
+                        <p class="text-xs uppercase tracking-wider text-gray-400 mt-2 font-mono" data-i18n="stat_active">ACTIVE</p>
+                    </div>
+                    <div class="frost p-6 border-grad">
+                        <p class="text-5xl font-black text-white mono-num">4</p>
+                        <p class="text-xs uppercase tracking-wider text-gray-400 mt-2 font-mono" data-i18n="stat_languages">LANGUAGES</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="work" class="py-32 px-6 bg-dark/30 backdrop-blur-sm">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-5xl font-black mb-20">
+                    <span class="text-accent font-mono">$</span> <span data-i18n="exp_title">EXPERIENCE</span>
+                </h2>
+
+                <div class="space-y-8">
+                    <div class="frost p-8 border-grad">
+                        <div class="flex justify-between items-start mb-6 flex-wrap gap-4">
+                            <div>
+                                <h3 class="text-3xl font-black mb-2">gemsy.es</h3>
+                                <p class="text-sm uppercase tracking-wider text-accent font-mono" data-i18n="role_gemsy">FOUNDER & LEAD ENGINEER</p>
+                            </div>
+                            <p class="text-sm font-mono text-gray-400">2025 — <span data-i18n="present">PRESENT</span></p>
+                        </div>
+                        <ul class="space-y-2 text-sm text-gray-300" data-i18n="desc_gemsy">
+                            <li>→ End-to-end system design and cloud architecture on Google Cloud</li>
+                            <li>→ Modular Python backend with REST APIs and PostgreSQL management</li>
+                            <li>→ GPT-4 semantic automation and advanced filtering logic</li>
+                            <li>→ Identity and permissions management (IAM)</li>
+                        </ul>
+                    </div>
+
+                    <div class="frost p-8 border-grad">
+                        <div class="flex justify-between items-start mb-6 flex-wrap gap-4">
+                            <div>
+                                <h3 class="text-3xl font-black mb-2">drscout.es</h3>
+                                <p class="text-sm uppercase tracking-wider text-accent2 font-mono" data-i18n="role_drscout">WEB DEVELOPER</p>
+                            </div>
+                            <p class="text-sm font-mono text-gray-400">2024 — <span data-i18n="present">PRESENT</span></p>
+                        </div>
+                        <ul class="space-y-2 text-sm text-gray-300" data-i18n="desc_drscout">
+                            <li>→ Technical development and infrastructure maintenance</li>
+                            <li>→ Performance optimization and technical SEO</li>
+                            <li>→ Process automation</li>
+                        </ul>
+                    </div>
+
+                    <div class="frost p-8 border-grad">
+                        <div class="flex justify-between items-start mb-6 flex-wrap gap-4">
+                            <div>
+                                <h3 class="text-3xl font-black mb-2">F10 Scout</h3>
+                                <p class="text-sm uppercase tracking-wider text-gray-400 font-mono" data-i18n="role_f10">DATA SCOUT</p>
+                            </div>
+                            <p class="text-sm font-mono text-gray-400">2023 — 2025</p>
+                        </div>
+                        <ul class="space-y-2 text-sm text-gray-300" data-i18n="desc_f10">
+                            <li>→ Management and validation of massive databases</li>
+                            <li>→ Statistical analysis and talent reporting</li>
+                            <li>→ Data integrity maintenance</li>
+                        </ul>
+                    </div>
+
+                    <div class="frost p-8 border-grad">
+                        <div class="flex justify-between items-start mb-6 flex-wrap gap-4">
+                            <div>
+                                <h3 class="text-3xl font-black mb-2">CD Mensajero</h3>
+                                <p class="text-sm uppercase tracking-wider text-gray-400 font-mono" data-i18n="role_mensajero">COORDINATOR</p>
+                            </div>
+                            <p class="text-sm font-mono text-gray-400">2022 — 2025</p>
+                        </div>
+                        <ul class="space-y-2 text-sm text-gray-300" data-i18n="desc_mensajero">
+                            <li>→ Player database management</li>
+                            <li>→ Scout team coordination and control</li>
+                            <li>→ Information workflow optimization</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -126,136 +364,393 @@
                     <span class="text-accent font-mono">$</span> <span data-i18n="projects_title">PROJECTS</span>
                 </h2>
 
-                <div class="grid grid-cols-1 gap-12">
-                    <div class="frost border-grad overflow-hidden flex flex-col md:flex-row group">
-                        <div class="md:w-1/3 relative h-64 md:h-auto overflow-hidden bg-black">
-                            <img src="gemsyinicio.jpg" alt="Gemsy Preview" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-700 project-card-image">
-                            <div class="absolute inset-0 flex items-center justify-center p-8">
-                                <img src="GEMSYLOGO1.png" alt="Gemsy Logo" class="relative z-10 max-h-24 drop-shadow-[0_0_15px_rgba(20,241,149,0.5)]">
+                <div class="space-y-8">
+                    <div class="frost p-10 border-grad group">
+                        <!-- HEADER CON LOGO Y TÍTULO -->
+                        <div class="flex justify-between items-start mb-6 flex-wrap gap-4">
+                            <div class="flex items-center gap-4">
+                                <!-- IMAGEN DEL LOGO AQUI -->
+                                <img src="GEMSYLOGO1.png" alt="Gemsy Logo" class="h-12 w-auto object-contain brightness-125 drop-shadow-[0_0_10px_rgba(20,241,149,0.3)]">
+                                <h3 class="text-4xl font-black holo" data-i18n="proj_gemsy_title">gemsy.es</h3>
                             </div>
+                            <a href="https://gemsy.es" target="_blank" class="text-accent hover:text-accent2 transition-colors">
+                                <i class="fas fa-external-link-alt text-xl"></i>
+                            </a>
                         </div>
-                        
-                        <div class="p-10 md:w-2/3">
-                            <div class="flex justify-between items-start mb-6">
-                                <h3 class="text-4xl font-black holo">gemsy.es</h3>
-                                <a href="https://gemsy.es" target="_blank" class="text-accent hover:text-white transition-colors">
-                                    <i class="fas fa-external-link-alt text-xl"></i>
-                                </a>
-                            </div>
-                            <p class="text-gray-300 mb-6 leading-relaxed" data-i18n="proj_gemsy_desc">
-                                Professional SaaS platform managing 60,000+ player records. Built from scratch with Python backend, GPT-4 semantic queries, PostgreSQL database, and Google Cloud deployment.
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="text-[10px] px-3 py-1 bg-accent/10 text-accent border border-accent/30 font-mono">PYTHON</span>
-                                <span class="text-[10px] px-3 py-1 bg-accent/10 text-accent border border-accent/30 font-mono">GCP</span>
-                                <span class="text-[10px] px-3 py-1 bg-accent/10 text-accent border border-accent/30 font-mono">AI INTEGRATION</span>
-                            </div>
+
+                        <!-- IMAGEN DE PREVISUALIZACION AQUI -->
+                        <div class="w-full h-64 mb-6 rounded-lg overflow-hidden border border-white/10 relative">
+                            <img src="gemsyinicio.jpg" alt="Gemsy Interface" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500 scale-100 group-hover:scale-105 transition-transform">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        </div>
+
+                        <p class="text-gray-300 mb-6 leading-relaxed" data-i18n="proj_gemsy_desc">
+                            Professional SaaS platform managing 60,000+ player records. Built from scratch with Python backend, GPT-4 semantic queries, PostgreSQL database, and Google Cloud deployment (App Engine, Firestore, CloudSQL, IAM). 99% AI precision, 95% time reduction in talent search.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-3 py-1 bg-accent/10 text-accent border border-accent/30 font-mono">PYTHON</span>
+                            <span class="text-xs px-3 py-1 bg-accent/10 text-accent border border-accent/30 font-mono">GPT-4</span>
+                            <span class="text-xs px-3 py-1 bg-accent/10 text-accent border border-accent/30 font-mono">POSTGRESQL</span>
+                            <span class="text-xs px-3 py-1 bg-accent/10 text-accent border border-accent/30 font-mono">GCP</span>
                         </div>
                     </div>
 
                     <div class="frost p-10 border-grad">
-                        <h3 class="text-3xl font-black mb-4" data-i18n="proj_homelab_title">AD HOMELAB</h3>
-                        <p class="text-gray-400 mb-6 font-mono text-sm" data-i18n="proj_homelab_desc">
-                            Isolated Active Directory environment for advanced penetration testing and Kerberos exploitation.
+                        <div class="flex justify-between items-start mb-6 flex-wrap gap-4">
+                            <h3 class="text-4xl font-black" data-i18n="proj_homelab_title">AD HOMELAB</h3>
+                            <span class="text-xs px-3 py-1 bg-accent2/10 text-accent2 border border-accent2/30 font-mono">PRIVATE</span>
+                        </div>
+                        <p class="text-gray-300 mb-6 leading-relaxed" data-i18n="proj_homelab_desc">
+                            Isolated AD lab for practicing enumeration (LDAP, SMB), Kerberos attack vectors, and ACL misconfiguration analysis. Documented attack paths, common mistakes, and mitigation strategies.
                         </p>
-                        <div class="flex gap-2">
-                            <span class="text-[10px] px-3 py-1 bg-accent2/10 text-accent2 border border-accent2/30 font-mono">CYBERSECURITY</span>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-3 py-1 bg-accent2/10 text-accent2 border border-accent2/30 font-mono">AD</span>
+                            <span class="text-xs px-3 py-1 bg-accent2/10 text-accent2 border border-accent2/30 font-mono">KERBEROS</span>
+                            <span class="text-xs px-3 py-1 bg-accent2/10 text-accent2 border border-accent2/30 font-mono">LDAP</span>
+                        </div>
+                    </div>
+
+                    <div class="frost p-10 border-grad">
+                        <div class="flex justify-between items-start mb-6 flex-wrap gap-4">
+                            <h3 class="text-4xl font-black" data-i18n="proj_drscout_title">drscout.es</h3>
+                            <a href="https://drscout.es" target="_blank" class="text-accent hover:text-accent2 transition-colors">
+                                <i class="fas fa-external-link-alt text-xl"></i>
+                            </a>
+                        </div>
+                        <p class="text-gray-300 mb-6 leading-relaxed" data-i18n="proj_drscout_desc">
+                            Scouting-focused analysis website optimized for performance, SEO, and usability. Technical infrastructure maintenance and process automation.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-3 py-1 bg-white/10 text-white border border-white/30 font-mono">WORDPRESS</span>
+                            <span class="text-xs px-3 py-1 bg-white/10 text-white border border-white/30 font-mono">SEO</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="py-32 px-6">
-            <div class="max-w-6xl mx-auto text-center">
-                <h2 class="text-5xl font-black mb-8" data-i18n="contact_title">CONNECT</h2>
-                <div class="flex justify-center gap-6 flex-wrap">
-                    <a href="mailto:davidrodriguezscout@gmail.com" class="text-2xl hover:text-accent transition-colors"><i class="fas fa-envelope"></i></a>
-                    <a href="https://linkedin.com/in/davidrscout" target="_blank" class="text-2xl hover:text-accent transition-colors"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/davidrscout" target="_blank" class="text-2xl hover:text-accent transition-colors"><i class="fab fa-github"></i></a>
+        <section id="skills" class="py-32 px-6 bg-dark/30 backdrop-blur-sm">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-5xl font-black mb-20">
+                    <span class="text-accent font-mono">$</span> <span data-i18n="cyber_title">CYBERSECURITY</span>
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-12">
+                    <div class="frost p-8 border-grad">
+                        <h3 class="text-2xl font-black mb-6 text-accent" data-i18n="cyber_enum">ENUMERATION</h3>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li>→ Windows/Linux system enumeration</li>
+                            <li>→ LDAP and SMB enumeration</li>
+                            <li>→ Service and user discovery</li>
+                            <li>→ Attack surface analysis</li>
+                        </ul>
+                    </div>
+                    <div class="frost p-8 border-grad">
+                        <h3 class="text-2xl font-black mb-6 text-accent2" data-i18n="cyber_exploit">EXPLOITATION</h3>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li>→ Windows service exploitation</li>
+                            <li>→ Web vulnerabilities (LFI, RCE, SQLi)</li>
+                            <li>→ Reverse shells</li>
+                            <li>→ Initial access techniques</li>
+                        </ul>
+                    </div>
+                    <div class="frost p-8 border-grad">
+                        <h3 class="text-2xl font-black mb-6 text-accent" data-i18n="cyber_privesc">PRIV ESCALATION</h3>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li>→ SUID exploitation</li>
+                            <li>→ Service misconfigurations</li>
+                            <li>→ Permission analysis</li>
+                            <li>→ Cronjobs and capabilities</li>
+                        </ul>
+                    </div>
+                    <div class="frost p-8 border-grad">
+                        <h3 class="text-2xl font-black mb-6 text-accent2" data-i18n="cyber_ad">ACTIVE DIRECTORY</h3>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li>→ Kerberos attack vectors</li>
+                            <li>→ ACL misconfiguration analysis</li>
+                            <li>→ Authenticated enumeration</li>
+                            <li>→ MSSQL/WinRM exploitation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="frost p-10 mb-12">
+                    <h3 class="text-2xl font-black mb-8" data-i18n="cyber_tools_title">TOOLS</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-2 bg-dark border border-accent/30 text-accent text-sm font-mono">NMAP</span>
+                        <span class="px-4 py-2 bg-dark border border-accent/30 text-accent text-sm font-mono">FFUF</span>
+                        <span class="px-4 py-2 bg-dark border border-accent/30 text-accent text-sm font-mono">BURP</span>
+                        <span class="px-4 py-2 bg-dark border border-accent/30 text-accent text-sm font-mono">EVIL-WINRM</span>
+                        <span class="px-4 py-2 bg-dark border border-accent/30 text-accent text-sm font-mono">IMPACKET</span>
+                        <span class="px-4 py-2 bg-dark border border-accent/30 text-accent text-sm font-mono">LIGOLO-NG</span>
+                        <span class="px-4 py-2 bg-dark border border-accent/30 text-accent text-sm font-mono">METASPLOIT</span>
+                    </div>
+                </div>
+
+                <div class="frost p-10 border-grad">
+                    <div class="flex justify-between items-start mb-8 flex-wrap gap-4">
+                        <h3 class="text-3xl font-black">HACKTHEBOX</h3>
+                        <span class="px-4 py-2 bg-accent text-dark font-mono font-black text-xs">20+ MACHINES</span>
+                    </div>
+                    <p class="text-gray-300 mb-8" data-i18n="cyber_htb_desc">
+                        Solved enterprise-like machines using structured enumeration, exploitation, and privilege escalation workflows.
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                        <div class="text-center p-3 bg-dark/50 border border-white/10"><p class="font-mono text-sm">Gavel</p></div>
+                        <div class="text-center p-3 bg-dark/50 border border-white/10"><p class="font-mono text-sm">Guardian</p></div>
+                        <div class="text-center p-3 bg-dark/50 border border-white/10"><p class="font-mono text-sm">Signed</p></div>
+                        <div class="text-center p-3 bg-dark/50 border border-white/10"><p class="font-mono text-sm">Eighteen</p></div>
+                        <div class="text-center p-3 bg-dark/50 border border-white/10"><p class="font-mono text-sm">Editor</p></div>
+                        <div class="text-center p-3 bg-dark/50 border border-white/10"><p class="font-mono text-sm">Giveback</p></div>
+                        <div class="text-center p-3 bg-dark/50 border border-white/10"><p class="font-mono text-sm">DarkZero</p></div>
+                        <div class="text-center p-3 bg-dark/50 border border-white/10"><p class="font-mono text-sm">HackNet</p></div>
+                        <div class="text-center p-3 bg-dark/50 border border-white/10"><p class="font-mono text-sm">Outbound</p></div>
+                        <div class="text-center p-3 bg-dark/50 border border-white/10"><p class="font-mono text-sm text-gray-500">+11</p></div>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <section class="py-32 px-6">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-5xl font-black mb-20">
+                    <span class="text-accent font-mono">$</span> <span data-i18n="edu_title">EDUCATION</span>
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="frost p-8 border-grad">
+                        <h3 class="text-xl font-black mb-6 text-accent" data-i18n="edu_formal">FORMAL</h3>
+                        <div class="space-y-4 text-sm">
+                            <div class="pb-4 border-b border-white/10">
+                                <p class="font-bold">Cybersecurity in Enterprise</p>
+                                <p class="text-gray-400 font-mono">2025</p>
+                            </div>
+                            <div class="pb-4 border-b border-white/10">
+                                <p class="font-bold">High School Diploma</p>
+                                <p class="text-gray-400 font-mono">2021</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="frost p-8 border-grad">
+                        <h3 class="text-xl font-black mb-6 text-accent2" data-i18n="languages_title">LANGUAGES</h3>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span>Spanish</span>
+                                <span class="text-accent font-mono" data-i18n="lang_native">NATIVE</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>English</span>
+                                <span class="text-accent font-mono" data-i18n="lang_advanced">ADVANCED</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>French</span>
+                                <span class="text-gray-500 font-mono" data-i18n="lang_intermediate">INTERMEDIATE</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Catalan</span>
+                                <span class="text-gray-500 font-mono" data-i18n="lang_basic">BASIC</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-32 px-6 bg-dark/30 backdrop-blur-sm">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-5xl font-black mb-12">
+                    <span class="text-accent font-mono">$</span> <span data-i18n="contact_title">CONNECT</span>
+                </h2>
+                <p class="text-gray-300 mb-12 max-w-2xl font-mono" data-i18n="contact_desc">
+                    open(offensive_security, development, technical_roles)
+                </p>
+
+                <div class="flex flex-wrap gap-4 mb-16">
+                    <a href="mailto:davidrodriguezscout@gmail.com" class="px-6 py-3 frost hover:bg-accent hover:text-dark transition-all font-mono text-sm">
+                        <i class="fas fa-envelope mr-2"></i>EMAIL
+                    </a>
+                    <a href="https://linkedin.com/in/davidrscout" target="_blank" class="px-6 py-3 frost hover:bg-accent hover:text-dark transition-all font-mono text-sm">
+                        <i class="fab fa-linkedin mr-2"></i>LINKEDIN
+                    </a>
+                    <a href="https://github.com/davidrscout" target="_blank" class="px-6 py-3 frost hover:bg-accent hover:text-dark transition-all font-mono text-sm">
+                        <i class="fab fa-github mr-2"></i>GITHUB
+                    </a>
+                    <a href="https://app.hackthebox.com/users/2807257" target="_blank" class="px-6 py-3 frost hover:bg-accent hover:text-dark transition-all font-mono text-sm">
+                        <i class="fas fa-cube mr-2"></i>HTB
+                    </a>
+                </div>
+
+                <p class="text-xs text-gray-500 font-mono">© 2025 David Rodríguez · Murcia, ES</p>
+            </div>
+        </section>
+
     </div>
 
     <script>
-        // --- MATRIX BACKGROUND LOGIC (Mantenida) ---
         (function() {
             const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            let width = window.innerWidth, height = window.innerHeight;
-            canvas.width = width; canvas.height = height;
-            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789アァカサタナハマヤャラワ';
+
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+
+            const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+            const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const nums = '0123456789';
+            const alphabet = katakana + latin + nums;
+
             const fontSize = 16;
             let columns = Math.floor(width / fontSize);
-            let drops = Array(columns).fill(1);
-            function draw() {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                ctx.fillRect(0, 0, width, height);
-                ctx.font = fontSize + 'px monospace';
-                for(let i = 0; i < drops.length; i++) {
-                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                    ctx.fillStyle = Math.random() > 0.95 ? '#9945ff' : '#14f195';
-                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                    if(drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
-                    drops[i]++;
+
+            let drops = [];
+            
+            function initDrops() {
+                drops = [];
+                for(let x = 0; x < columns; x++) {
+                    drops[x] = Math.random() * (height / fontSize); 
                 }
             }
-            setInterval(draw, 33);
+            initDrops();
+
+            const draw = () => {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; 
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.font = fontSize + 'px monospace';
+
+                for(let i = 0; i < drops.length; i++) {
+                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+
+                    if(Math.random() > 0.975) {
+                        ctx.fillStyle = '#9945ff'; 
+                    } else {
+                        ctx.fillStyle = '#14f195'; 
+                    }
+
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                    if(drops[i] * fontSize > height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            };
+
             window.addEventListener('resize', () => {
-                width = window.innerWidth; height = window.innerHeight;
-                canvas.width = width; canvas.height = height;
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
                 columns = Math.floor(width / fontSize);
-                drops = Array(columns).fill(1);
+                if (drops.length < columns) {
+                    for (let i = drops.length; i < columns; i++) {
+                        drops[i] = Math.random() * (height / fontSize);
+                    }
+                }
             });
+
+            setInterval(draw, 33);
         })();
 
-        // --- TRADUCCIÓN Y LÓGICA DE ARCHIVOS ---
+        /* --- UI LOGIC --- */
         const translations = {
             en: {
                 nav_work: "work", nav_projects: "projects", nav_skills: "skills", nav_contact: "contact",
                 hero_label: "Junior Security Analyst",
                 hero_desc: "offensive_security + full_stack_dev + ai_integration",
                 hero_btn_projects: "VIEW WORK", hero_btn_cv: "DOWNLOAD CV",
+                stat_machines: "HTB MACHINES", stat_records: "DB RECORDS", stat_active: "ACTIVE", stat_languages: "LANGUAGES",
+                exp_title: "EXPERIENCE", present: "PRESENT",
+                role_gemsy: "FOUNDER & LEAD ENGINEER",
+                desc_gemsy: "<li>→ End-to-end system design and cloud architecture on Google Cloud</li><li>→ Modular Python backend with REST APIs and PostgreSQL management</li><li>→ GPT-4 semantic automation and advanced filtering logic</li><li>→ Identity and permissions management (IAM)</li>",
+                role_drscout: "WEB DEVELOPER",
+                desc_drscout: "<li>→ Technical development and infrastructure maintenance</li><li>→ Performance optimization and technical SEO</li><li>→ Process automation</li>",
+                role_f10: "DATA SCOUT",
+                desc_f10: "<li>→ Management and validation of massive databases</li><li>→ Statistical analysis and talent reporting</li><li>→ Data integrity maintenance</li>",
+                role_mensajero: "COORDINATOR",
+                desc_mensajero: "<li>→ Player database management</li><li>→ Scout team coordination and control</li><li>→ Information workflow optimization</li>",
                 projects_title: "PROJECTS",
-                proj_gemsy_desc: "Professional SaaS platform managing 60,000+ player records. Built from scratch with Python backend, GPT-4 semantic queries, PostgreSQL database, and Google Cloud deployment.",
+                proj_gemsy_title: "gemsy.es",
+                proj_gemsy_desc: "Professional SaaS platform managing 60,000+ player records. Built from scratch with Python backend, GPT-4 semantic queries, PostgreSQL database, and Google Cloud deployment (App Engine, Firestore, CloudSQL, IAM). 99% AI precision, 95% time reduction in talent search.",
                 proj_homelab_title: "AD HOMELAB",
-                proj_homelab_desc: "Isolated Active Directory environment for advanced penetration testing and Kerberos exploitation.",
-                contact_title: "CONNECT"
+                proj_homelab_desc: "Isolated AD lab for practicing enumeration (LDAP, SMB), Kerberos attack vectors, and ACL misconfiguration analysis. Documented attack paths, common mistakes, and mitigation strategies.",
+                proj_drscout_title: "drscout.es",
+                proj_drscout_desc: "Scouting-focused analysis website optimized for performance, SEO, and usability. Technical infrastructure maintenance and process automation.",
+                cyber_title: "CYBERSECURITY",
+                cyber_enum: "ENUMERATION", cyber_exploit: "EXPLOITATION", cyber_privesc: "PRIV ESCALATION", cyber_ad: "ACTIVE DIRECTORY",
+                cyber_tools_title: "TOOLS",
+                cyber_htb_desc: "Solved enterprise-like machines using structured enumeration, exploitation, and privilege escalation workflows.",
+                edu_title: "EDUCATION", edu_formal: "FORMAL", languages_title: "LANGUAGES",
+                lang_native: "NATIVE", lang_advanced: "ADVANCED", lang_intermediate: "INTERMEDIATE", lang_basic: "BASIC",
+                contact_title: "CONNECT",
+                contact_desc: "open(offensive_security, development, technical_roles)"
             },
             es: {
                 nav_work: "experiencia", nav_projects: "proyectos", nav_skills: "habilidades", nav_contact: "contacto",
                 hero_label: "Analista de Seguridad Junior",
                 hero_desc: "seguridad_ofensiva + desarrollo_full_stack + integración_ia",
                 hero_btn_projects: "VER TRABAJO", hero_btn_cv: "DESCARGAR CV",
+                stat_machines: "MÁQUINAS HTB", stat_records: "REGISTROS BD", stat_active: "ACTIVO", stat_languages: "IDIOMAS",
+                exp_title: "EXPERIENCIA", present: "PRESENTE",
+                role_gemsy: "FUNDADOR E INGENIERO PRINCIPAL",
+                desc_gemsy: "<li>→ Diseño completo y arquitectura cloud en Google Cloud</li><li>→ Backend modular Python con APIs REST y gestión PostgreSQL</li><li>→ Automatización semántica GPT-4 y lógica filtrado avanzada</li><li>→ Gestión identidad y permisos (IAM)</li>",
+                role_drscout: "DESARROLLADOR WEB",
+                desc_drscout: "<li>→ Desarrollo técnico y mantenimiento infraestructura</li><li>→ Optimización rendimiento y SEO técnico</li><li>→ Automatización de procesos</li>",
+                role_f10: "SCOUT DE DATOS",
+                desc_f10: "<li>→ Gestión y validación bases de datos masivas</li><li>→ Análisis estadístico y reportes talento</li><li>→ Mantenimiento integridad datos</li>",
+                role_mensajero: "COORDINADOR",
+                desc_mensajero: "<li>→ Gestión bases datos jugadores</li><li>→ Coordinación y control equipo scouts</li><li>→ Optimización flujos información</li>",
                 projects_title: "PROYECTOS",
-                proj_gemsy_desc: "Plataforma SaaS profesional con 60,000+ registros. Construida desde cero con Python, GPT-4, PostgreSQL y despliegue en Google Cloud.",
-                proj_homelab_title: "LABORATORIO AD",
-                proj_homelab_desc: "Entorno de Active Directory aislado para pentesting avanzado y explotación de Kerberos.",
-                contact_title: "CONTACTO"
+                proj_gemsy_title: "gemsy.es",
+                proj_gemsy_desc: "Plataforma SaaS profesional gestionando 60,000+ registros. Construida desde cero con backend Python, consultas semánticas GPT-4, PostgreSQL y despliegue Google Cloud (App Engine, Firestore, CloudSQL, IAM). 99% precisión IA, 95% reducción tiempo.",
+                proj_homelab_title: "HOMELAB AD",
+                proj_homelab_desc: "Laboratorio AD aislado para practicar enumeración (LDAP, SMB), vectores ataque Kerberos y análisis ACL. Documentación rutas ataque, errores comunes y estrategias mitigación.",
+                proj_drscout_title: "drscout.es",
+                proj_drscout_desc: "Sitio web análisis scouting optimizado para rendimiento, SEO y usabilidad. Mantenimiento infraestructura técnica y automatización procesos.",
+                cyber_title: "CIBERSEGURIDAD",
+                cyber_enum: "ENUMERACIÓN", cyber_exploit: "EXPLOTACIÓN", cyber_privesc: "ESCALADA PRIVILEGIOS", cyber_ad: "ACTIVE DIRECTORY",
+                cyber_tools_title: "HERRAMIENTAS",
+                cyber_htb_desc: "Máquinas tipo empresa resueltas usando flujos estructurados enumeración, explotación y escalada privilegios.",
+                edu_title: "EDUCACIÓN", edu_formal: "FORMAL", languages_title: "IDIOMAS",
+                lang_native: "NATIVO", lang_advanced: "AVANZADO", lang_intermediate: "INTERMEDIO", lang_basic: "BÁSICO",
+                contact_title: "CONECTAR",
+                contact_desc: "abierto(seguridad_ofensiva, desarrollo, roles_técnicos)"
             }
         };
 
         let currentLang = 'en';
-
         function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'es' : 'en';
             
-            // Actualizar textos
+            // Actualizar texto botón idioma
             document.getElementById('lang-text').textContent = currentLang.toUpperCase();
+            
+            // Actualizar textos traducibles
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
             });
 
-            // Actualizar enlace de descarga del CV dinámicamente
-            const cvLink = document.getElementById('cv-download-link');
+            // Actualizar enlace de descarga del PDF
+            const cvBtn = document.getElementById('btn-cv');
             if (currentLang === 'es') {
-                cvLink.setAttribute('href', 'david-rodriguez-cyber-es.pdf');
+                cvBtn.href = './david-rodriguez-cyber-es.pdf';
             } else {
-                cvLink.setAttribute('href', 'david-rodriguez-cyber-en.pdf');
+                cvBtn.href = './david-rodriguez-cyber-en.pdf';
             }
         }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
     </script>
 </body>
 </html>

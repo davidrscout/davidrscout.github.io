@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>David Rodríguez | Offensive Engineer</title>
+    <title>David Rodríguez — Security & Engineering</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;500;700&family=Archivo:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
@@ -21,714 +18,243 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Outfit', 'sans-serif'],
+                        mono: ['Martian Mono', 'monospace'],
+                        sans: ['Archivo', 'sans-serif'],
                     },
                     colors: {
-                        bg: '#050505',
-                        card: '#0f0f0f', 
-                        primary: '#8b5cf6', // Violeta Vibrante
-                        secondary: '#06b6d4', // Cyan
-                        accent: '#f43f5e', // Red/Pink para ofensiva
+                        dark: '#0d0d0d',
+                        accent: '#14f195',
+                        accent2: '#9945ff',
                     },
-                    backgroundImage: {
-                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        }
-                    }
                 }
             }
         }
     </script>
 
     <style>
-        body {
-            background-color: #050505;
-            color: #ffffff;
-            overflow-x: hidden;
-        }
-
-        /* --- INTERACTIVE CANVAS --- */
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: #020202; /* Fondo casi negro */
-        }
-
-        /* --- GLASSMOPHISM PREMIUM --- */
-        .glass-panel {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
+        /* Estilos base (Mantenidos de tu versión original) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { background-color: #050505; height: 100%; }
+        body { background-color: transparent; color: #e8e8e8; font-family: 'Archivo', sans-serif; overflow-x: hidden; min-height: 100vh; position: relative; }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .content-layer { position: relative; z-index: 1; }
+        .frost { background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(12px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+        .frost:hover { background: rgba(15, 15, 15, 0.90); border-color: rgba(20, 241, 149, 0.4); }
         
-        .glass-panel:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-            background: rgba(30, 30, 30, 0.8);
-        }
-
-        /* --- TYPOGRAPHY GRADIENTS --- */
-        .text-gradient {
-            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        /* Animaciones */
+        .glitch { position: relative; }
+        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8; }
+        .glitch::before { animation: glitch-1 2.5s infinite; color: #14f195; z-index: -1; }
+        .glitch::after { animation: glitch-2 2.5s infinite; color: #9945ff; z-index: -2; }
+        @keyframes glitch-1 { 0%, 100% { transform: translate(0); } 33% { transform: translate(-2px, 2px); } 66% { transform: translate(2px, -2px); } }
+        @keyframes glitch-2 { 0%, 100% { transform: translate(0); } 33% { transform: translate(2px, -2px); } 66% { transform: translate(-2px, 2px); } }
         
-        .gradient-title {
-            background: linear-gradient(to right, #c4b5fd, #67e8f9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* --- TIMELINE --- */
-        .timeline-line {
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: linear-gradient(to bottom, transparent, #333, transparent);
-        }
+        .holo { background: linear-gradient(135deg, #14f195, #9945ff, #14f195); background-size: 200% 200%; animation: holo-shift 4s ease infinite; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        @keyframes holo-shift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
         
-        /* --- SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        .fade-in { animation: fadeInUp 1s ease forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .d1 { animation-delay: 0.1s; opacity: 0; }
+        .d2 { animation-delay: 0.2s; opacity: 0; }
+        .d3 { animation-delay: 0.3s; opacity: 0; }
+
+        .border-grad { position: relative; border: 1px solid transparent; }
+        .border-grad::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(45deg, #14f195, #9945ff, #14f195, #9945ff); background-size: 400% 400%; border-radius: inherit; opacity: 0; transition: opacity 0.3s; animation: border-flow 4s ease infinite; z-index: -1; }
+        .border-grad:hover::before { opacity: 1; }
+        @keyframes border-flow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+        .project-card-image {
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        }
     </style>
 </head>
-<body class="selection:bg-primary selection:text-white">
+<body>
 
-    <!-- INTERACTIVE BACKGROUND -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- NAVIGATION -->
-    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4 transition-all duration-300 backdrop-blur-md border-b border-white/5 bg-[#050505]/70">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="#" class="text-xl font-heading font-bold tracking-tight flex items-center gap-2 group">
-                <div class="w-8 h-8 rounded bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-primary/20">
-                    DR
+    <div class="content-layer">
+        <nav class="fixed top-0 left-0 w-full z-50 frost border-b border-white/5">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+                <a href="#" class="font-mono text-sm font-bold tracking-tight">
+                    <span class="text-accent">$</span> david_rodriguez
+                </a>
+                
+                <div class="hidden md:flex items-center gap-8 text-xs uppercase tracking-wider font-mono">
+                    <a href="#work" class="hover:text-accent transition-colors" data-i18n="nav_work">work</a>
+                    <a href="#projects" class="hover:text-accent transition-colors" data-i18n="nav_projects">projects</a>
+                    <a href="#skills" class="hover:text-accent transition-colors" data-i18n="nav_skills">skills</a>
+                    <a href="#contact" class="hover:text-accent transition-colors" data-i18n="nav_contact">contact</a>
                 </div>
-                <span class="text-white group-hover:text-primary transition-colors">NATU</span>
-            </a>
-            
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-                <a href="#inicio" class="hover:text-white transition-colors" data-i18n="nav_home">Inicio</a>
-                <a href="#experiencia" class="hover:text-white transition-colors" data-i18n="nav_exp">Experiencia</a>
-                <a href="#formacion" class="hover:text-white transition-colors" data-i18n="nav_edu">Formación</a>
-                <a href="#proyectos" class="hover:text-white transition-colors" data-i18n="nav_projects">Proyectos</a>
-                <a href="#ciberseguridad" class="hover:text-white transition-colors" data-i18n="nav_cyber">Ciberseguridad</a>
-            </div>
 
-            <div class="flex items-center gap-4">
-                <!-- Language Selector -->
-                <button onclick="toggleLanguage()" class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition text-xs font-medium cursor-pointer">
-                    <span id="lang-flag">🇪🇸</span>
-                    <span id="lang-text">ES</span>
+                <button onclick="toggleLanguage()" class="flex items-center gap-2 text-xs px-4 py-2 frost border-accent/50 hover:border-accent transition-all font-mono group">
+                    <i class="fas fa-globe text-accent group-hover:rotate-180 transition-transform duration-500"></i>
+                    <span id="lang-text" class="font-bold">EN</span>
                 </button>
-
-                <a href="mailto:davidrodriguezscout@gmail.com" class="hidden sm:flex px-5 py-2 rounded-full border border-white/10 bg-white/5 text-sm font-medium hover:bg-white/10 transition-all items-center gap-2 group">
-                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                    <span class="group-hover:text-white text-gray-300" data-i18n="nav_contact">Contactar</span>
-                </a>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <!-- 1. HERO (PRESENTACIÓN) -->
-    <section id="inicio" class="relative min-h-screen flex items-center justify-center px-6 pt-20">
-        <div class="max-w-7xl w-full grid lg:grid-cols-2 gap-16 items-center">
-            <div class="space-y-8 relative z-10">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
-                    <span class="text-[10px] font-bold text-secondary tracking-widest uppercase">Offensive Security & Engineering</span>
-                </div>
-
-                <h1 class="text-6xl md:text-8xl font-heading font-extrabold leading-[0.9] tracking-tight">
-                    Offensive <br>
-                    <span class="gradient-title">Engineer.</span>
-                </h1>
-
-                <p class="text-lg text-gray-400 max-w-lg leading-relaxed font-light" data-i18n="hero_desc">
-                    Combinando <strong>Red Teaming</strong> y <strong>Desarrollo Full-Stack</strong>. 
-                    Reconstruyo rutas de ataque rotas y construyo infraestructuras de nube escalables.
-                </p>
-
-                <div class="flex flex-wrap gap-4 pt-4">
-                    <a href="#proyectos" class="px-8 py-4 bg-white text-black font-heading font-bold rounded-full hover:bg-gray-200 transition-all hover:scale-105 shadow-[0_0_30px_-5px_rgba(255,255,255,0.3)] cursor-pointer" data-i18n="hero_btn_projects">
-                        Ver Proyectos
-                    </a>
-                    <a href="./Resume Cyber David Rodriguez EN.pdf" download class="px-8 py-4 glass-panel rounded-full font-heading font-medium hover:bg-white/10 transition-all flex items-center gap-2 cursor-pointer" data-i18n="hero_btn_cv">
-                        <i class="fas fa-download"></i> Descargar CV
-                    </a>
-                </div>
-            </div>
-
-            <!-- Visual Abstract -->
-            <div class="relative hidden lg:block h-[500px] w-full">
-                <div class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-secondary/10 rounded-full blur-[100px] animate-pulse-slow"></div>
-                <div class="relative z-10 glass-panel rounded-2xl p-1 animate-float border border-white/10">
-                    <div class="bg-[#0a0a0a] rounded-xl p-6 font-mono text-sm leading-loose shadow-2xl">
-                        <div class="flex gap-2 mb-4">
-                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                        </div>
-                        <span class="text-purple-400">class</span> <span class="text-yellow-200">Engineer</span> {<br>
-                        &nbsp;&nbsp;<span class="text-blue-400">constructor</span>() {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-pink-400">this</span>.name = <span class="text-green-300">"David Rodríguez"</span>;<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-pink-400">this</span>.role = <span class="text-green-300">"Red Teamer & Dev"</span>;<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-pink-400">this</span>.skills = [<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-orange-300">"Active Directory"</span>,<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-orange-300">"AI Automation"</span>,<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-orange-300">"SQL & NoSQL"</span><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;];<br>
-                        &nbsp;&nbsp;}<br>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 2. EXPERIENCIA (VERTICAL TIMELINE) -->
-    <section id="experiencia" class="py-32 px-6 relative">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-heading font-bold mb-16 text-center" data-i18n="exp_title">Trayectoria <span class="text-gray-500">Profesional</span></h2>
-            
-            <div class="relative pl-8 md:pl-0">
-                <!-- Vertical Line (Visible only on desktop) -->
-                <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-transparent -translate-x-1/2"></div>
-
-                <!-- Item 1: Gemsy -->
-                <div class="relative mb-20 md:grid md:grid-cols-2 md:gap-16 items-center group">
-                    <div class="absolute left-[-5px] top-6 w-3 h-3 rounded-full bg-primary border border-white md:left-1/2 md:-translate-x-1.5 z-10 shadow-[0_0_10px_rgba(139,92,246,0.8)]"></div>
-                    <div class="md:text-right">
-                        <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">Gemsy.es</h3>
-                        <p class="text-sm font-mono text-gray-400 mb-2">2025 — <span data-i18n="present">PRESENTE</span></p>
-                        <span class="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4">Founder & Lead Engineer</span>
-                    </div>
-                    <div class="glass-panel p-6 rounded-2xl">
-                        <h4 class="text-lg font-bold text-white mb-2">Full-Stack Development & AI</h4>
-                        <ul class="text-sm text-gray-400 space-y-2 list-disc list-inside" data-i18n="exp_gemsy_desc">
-                            <li>Diseño de sistema end-to-end y arquitectura cloud.</li>
-                            <li>Automatización semántica con GPT-4 y filtrado avanzado.</li>
-                            <li>Desarrollo de API modular en Python y gestión de PostgreSQL en Google Cloud.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Item 2: DrScout -->
-                <div class="relative mb-20 md:grid md:grid-cols-2 md:gap-16 items-center group">
-                    <div class="absolute left-[-5px] top-6 w-3 h-3 rounded-full bg-secondary border border-white md:left-1/2 md:-translate-x-1.5 z-10 shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
-                    <div class="glass-panel p-6 rounded-2xl md:order-2">
-                        <h4 class="text-lg font-bold text-white mb-2">Web & Infrastructure</h4>
-                        <ul class="text-sm text-gray-400 space-y-2 list-disc list-inside" data-i18n="exp_drscout_desc">
-                            <li>Desarrollo técnico y mantenimiento de infraestructura.</li>
-                            <li>Optimización de rendimiento y SEO técnico.</li>
-                            <li>Automatización de procesos del sitio.</li>
-                        </ul>
-                    </div>
-                    <div class="md:order-1 md:text-right mt-4 md:mt-0">
-                        <h3 class="text-2xl font-bold text-white group-hover:text-secondary transition-colors">DrScout.es</h3>
-                        <p class="text-sm font-mono text-gray-400 mb-2">2024 — <span data-i18n="present">PRESENTE</span></p>
-                        <span class="inline-block px-3 py-1 rounded-full bg-secondary/10 text-secondary text-xs font-bold mb-4">Web Developer</span>
-                    </div>
-                </div>
-
-                <!-- Item 3: F10 Scout (Data) -->
-                <div class="relative mb-20 md:grid md:grid-cols-2 md:gap-16 items-center group">
-                    <div class="absolute left-[-5px] top-6 w-3 h-3 rounded-full bg-gray-500 border border-white md:left-1/2 md:-translate-x-1.5 z-10 shadow-[0_0_10px_rgba(107,114,128,0.8)]"></div>
-                    <div class="md:text-right">
-                        <h3 class="text-2xl font-bold text-white group-hover:text-gray-300 transition-colors">F10 Scout</h3>
-                        <p class="text-sm font-mono text-gray-400 mb-2">2023 — 2025</p>
-                        <span class="inline-block px-3 py-1 rounded-full bg-gray-500/10 text-gray-300 text-xs font-bold mb-4">Data Management</span>
-                    </div>
-                    <div class="glass-panel p-6 rounded-2xl">
-                        <h4 class="text-lg font-bold text-white mb-2">Data Scout & DB Management</h4>
-                        <ul class="text-sm text-gray-400 space-y-2 list-disc list-inside" data-i18n="exp_f10_desc">
-                            <li>Gestión y validación de bases de datos masivas.</li>
-                            <li>Análisis estadístico y reportes de talento.</li>
-                            <li>Mantenimiento de integridad de datos.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Item 4: CD Mensajero (New) -->
-                <div class="relative mb-20 md:grid md:grid-cols-2 md:gap-16 items-center group">
-                    <div class="absolute left-[-5px] top-6 w-3 h-3 rounded-full bg-gray-600 border border-white md:left-1/2 md:-translate-x-1.5 z-10 shadow-[0_0_10px_rgba(75,85,99,0.8)]"></div>
-                    <div class="glass-panel p-6 rounded-2xl md:order-2">
-                        <h4 class="text-lg font-bold text-white mb-2">Database & Team Control</h4>
-                        <ul class="text-sm text-gray-400 space-y-2 list-disc list-inside" data-i18n="exp_mensajero_desc">
-                            <li>Gestión de bases de datos de jugadores.</li>
-                            <li>Coordinación y control del equipo de scouts.</li>
-                            <li>Optimización de flujos de información.</li>
-                        </ul>
-                    </div>
-                    <div class="md:order-1 md:text-right mt-4 md:mt-0">
-                        <h3 class="text-2xl font-bold text-white group-hover:text-gray-400 transition-colors">CD Mensajero</h3>
-                        <p class="text-sm font-mono text-gray-400 mb-2">2022 — 2025</p>
-                        <span class="inline-block px-3 py-1 rounded-full bg-gray-600/10 text-gray-400 text-xs font-bold mb-4">Coordinador</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- NUEVO: FORMACIÓN & BACKGROUND -->
-    <section id="formacion" class="py-24 px-6 relative">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-heading font-bold text-center mb-16" data-i18n="edu_title">Formación & <span class="text-primary">Background</span></h2>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Autodidacta -->
-                <div class="glass-panel p-8 rounded-3xl">
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="fas fa-brain text-2xl text-secondary"></i>
-                        <h3 class="text-xl font-bold text-white" data-i18n="edu_self_title">Autodidacta & I+D</h3>
-                    </div>
-                    <p class="text-sm text-gray-400 mb-6 leading-relaxed" data-i18n="edu_self_desc">
-                        Mi curiosidad técnica es el motor de mi carrera. He profundizado por mi cuenta en tecnologías avanzadas fuera del currículo estándar.
+        <section class="min-h-screen flex items-center justify-center px-6 pt-20 relative">
+            <div class="max-w-6xl w-full relative z-10">
+                <div class="mb-12 fade-in d1">
+                    <p class="text-xs uppercase tracking-widest mb-4 text-gray-500 font-mono">
+                        <span class="text-accent">#</span> <span data-i18n="hero_label">Junior Security Analyst</span>
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 rounded bg-secondary/10 text-secondary text-xs font-bold">IA & Automatización</span>
-                        <span class="px-3 py-1 rounded bg-secondary/10 text-secondary text-xs font-bold">Red Teaming</span>
-                        <span class="px-3 py-1 rounded bg-secondary/10 text-secondary text-xs font-bold">SQL / NoSQL</span>
-                        <span class="px-3 py-1 rounded bg-secondary/10 text-secondary text-xs font-bold">Prompt Engineering</span>
-                    </div>
+                    <h1 class="text-7xl md:text-9xl font-black leading-[0.85] mb-8 glitch" data-text="DAVID RODRÍGUEZ">
+                        DAVID<br>
+                        <span class="holo">RODRÍGUEZ</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl max-w-3xl leading-relaxed text-gray-300 font-mono" data-i18n="hero_desc">
+                        offensive_security + full_stack_dev + ai_integration
+                    </p>
                 </div>
 
-                <!-- Formal & Idiomas -->
-                <div class="glass-panel p-8 rounded-3xl flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-3 mb-6">
-                            <i class="fas fa-graduation-cap text-2xl text-primary"></i>
-                            <h3 class="text-xl font-bold text-white" data-i18n="edu_formal_title">Educación Formal</h3>
-                        </div>
-                        <ul class="space-y-4 text-sm text-gray-300">
-                            <li class="flex justify-between border-b border-white/5 pb-2">
-                                <span>Cybersecurity in Enterprise</span>
-                                <span class="text-gray-500">2025</span>
-                            </li>
-                            <li class="flex justify-between border-b border-white/5 pb-2">
-                                <span>Bachillerato (Diploma)</span>
-                                <span class="text-gray-500">2021</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="mt-8 pt-6 border-t border-white/10">
-                        <h4 class="text-sm font-bold text-gray-400 mb-4 uppercase tracking-wider" data-i18n="languages_title">Idiomas</h4>
-                        <div class="flex gap-4 text-2xl">
-                            <span title="Español (Nativo)">🇪🇸</span>
-                            <span title="Inglés (Avanzado)">🇬🇧</span>
-                            <span title="Francés (Intermedio)">🇫🇷</span>
-                            <span title="Catalán (Básico)">🏴</span>
-                        </div>
-                    </div>
+                <div class="flex flex-wrap gap-4 mb-20 fade-in d2">
+                    <a href="#projects" class="px-8 py-4 frost hover:bg-accent hover:text-dark transition-all text-sm uppercase tracking-wider font-bold">
+                        <span data-i18n="hero_btn_projects">VIEW WORK</span>
+                    </a>
+                    <a id="cv-download-link" href="david-rodriguez-cyber-en.pdf" download class="px-8 py-4 frost border-white/20 hover:bg-white/10 transition-all text-sm uppercase tracking-wider font-bold">
+                        <i class="fas fa-download mr-2 text-accent"></i><span data-i18n="hero_btn_cv">DOWNLOAD CV</span>
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 3. PROYECTOS -->
-    <section id="proyectos" class="py-32 px-6 relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
-                <h2 class="text-4xl md:text-5xl font-heading font-bold mb-4" data-i18n="projects_title">Proyectos <span class="gradient-title">Destacados</span></h2>
-                <p class="text-gray-400 max-w-2xl mx-auto" data-i18n="projects_subtitle">Ingeniería aplicada a problemas reales. Desde plataformas SaaS hasta herramientas de Red Teaming.</p>
-            </div>
+        <section id="projects" class="py-32 px-6">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-5xl font-black mb-20">
+                    <span class="text-accent font-mono">$</span> <span data-i18n="projects_title">PROJECTS</span>
+                </h2>
 
-            <!-- GEMSY (Updated Metrics) -->
-            <div class="glass-panel rounded-[2.5rem] p-1 overflow-hidden mb-12 group hover:border-primary/30 transition-colors">
-                <div class="bg-[#080808] rounded-[2.3rem] overflow-hidden">
-                    <div class="grid lg:grid-cols-2 gap-0">
-                        <div class="p-8 md:p-16 flex flex-col justify-center order-2 lg:order-1">
-                            <div class="flex items-center gap-3 mb-6">
-                                <img src="./GEMSYLOGO1.png" alt="Gemsy Logo" class="h-10 w-auto">
+                <div class="grid grid-cols-1 gap-12">
+                    <div class="frost border-grad overflow-hidden flex flex-col md:flex-row group">
+                        <div class="md:w-1/3 relative h-64 md:h-auto overflow-hidden bg-black">
+                            <img src="gemsyinicio.jpg" alt="Gemsy Preview" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-700 project-card-image">
+                            <div class="absolute inset-0 flex items-center justify-center p-8">
+                                <img src="GEMSYLOGO1.png" alt="Gemsy Logo" class="relative z-10 max-h-24 drop-shadow-[0_0_15px_rgba(20,241,149,0.5)]">
                             </div>
-                            
-                            <h3 class="text-3xl md:text-4xl font-heading font-bold text-white mb-6" data-i18n="gemsy_title">
-                                Plataforma de Análisis con IA
-                            </h3>
-                            
-                            <p class="text-gray-400 leading-relaxed mb-8" data-i18n="gemsy_desc_full">
-                                SaaS profesional validado por scouts internacionales. Gestiona una base de datos de <strong>>60,000 jugadores</strong>.
-                                El núcleo de IA ofrece una <strong>precisión del 99%</strong> y ha reducido el tiempo de búsqueda de talento en un <strong>95%</strong> (de semanas a segundos).
+                        </div>
+                        
+                        <div class="p-10 md:w-2/3">
+                            <div class="flex justify-between items-start mb-6">
+                                <h3 class="text-4xl font-black holo">gemsy.es</h3>
+                                <a href="https://gemsy.es" target="_blank" class="text-accent hover:text-white transition-colors">
+                                    <i class="fas fa-external-link-alt text-xl"></i>
+                                </a>
+                            </div>
+                            <p class="text-gray-300 mb-6 leading-relaxed" data-i18n="proj_gemsy_desc">
+                                Professional SaaS platform managing 60,000+ player records. Built from scratch with Python backend, GPT-4 semantic queries, PostgreSQL database, and Google Cloud deployment.
                             </p>
-
-                            <div class="flex flex-wrap gap-2 mb-10">
-                                <span class="px-3 py-1 rounded-md bg-white/5 text-xs text-gray-300 font-mono border border-white/10">Python</span>
-                                <span class="px-3 py-1 rounded-md bg-white/5 text-xs text-gray-300 font-mono border border-white/10">GCP</span>
-                                <span class="px-3 py-1 rounded-md bg-white/5 text-xs text-gray-300 font-mono border border-white/10">GPT-4</span>
-                                <span class="px-3 py-1 rounded-md bg-white/5 text-xs text-gray-300 font-mono border border-white/10">Big Data</span>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-[10px] px-3 py-1 bg-accent/10 text-accent border border-accent/30 font-mono">PYTHON</span>
+                                <span class="text-[10px] px-3 py-1 bg-accent/10 text-accent border border-accent/30 font-mono">GCP</span>
+                                <span class="text-[10px] px-3 py-1 bg-accent/10 text-accent border border-accent/30 font-mono">AI INTEGRATION</span>
                             </div>
-
-                            <a href="https://gemsy.es" target="_blank" class="w-fit px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-colors flex items-center gap-2">
-                                <span data-i18n="visit_platform">Visitar Plataforma</span> <i class="fas fa-external-link-alt text-xs"></i>
-                            </a>
-                        </div>
-
-                        <div class="relative min-h-[300px] lg:min-h-full bg-[#050505] order-1 lg:order-2 overflow-hidden">
-                            <img src="./gemsyinicio.jpg" alt="Gemsy UI" class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-[#080808]"></div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- GRID SECONDARY PROJECTS (Updated NatuMap) -->
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- NatuMap (New) -->
-                <div class="glass-panel p-8 rounded-3xl group hover:bg-white/5 transition-colors border-t-4 border-t-accent">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center text-accent text-2xl">
-                            <i class="fas fa-map"></i>
+                    <div class="frost p-10 border-grad">
+                        <h3 class="text-3xl font-black mb-4" data-i18n="proj_homelab_title">AD HOMELAB</h3>
+                        <p class="text-gray-400 mb-6 font-mono text-sm" data-i18n="proj_homelab_desc">
+                            Isolated Active Directory environment for advanced penetration testing and Kerberos exploitation.
+                        </p>
+                        <div class="flex gap-2">
+                            <span class="text-[10px] px-3 py-1 bg-accent2/10 text-accent2 border border-accent2/30 font-mono">CYBERSECURITY</span>
                         </div>
-                        <i class="fas fa-lock text-gray-600" title="Private Tool"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">NatuMap</h3>
-                    <p class="text-sm text-gray-400 mb-6 leading-relaxed" data-i18n="proj_natumap_desc">
-                        Suite de enumeración ofensiva automatizada. Orquesta múltiples técnicas de reconocimiento, fuzzing y descubrimiento de activos en un flujo unificado y optimizado.
-                    </p>
-                    <div class="flex gap-2 text-xs font-mono text-accent">
-                        <span>BASH</span> <span>•</span> <span>RECON</span> <span>•</span> <span>AUTO</span>
-                    </div>
-                </div>
-
-                <!-- Scraping System -->
-                <div class="glass-panel p-8 rounded-3xl group hover:bg-white/5 transition-colors">
-                    <div class="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center text-secondary text-2xl mb-6">
-                        <i class="fas fa-spider"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3" data-i18n="proj_scraping_title">Scraping Distribuido</h3>
-                    <p class="text-sm text-gray-400 mb-6 leading-relaxed" data-i18n="proj_scraping_short">
-                        Pipelines de extracción masiva. Rotación de IPs, resolución de CAPTCHAs y normalización SQL.
-                    </p>
-                    <div class="flex gap-2 text-xs font-mono text-secondary">
-                        <span>PLAYWRIGHT</span> <span>•</span> <span>BS4</span>
-                    </div>
-                </div>
-
-                <!-- Offensive Bots -->
-                <div class="glass-panel p-8 rounded-3xl group hover:bg-white/5 transition-colors">
-                    <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary text-2xl mb-6">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3" data-i18n="proj_bots_title">Bots Ofensivos</h3>
-                    <p class="text-sm text-gray-400 mb-6 leading-relaxed" data-i18n="proj_bots_short">
-                        Bots de Telegram para reportes C2 en tiempo real y scripts serverless para reconocimiento.
-                    </p>
-                    <div class="flex gap-2 text-xs font-mono text-primary">
-                        <span>TELEGRAM API</span> <span>•</span> <span>CLOUD</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 4. CIBERSEGURIDAD (FULL ARSENAL) -->
-    <section id="ciberseguridad" class="py-32 px-6 relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-20 text-center">
-                <h2 class="text-4xl md:text-5xl font-heading font-bold mb-4" data-i18n="cyber_title">Ciberseguridad</h2>
-                <p class="text-gray-400" data-i18n="cyber_subtitle">Metodología ofensiva y arsenal completo de herramientas.</p>
-            </div>
-
-            <!-- OFFENSIVE ARSENAL GRID -->
-            <div class="glass-panel p-8 rounded-[2rem] mb-16 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500"></div>
-                <h3 class="text-2xl font-bold mb-10 text-center bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">Offensive Arsenal</h3>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                    <div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-red-500/50 hover:bg-white/10 transition group">
-                        <i class="fas fa-network-wired text-4xl text-yellow-500 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold text-sm text-gray-300">Impacket</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-red-500/50 hover:bg-white/10 transition group">
-                        <i class="fas fa-ticket-alt text-4xl text-red-500 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold text-sm text-gray-300">Kerberos</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-red-500/50 hover:bg-white/10 transition group">
-                        <i class="fas fa-terminal text-4xl text-white group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold text-sm text-gray-300">Evil-WinRM</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-red-500/50 hover:bg-white/10 transition group">
-                        <i class="fas fa-random text-4xl text-green-400 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold text-sm text-gray-300">Ligolo-ng</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-red-500/50 hover:bg-white/10 transition group">
-                        <i class="fas fa-search text-4xl text-blue-300 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold text-sm text-gray-300">LDAPSearch</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-red-500/50 hover:bg-white/10 transition group">
-                        <i class="fas fa-users text-4xl text-orange-400 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold text-sm text-gray-300">Kerbrute</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-red-500/50 hover:bg-white/10 transition group">
-                        <i class="fas fa-eye text-4xl text-green-500 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold text-sm text-gray-300">Nmap</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-red-500/50 hover:bg-white/10 transition group">
-                        <i class="fas fa-bug text-4xl text-orange-500 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold text-sm text-gray-300">Burp Suite</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-red-500/50 hover:bg-white/10 transition group">
-                        <i class="fas fa-globe text-4xl text-purple-400 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold text-sm text-gray-300">Ffuf</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-red-500/50 hover:bg-white/10 transition group">
-                        <i class="fas fa-bomb text-4xl text-gray-400 group-hover:scale-110 transition-transform"></i>
-                        <span class="font-bold text-sm text-gray-300">Metasploit</span>
-                    </div>
+        <section id="contact" class="py-32 px-6">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="text-5xl font-black mb-8" data-i18n="contact_title">CONNECT</h2>
+                <div class="flex justify-center gap-6 flex-wrap">
+                    <a href="mailto:davidrodriguezscout@gmail.com" class="text-2xl hover:text-accent transition-colors"><i class="fas fa-envelope"></i></a>
+                    <a href="https://linkedin.com/in/davidrscout" target="_blank" class="text-2xl hover:text-accent transition-colors"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/davidrscout" target="_blank" class="text-2xl hover:text-accent transition-colors"><i class="fab fa-github"></i></a>
                 </div>
             </div>
+        </section>
+    </div>
 
-            <!-- HTB LOG -->
-            <div class="glass-panel rounded-3xl p-8 md:p-12">
-                <div class="flex items-center justify-between mb-8">
-                    <h3 class="text-2xl font-bold text-white"><i class="fas fa-cube text-green-500 mr-2"></i> HackTheBox Activity</h3>
-                    <span class="text-xs font-bold text-green-500 bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20 animate-pulse">LIVE</span>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition">
-                        <div class="text-green-400 font-bold text-lg">Guardian</div>
-                        <div class="text-[10px] text-gray-500">SYSTEM + USER</div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition">
-                        <div class="text-green-400 font-bold text-lg">Signed</div>
-                        <div class="text-[10px] text-gray-500">SYSTEM + USER</div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition">
-                        <div class="text-green-400 font-bold text-lg">Giveback</div>
-                        <div class="text-[10px] text-gray-500">SYSTEM + USER</div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition">
-                        <div class="text-green-400 font-bold text-lg">Eighteen</div>
-                        <div class="text-[10px] text-gray-500">SYSTEM + USER</div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition">
-                        <div class="text-green-400 font-bold text-lg">Gavel</div>
-                        <div class="text-[10px] text-gray-500">SYSTEM + USER</div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition">
-                        <div class="text-green-400 font-bold text-lg">MonitorsFour</div>
-                        <div class="text-[10px] text-gray-500">SYSTEM + USER</div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition">
-                        <div class="text-green-400 font-bold text-lg">Editor</div>
-                        <div class="text-[10px] text-gray-500">SYSTEM + USER</div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition">
-                        <div class="text-green-400 font-bold text-lg">DarkZero</div>
-                        <div class="text-[10px] text-gray-500">SYSTEM + USER</div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition">
-                        <div class="text-green-400 font-bold text-lg">HackNet</div>
-                        <div class="text-[10px] text-gray-500">SYSTEM + USER</div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition">
-                        <div class="text-green-400 font-bold text-lg">Outbound</div>
-                        <div class="text-[10px] text-gray-500">USER</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="py-20 px-6 border-t border-white/5 bg-[#020005]">
-        <div class="max-w-5xl mx-auto text-center">
-            <h2 class="text-3xl font-heading font-bold mb-8" data-i18n="footer_title">Ready to Collaborate?</h2>
-            
-            <div class="flex justify-center gap-8 mb-12">
-                <a href="mailto:davidrodriguezscout@gmail.com" class="w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="https://linkedin.com/in/davidrscout" target="_blank" class="w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="https://github.com/davidrscout" target="_blank" class="w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://app.hackthebox.com/users/2807257" target="_blank" class="w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                    <i class="fas fa-cube"></i>
-                </a>
-            </div>
-            
-            <p class="text-xs text-gray-600 font-mono">© 2025 DAVID RODRÍGUEZ RAMÍREZ · MURCIA, ES</p>
-        </div>
-    </footer>
-
-    <!-- INTERACTIVE BACKGROUND SCRIPT -->
     <script>
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let cells = [];
-        const cellSize = 40; // Size of grid cells
-
-        function init() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-            
-            cells = [];
-            for(let x = 0; x < width; x += cellSize) {
-                for(let y = 0; y < height; y += cellSize) {
-                    cells.push({ x, y, active: 0, life: 0 });
+        // --- MATRIX BACKGROUND LOGIC (Mantenida) ---
+        (function() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let width = window.innerWidth, height = window.innerHeight;
+            canvas.width = width; canvas.height = height;
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789アァカサタナハマヤャラワ';
+            const fontSize = 16;
+            let columns = Math.floor(width / fontSize);
+            let drops = Array(columns).fill(1);
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, width, height);
+                ctx.font = fontSize + 'px monospace';
+                for(let i = 0; i < drops.length; i++) {
+                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                    ctx.fillStyle = Math.random() > 0.95 ? '#9945ff' : '#14f195';
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    if(drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
                 }
             }
-        }
-
-        const mouse = { x: -1000, y: -1000 };
-        window.addEventListener('mousemove', e => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        window.addEventListener('resize', init);
-
-        function draw() {
-            ctx.fillStyle = '#020202';
-            ctx.fillRect(0, 0, width, height);
-
-            // Draw grid lines
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
-            ctx.lineWidth = 1;
-            
-            for(let x = 0; x <= width; x += cellSize) {
-                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
-            }
-            for(let y = 0; y <= height; y += cellSize) {
-                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
-            }
-
-            // Update & Draw active cells
-            cells.forEach(cell => {
-                // Random Glitch
-                if(Math.random() < 0.0005) {
-                    cell.active = 1;
-                    cell.life = 1;
-                }
-
-                // Mouse interaction
-                const dx = mouse.x - (cell.x + cellSize/2);
-                const dy = mouse.y - (cell.y + cellSize/2);
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                
-                if (dist < 150) {
-                    const intensity = 1 - (dist / 150);
-                    cell.active = Math.max(cell.active, intensity);
-                }
-
-                if (cell.active > 0.01) {
-                    cell.active *= 0.95; // Decay
-                    
-                    // Color based on position (Cyan vs Purple)
-                    const isCyan = (cell.x + cell.y) % (cellSize * 3) === 0;
-                    const r = isCyan ? 6 : 139;
-                    const g = isCyan ? 182 : 92;
-                    const b = isCyan ? 212 : 246;
-                    
-                    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${cell.active * 0.4})`;
-                    ctx.fillRect(cell.x + 1, cell.y + 1, cellSize - 2, cellSize - 2);
-                }
+            setInterval(draw, 33);
+            window.addEventListener('resize', () => {
+                width = window.innerWidth; height = window.innerHeight;
+                canvas.width = width; canvas.height = height;
+                columns = Math.floor(width / fontSize);
+                drops = Array(columns).fill(1);
             });
+        })();
 
-            requestAnimationFrame(draw);
-        }
-
-        init();
-        draw();
-
-        // TRANSLATIONS
+        // --- TRADUCCIÓN Y LÓGICA DE ARCHIVOS ---
         const translations = {
-            es: {
-                nav_home: "Inicio", nav_exp: "Experiencia", nav_edu: "Formación", nav_projects: "Proyectos", nav_cyber: "Ciberseguridad", nav_contact: "Contactar",
-                hero_desc: "Combinando <strong>Red Teaming</strong> y <strong>Desarrollo Full-Stack</strong>. Reconstruyo rutas de ataque rotas y construyo infraestructuras de nube escalables.",
-                hero_btn_projects: "Ver Proyectos", hero_btn_cv: "Descargar CV",
-                exp_title: "Trayectoria <span class='text-gray-500'>Profesional</span>",
-                present: "PRESENTE",
-                exp_gemsy_desc: "<li>Diseño de sistema end-to-end y arquitectura cloud.</li><li>Automatización semántica con GPT-4 y filtrado avanzado.</li><li>Desarrollo de API modular en Python y gestión de PostgreSQL en Google Cloud.</li>",
-                exp_drscout_desc: "<li>Desarrollo técnico y mantenimiento de infraestructura.</li><li>Optimización de rendimiento y SEO técnico.</li><li>Automatización de procesos del sitio.</li>",
-                exp_f10_desc: "<li>Gestión y validación de bases de datos masivas.</li><li>Análisis estadístico y reportes de talento.</li><li>Mantenimiento de integridad de datos y sistemas de filtrado.</li>",
-                exp_mensajero_desc: "<li>Gestión de bases de datos de jugadores.</li><li>Coordinación y control del equipo de scouts.</li><li>Optimización de flujos de información.</li>",
-                edu_title: "Formación & <span class='text-primary'>Background</span>",
-                edu_self_title: "Autodidacta & I+D",
-                edu_self_desc: "Mi curiosidad técnica es el motor de mi carrera. He profundizado por mi cuenta en tecnologías avanzadas fuera del currículo estándar.",
-                edu_formal_title: "Educación Formal",
-                languages_title: "Idiomas",
-                projects_title: "Proyectos <span class='gradient-title'>Destacados</span>",
-                projects_subtitle: "Ingeniería aplicada a problemas reales. Desde plataformas SaaS hasta herramientas de Red Teaming.",
-                gemsy_title: "Plataforma de Análisis con IA",
-                gemsy_desc_full: "SaaS profesional validado por scouts internacionales. Gestiona una base de datos de <strong>>60,000 jugadores</strong>. El núcleo de IA ofrece una <strong>precisión del 99%</strong> y ha reducido el tiempo de búsqueda de talento en un <strong>95%</strong> (de semanas a segundos).",
-                visit_platform: "Visitar Plataforma",
-                proj_natumap_desc: "Suite de enumeración ofensiva automatizada. Orquesta múltiples técnicas de reconocimiento, fuzzing y descubrimiento de activos en un flujo unificado y optimizado.",
-                proj_scraping_title: "Scraping Distribuido",
-                proj_scraping_short: "Pipelines de extracción masiva. Rotación de IPs, resolución de CAPTCHAs y normalización SQL.",
-                proj_bots_title: "Bots Ofensivos",
-                proj_bots_short: "Bots de Telegram para reportes C2 en tiempo real y scripts serverless para reconocimiento.",
-                cyber_title: "Ciberseguridad",
-                cyber_subtitle: "Metodología ofensiva y arsenal completo de herramientas.",
-                footer_title: "¿Listo para Colaborar?"
-            },
             en: {
-                nav_home: "Home", nav_exp: "Experience", nav_edu: "Education", nav_projects: "Projects", nav_cyber: "Cybersecurity", nav_contact: "Contact",
-                hero_desc: "Merging <strong>Red Teaming</strong> and <strong>Full-Stack Development</strong>. I reconstruct broken attack paths and build scalable cloud infrastructures.",
-                hero_btn_projects: "View Projects", hero_btn_cv: "Download CV",
-                exp_title: "Professional <span class='text-gray-500'>Track</span>",
-                present: "PRESENT",
-                exp_gemsy_desc: "<li>End-to-end system design and cloud architecture.</li><li>Semantic automation with GPT-4 and advanced filtering.</li><li>Modular Python API development and PostgreSQL management on Google Cloud.</li>",
-                exp_drscout_desc: "<li>Technical development and infrastructure maintenance.</li><li>Performance optimization and technical SEO.</li><li>Site process automation.</li>",
-                exp_f10_desc: "<li>Management and validation of massive databases.</li><li>Statistical analysis and talent reporting.</li><li>Data integrity maintenance and filtering systems.</li>",
-                exp_mensajero_desc: "<li>Player database management.</li><li>Coordination and control of scout teams.</li><li>Optimization of information workflows.</li>",
-                edu_title: "Education & <span class='text-primary'>Background</span>",
-                edu_self_title: "Self-Taught & R&D",
-                edu_self_desc: "Technical curiosity drives my career. I have delved deep into advanced technologies outside the standard curriculum.",
-                edu_formal_title: "Formal Education",
-                languages_title: "Languages",
-                projects_title: "Featured <span class='gradient-title'>Projects</span>",
-                projects_subtitle: "Engineering applied to real problems. From SaaS platforms to Red Teaming tools.",
-                gemsy_title: "AI Analysis Platform",
-                gemsy_desc_full: "Professional SaaS validated by international scouts. Manages a database of <strong>>60,000 players</strong>. The AI core offers <strong>99% precision</strong> and has reduced talent search time by <strong>95%</strong> (from weeks to seconds).",
-                visit_platform: "Visit Platform",
-                proj_natumap_desc: "Automated offensive enumeration suite. Orchestrates multiple reconnaissance, fuzzing, and asset discovery techniques into a unified and optimized flow.",
-                proj_scraping_title: "Distributed Scraping",
-                proj_scraping_short: "Massive extraction pipelines. IP rotation, CAPTCHA solving, and SQL normalization.",
-                proj_bots_title: "Offensive Bots",
-                proj_bots_short: "Telegram bots for real-time C2 reporting and serverless scripts for reconnaissance.",
-                cyber_title: "Cybersecurity",
-                cyber_subtitle: "Offensive methodology and complete tool arsenal.",
-                footer_title: "Ready to Collaborate?"
+                nav_work: "work", nav_projects: "projects", nav_skills: "skills", nav_contact: "contact",
+                hero_label: "Junior Security Analyst",
+                hero_desc: "offensive_security + full_stack_dev + ai_integration",
+                hero_btn_projects: "VIEW WORK", hero_btn_cv: "DOWNLOAD CV",
+                projects_title: "PROJECTS",
+                proj_gemsy_desc: "Professional SaaS platform managing 60,000+ player records. Built from scratch with Python backend, GPT-4 semantic queries, PostgreSQL database, and Google Cloud deployment.",
+                proj_homelab_title: "AD HOMELAB",
+                proj_homelab_desc: "Isolated Active Directory environment for advanced penetration testing and Kerberos exploitation.",
+                contact_title: "CONNECT"
+            },
+            es: {
+                nav_work: "experiencia", nav_projects: "proyectos", nav_skills: "habilidades", nav_contact: "contacto",
+                hero_label: "Analista de Seguridad Junior",
+                hero_desc: "seguridad_ofensiva + desarrollo_full_stack + integración_ia",
+                hero_btn_projects: "VER TRABAJO", hero_btn_cv: "DESCARGAR CV",
+                projects_title: "PROYECTOS",
+                proj_gemsy_desc: "Plataforma SaaS profesional con 60,000+ registros. Construida desde cero con Python, GPT-4, PostgreSQL y despliegue en Google Cloud.",
+                proj_homelab_title: "LABORATORIO AD",
+                proj_homelab_desc: "Entorno de Active Directory aislado para pentesting avanzado y explotación de Kerberos.",
+                contact_title: "CONTACTO"
             }
         };
 
-        let currentLang = 'es';
+        let currentLang = 'en';
+
         function toggleLanguage() {
-            currentLang = currentLang === 'es' ? 'en' : 'es';
-            document.getElementById('lang-flag').textContent = currentLang === 'es' ? '🇪🇸' : '🇬🇧';
-            document.getElementById('lang-text').textContent = currentLang === 'es' ? 'ES' : 'EN';
+            currentLang = currentLang === 'en' ? 'es' : 'en';
+            
+            // Actualizar textos
+            document.getElementById('lang-text').textContent = currentLang.toUpperCase();
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
             });
+
+            // Actualizar enlace de descarga del CV dinámicamente
+            const cvLink = document.getElementById('cv-download-link');
+            if (currentLang === 'es') {
+                cvLink.setAttribute('href', 'david-rodriguez-cyber-es.pdf');
+            } else {
+                cvLink.setAttribute('href', 'david-rodriguez-cyber-en.pdf');
+            }
         }
     </script>
 </body>

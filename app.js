@@ -136,13 +136,18 @@ const sectionObserver = new IntersectionObserver((entries) => {
 
 const story = document.querySelector("[data-story]");
 const storyCopies = [...document.querySelectorAll("[data-story-copy]")];
-const scenes = [...document.querySelectorAll("[data-scene]")];
 const storyDots = [...document.querySelectorAll(".scene-progress i")];
 const storyCurrent = document.querySelector("[data-story-current]");
+const sceneCoordinate = document.querySelector("[data-scene-coordinate]");
+const coordinates = [
+  "SURFACE / DISCOVERY<br>LIVE NETWORK OBSERVATION",
+  "CONTROLLED ACCESS<br>HYPOTHESIS / TEST / VERIFY",
+  "PRIVILEGE / CONTEXT<br>USER → SERVICE → SYSTEM",
+  "EVIDENCE / VERIFIED<br>OBSERVE / REPRODUCE / EXPLAIN"
+];
 const timecode = document.querySelector("[data-timecode]");
 const header = document.querySelector("[data-header]");
 const progressBar = document.querySelector(".scroll-progress span");
-const corridor = document.querySelector("[data-corridor]");
 let targetScroll = window.scrollY;
 let smoothScroll = targetScroll;
 let frame = 0;
@@ -152,9 +157,9 @@ function setStoryStep(step) {
   if (step === activeStep) return;
   activeStep = step;
   storyCopies.forEach((copy, index) => copy.classList.toggle("is-active", index === step));
-  scenes.forEach((scene, index) => scene.classList.toggle("is-active", index === step));
   storyDots.forEach((dot, index) => dot.classList.toggle("is-active", index === step));
   storyCurrent.textContent = String(step + 1).padStart(2, "0");
+  sceneCoordinate.innerHTML = coordinates[step];
 }
 function render(scrollPosition) {
   const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -164,12 +169,12 @@ function render(scrollPosition) {
     const rect = story.getBoundingClientRect();
     const distance = story.offsetHeight - window.innerHeight;
     const progress = Math.max(0, Math.min(1, -rect.top / distance));
-    setStoryStep(Math.min(3, Math.floor(progress * 4)));
-    scenes.forEach((scene, index) => scene.style.setProperty("--scene-progress", String(Math.max(0, Math.min(1, progress * 4 - index)))));
+    const step = Math.min(3, Math.floor(progress * 4));
+    setStoryStep(step);
+    window.liveMotion?.setScene(step, Math.max(0, Math.min(1, progress * 4 - step)));
     const frames = Math.round(progress * 120);
     const seconds = Math.floor(frames / 24);
     timecode.textContent = `00:00:${String(seconds).padStart(2, "0")}:${String(frames % 24).padStart(2, "0")}`;
-    corridor.style.opacity = String(Math.max(0, .65 - scrollPosition / window.innerHeight));
   }
 }
 function animate() {
@@ -190,13 +195,4 @@ reducedMotion.addEventListener("change", () => {
   else activeStep = -1;
   requestRender();
 });
-
-if (!reducedMotion.matches) {
-  document.querySelector("[data-hero]").addEventListener("pointermove", (event) => {
-    const x = (event.clientX / window.innerWidth - .5) * -16;
-    const y = (event.clientY / window.innerHeight - .5) * -12;
-    corridor.style.setProperty("--pointer-x", `${x}px`);
-    corridor.style.setProperty("--pointer-y", `${y}px`);
-  }, { passive: true });
-}
 render(targetScroll);

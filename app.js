@@ -2,8 +2,8 @@
 
 const translations = {
   es: {
-    page_title: "David Rodríguez — Offensive Security",
-    page_description: "David Rodríguez — Seguridad ofensiva. Reconocimiento, explotación controlada, Active Directory, seguridad web y evidencia reproducible.",
+    page_title: "srd — Offensive Security",
+    page_description: "srd — Seguridad ofensiva. Reconocimiento, explotación controlada, Active Directory, seguridad web y evidencia reproducible.",
     skip: "Saltar al contenido", nav_aria: "Navegación principal", mobile_nav_aria: "Navegación móvil",
     nav_labs: "Secuencia", nav_contact: "Contacto", menu_open: "Abrir menú", menu_close: "Cerrar menú",
     hero_eyebrow: "Una secuencia de investigación", hero_location: "Murcia, España",
@@ -31,8 +31,8 @@ const translations = {
     back_top: "Volver al inicio ↑", language_aria: "Cambiar a inglés"
   },
   en: {
-    page_title: "David Rodríguez — Offensive Security",
-    page_description: "David Rodríguez — Offensive security. Reconnaissance, controlled exploitation, Active Directory, web security and reproducible evidence.",
+    page_title: "srd — Offensive Security",
+    page_description: "srd — Offensive security. Reconnaissance, controlled exploitation, Active Directory, web security and reproducible evidence.",
     skip: "Skip to content", nav_aria: "Main navigation", mobile_nav_aria: "Mobile navigation",
     nav_labs: "Sequence", nav_contact: "Contact", menu_open: "Open menu", menu_close: "Close menu",
     hero_eyebrow: "An investigation sequence", hero_location: "Murcia, Spain",

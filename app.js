@@ -63,13 +63,45 @@ const translations = {
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const film = document.querySelector("[data-film]");
+film.loop = false;
+const filmScenes = {
+  hero: [0, 3.2], recon: [3.2, 6.4], access: [6.4, 9.6], privesc: [9.6, 12.8], evidence: [12.8, 16],
+  labs: [3.2, 9.6], capabilities: [9.6, 12.8], contact: [16, 20]
+};
+let filmScene = filmScenes.hero;
+let filmTargetTime = 0;
+let filmLastGuidance = performance.now();
+function guideFilm(name, progress = 0) {
+  const scene = filmScenes[name];
+  filmScene = scene;
+  film.dataset.chapter = name;
+  filmTargetTime = scene[0] + Math.max(0, Math.min(1, progress)) * (scene[1] - scene[0]);
+  filmLastGuidance = performance.now();
+}
 function syncFilmPlayback() {
   if (reducedMotion.matches || document.hidden) film.pause();
   else film.play().catch(() => {});
 }
+function animateFilm() {
+  requestAnimationFrame(animateFilm);
+  if (reducedMotion.matches || document.hidden || film.readyState < 2) return;
+  const now = performance.now();
+  if (now - filmLastGuidance < 850) {
+    const difference = filmTargetTime - film.currentTime;
+    if (Math.abs(difference) > .025) film.currentTime += difference * .16;
+  } else {
+    if (film.currentTime >= filmScene[1] - .035 || film.currentTime < filmScene[0] - .1) film.currentTime = filmScene[0];
+    if (film.paused) film.play().catch(() => {});
+  }
+  const frames = Math.floor(film.currentTime * 24);
+  const seconds = Math.floor(frames / 24);
+  const timecode = document.querySelector("[data-timecode]");
+  timecode.textContent = `00:00:${String(seconds).padStart(2, "0")}:${String(frames % 24).padStart(2, "0")}`;
+}
 syncFilmPlayback();
 reducedMotion.addEventListener("change", syncFilmPlayback);
 document.addEventListener("visibilitychange", syncFilmPlayback);
+requestAnimationFrame(animateFilm);
 let language = document.documentElement.lang === "en" ? "en" : "es";
 try {
   const saved = localStorage.getItem("portfolio-language");
@@ -153,7 +185,6 @@ const coordinates = [
   "PRIVILEGE / CONTEXT<br>USER → SERVICE → SYSTEM",
   "EVIDENCE / VERIFIED<br>OBSERVE / REPRODUCE / EXPLAIN"
 ];
-const timecode = document.querySelector("[data-timecode]");
 const header = document.querySelector("[data-header]");
 const progressBar = document.querySelector(".scroll-progress span");
 let targetScroll = window.scrollY;
@@ -169,6 +200,10 @@ function setStoryStep(step) {
   storyCurrent.textContent = String(step + 1).padStart(2, "0");
   sceneCoordinate.innerHTML = coordinates[step];
 }
+function sectionProgress(section, scrollPosition) {
+  const start = section.offsetTop - window.innerHeight * .5;
+  return Math.max(0, Math.min(1, (scrollPosition - start) / section.offsetHeight));
+}
 function render(scrollPosition) {
   const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
   progressBar.style.transform = `scaleX(${documentHeight > 0 ? Math.min(scrollPosition / documentHeight, 1) : 0})`;
@@ -179,9 +214,20 @@ function render(scrollPosition) {
     const progress = Math.max(0, Math.min(1, -rect.top / distance));
     const step = Math.min(3, Math.floor(progress * 4));
     setStoryStep(step);
-    const frames = Math.round(progress * 120);
-    const seconds = Math.floor(frames / 24);
-    timecode.textContent = `00:00:${String(seconds).padStart(2, "0")}:${String(frames % 24).padStart(2, "0")}`;
+    const labsSection = document.getElementById("laboratorios");
+    const skillsSection = document.getElementById("capacidades");
+    const contactSection = document.getElementById("contacto");
+    if (scrollPosition < story.offsetTop) {
+      guideFilm("hero", scrollPosition / story.offsetTop);
+    } else if (rect.bottom > window.innerHeight) {
+      guideFilm(["recon", "access", "privesc", "evidence"][step], progress * 4 - step);
+    } else if (scrollPosition < skillsSection.offsetTop - window.innerHeight * .4) {
+      guideFilm("labs", sectionProgress(labsSection, scrollPosition));
+    } else if (scrollPosition < contactSection.offsetTop - window.innerHeight * .4) {
+      guideFilm("capabilities", sectionProgress(skillsSection, scrollPosition));
+    } else {
+      guideFilm("contact", sectionProgress(contactSection, scrollPosition));
+    }
   }
 }
 function animate() {

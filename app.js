@@ -62,6 +62,14 @@ const translations = {
 };
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const film = document.querySelector("[data-film]");
+function syncFilmPlayback() {
+  if (reducedMotion.matches || document.hidden) film.pause();
+  else film.play().catch(() => {});
+}
+syncFilmPlayback();
+reducedMotion.addEventListener("change", syncFilmPlayback);
+document.addEventListener("visibilitychange", syncFilmPlayback);
 let language = document.documentElement.lang === "en" ? "en" : "es";
 try {
   const saved = localStorage.getItem("portfolio-language");
@@ -171,7 +179,6 @@ function render(scrollPosition) {
     const progress = Math.max(0, Math.min(1, -rect.top / distance));
     const step = Math.min(3, Math.floor(progress * 4));
     setStoryStep(step);
-    window.liveMotion?.setScene(step, Math.max(0, Math.min(1, progress * 4 - step)));
     const frames = Math.round(progress * 120);
     const seconds = Math.floor(frames / 24);
     timecode.textContent = `00:00:${String(seconds).padStart(2, "0")}:${String(frames % 24).padStart(2, "0")}`;

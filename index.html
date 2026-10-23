@@ -35,8 +35,7 @@
   <header class="site-header" data-header>
     <a class="wordmark" href="#inicio" aria-label="David Rodríguez — inicio">David Rodríguez<span>.</span></a>
     <nav class="desktop-nav" aria-label="Navegación principal" data-i18n-aria="nav_aria">
-      <a href="#laboratorios" data-i18n="nav_labs">Laboratorio</a>
-      <a href="#capacidades" data-i18n="nav_skills">Capacidades</a>
+      <a href="#secuencia" data-i18n="nav_labs">Secuencia</a>
       <a href="#contacto" data-i18n="nav_contact">Contacto</a>
     </nav>
     <div class="header-actions">
@@ -47,8 +46,7 @@
   </header>
 
   <nav class="mobile-nav" id="mobile-menu" aria-label="Navegación móvil" data-i18n-aria="mobile_nav_aria" hidden>
-    <a href="#laboratorios" data-i18n="nav_labs">Laboratorio</a>
-    <a href="#capacidades" data-i18n="nav_skills">Capacidades</a>
+    <a href="#secuencia" data-i18n="nav_labs">Secuencia</a>
     <a href="#contacto" data-i18n="nav_contact">Contacto</a>
   </nav>
 
@@ -93,82 +91,33 @@
           <article class="scene-copy is-active" data-story-copy="0">
             <p class="scene-number">SECUENCIA 01 / <span data-i18n="chapter_recon">RECONOCIMIENTO</span></p>
             <h2 data-i18n="scene_1_title">Todo empieza<br>en la superficie.</h2>
-            <p data-i18n="scene_1_text">Servicios, usuarios, rutas y relaciones. La enumeración convierte lo desconocido en un mapa que se puede estudiar.</p>
+            <p class="scene-description" data-i18n="scene_1_text">Servicios, usuarios, rutas y relaciones. La enumeración convierte lo desconocido en un mapa que se puede estudiar.</p>
+            <p class="scene-tags">AD HOMELAB / LDAP / SMB / KERBEROS</p>
           </article>
           <article class="scene-copy" data-story-copy="1">
             <p class="scene-number">SECUENCIA 02 / <span data-i18n="chapter_access">ACCESO</span></p>
             <h2 data-i18n="scene_2_title">Una hipótesis.<br>Una prueba controlada.</h2>
-            <p data-i18n="scene_2_text">Probar lo mínimo necesario para responder una pregunta. Sin asumir impacto, sin perder el control del entorno.</p>
+            <p class="scene-description" data-i18n="scene_2_text">Probar lo mínimo necesario para responder una pregunta. Sin asumir impacto, sin perder el control del entorno.</p>
+            <p class="scene-tags">WEB SECURITY / LFI / RCE / SQLI</p>
           </article>
           <article class="scene-copy" data-story-copy="2">
             <p class="scene-number">SECUENCIA 03 / <span data-i18n="chapter_privesc">ESCALADA</span></p>
             <h2 data-i18n="scene_3_title">El contexto<br>cambia la perspectiva.</h2>
-            <p data-i18n="scene_3_text">Permisos, identidades y configuraciones. Comprender el camino importa más que coleccionar comandos.</p>
+            <p class="scene-description" data-i18n="scene_3_text">Permisos, identidades y configuraciones. Comprender el camino importa más que coleccionar comandos.</p>
+            <p class="scene-tags">WINDOWS / LINUX / ACL / PRIVILEGE ESCALATION</p>
           </article>
           <article class="scene-copy" data-story-copy="3">
             <p class="scene-number">SECUENCIA 04 / <span data-i18n="chapter_proof">EVIDENCIA</span></p>
             <h2 data-i18n="scene_4_title">Si no se puede repetir,<br>la historia no termina.</h2>
-            <p data-i18n="scene_4_text">Pasos claros, resultado observado y mitigación. La evidencia convierte una prueba en algo útil.</p>
+            <p class="scene-description" data-i18n="scene_4_text">Pasos claros, resultado observado y mitigación. La evidencia convierte una prueba en algo útil.</p>
+            <p class="scene-tags">HACK THE BOX / GAVEL / GUARDIAN / SIGNED / EDITOR</p>
+            <a class="scene-link" href="https://app.hackthebox.com/users/2807257" target="_blank" rel="noopener noreferrer"><span data-i18n="htb_profile">Ver perfil de Hack The Box</span> ↗</a>
           </article>
         </div>
 
         <div class="scene-progress" aria-hidden="true"><span data-story-current>01</span><div><i></i><i></i><i></i><i></i></div><span>04</span></div>
         <div class="film-bar film-bar-bottom" aria-hidden="true"></div>
       </div>
-    </section>
-
-    <section class="labs section-shell" id="laboratorios" aria-labelledby="labs-title">
-      <div class="section-heading reveal">
-        <p class="eyebrow" data-i18n="labs_eyebrow">Notas de campo</p>
-        <h2 id="labs-title"><span data-i18n="labs_title_1">Laboratorio.</span><br><em data-i18n="labs_title_2">Prueba. Repite.</em></h2>
-        <p data-i18n="labs_intro">Entornos controlados para aprender cómo fallan los sistemas y documentar el proceso.</p>
-      </div>
-
-      <article class="lab-feature reveal">
-        <div class="lab-copy">
-          <p class="case-label">CASE 01 / ACTIVE DIRECTORY</p>
-          <h3>AD Homelab</h3>
-          <p data-i18n="ad_description">Laboratorio aislado para practicar enumeración LDAP y SMB, analizar vectores de ataque Kerberos y estudiar configuraciones incorrectas de ACL.</p>
-          <p data-i18n="ad_outcome">Cada ruta termina en documentación: precondiciones, pasos, errores y mitigación.</p>
-          <ul class="tag-list" aria-label="Tecnologías de Active Directory"><li>LDAP</li><li>SMB</li><li>Kerberos</li><li>ACL</li><li>WinRM</li></ul>
-        </div>
-        <div class="ad-visual" aria-hidden="true">
-          <div class="visual-meta">TOPOLOGY / ISOLATED</div>
-          <svg viewBox="0 0 700 460" fill="none"><path class="ad-grid" d="M0 92H700M0 184H700M0 276H700M0 368H700M140 0V460M280 0V460M420 0V460M560 0V460"/><path class="ad-link" d="M96 240H220M340 240H466M220 240V110H466V140M340 240V370H466V340"/><circle cx="96" cy="240" r="10"/><rect x="220" y="190" width="120" height="100" rx="2"/><circle cx="466" cy="240" r="52"/><circle cx="466" cy="110" r="10"/><circle cx="466" cy="370" r="10"/><path class="ad-route" pathLength="1" d="M96 240H220M340 240H414"/><text x="280" y="246">DC</text><text x="466" y="246">ACL</text></svg>
-          <div class="visual-footer"><span>ENUMERATE</span><span>ANALYSE</span><span>DOCUMENT</span></div>
-        </div>
-      </article>
-
-      <div class="lab-pair">
-        <article class="web-lab reveal">
-          <p class="case-label">CASE 02 / WEB SECURITY</p>
-          <h3 data-i18n="web_title">Seguridad web</h3>
-          <p data-i18n="web_description">Práctica controlada de enumeración y vulnerabilidades web: LFI, RCE, SQLi y técnicas de acceso inicial.</p>
-          <div class="web-console" aria-hidden="true"><p><span>></span> enumerate --target lab</p><p><span>></span> observe --response</p><p><span>></span> verify --evidence</p><i></i></div>
-        </article>
-        <article class="htb-lab reveal">
-          <p class="case-label">CASE 03 / HACK THE BOX</p>
-          <h3>Hack The Box</h3>
-          <p data-i18n="htb_description">Máquinas tipo empresa para entrenar enumeración, explotación y escalada de privilegios con una metodología estructurada.</p>
-          <div class="machine-list" aria-label="Máquinas practicadas" data-i18n-aria="machines_aria"><span>Gavel</span><span>Guardian</span><span>Signed</span><span>Eighteen</span><span>Editor</span><span>DarkZero</span><span>HackNet</span><span>Outbound</span></div>
-          <a class="text-link" href="https://app.hackthebox.com/users/2807257" target="_blank" rel="noopener noreferrer"><span data-i18n="htb_profile">Ver perfil de Hack The Box</span><span aria-hidden="true">↗</span></a>
-        </article>
-      </div>
-    </section>
-
-    <section class="capabilities section-shell" id="capacidades" aria-labelledby="capabilities-title">
-      <div class="section-heading reveal">
-        <p class="eyebrow" data-i18n="skills_eyebrow">Superficie de trabajo</p>
-        <h2 id="capabilities-title"><span data-i18n="skills_title_1">Método antes</span><br><em data-i18n="skills_title_2">que herramientas.</em></h2>
-      </div>
-      <div class="skill-ledger reveal">
-        <article><p>01 / RECON</p><h3 data-i18n="skill_1_title">Enumeración</h3><p data-i18n="skill_1_text">Windows y Linux. LDAP, SMB, descubrimiento de servicios y usuarios, análisis de superficie de ataque.</p></article>
-        <article><p>02 / ACCESS</p><h3 data-i18n="skill_2_title">Explotación controlada</h3><p data-i18n="skill_2_text">Vulnerabilidades web, servicios Windows, shells y técnicas de acceso inicial en entornos de práctica.</p></article>
-        <article><p>03 / PRIVESC</p><h3 data-i18n="skill_3_title">Escalada de privilegios</h3><p data-i18n="skill_3_text">SUID, capacidades, cron, servicios, permisos, Kerberos, ACL, MSSQL y WinRM.</p></article>
-        <article><p>04 / PROOF</p><h3 data-i18n="skill_4_title">Evidencia</h3><p data-i18n="skill_4_text">Reproducción, documentación de rutas de ataque, errores comunes y estrategias de mitigación.</p></article>
-      </div>
-      <div class="toolkit reveal"><p class="eyebrow" data-i18n="toolkit">Kit de trabajo</p><div><span>Nmap</span><span>Burp Suite</span><span>ffuf</span><span>Impacket</span><span>NetExec</span><span>Metasploit</span><span>Evil-WinRM</span><span>Ligolo-ng</span></div></div>
-      <div class="education reveal"><p class="eyebrow" data-i18n="education">Formación</p><p data-i18n="education_detail">Ciberseguridad en la empresa · 2025</p></div>
     </section>
 
     <section class="contact section-shell" id="contacto" aria-labelledby="contact-title">

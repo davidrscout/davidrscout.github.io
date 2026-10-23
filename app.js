@@ -5,7 +5,7 @@ const translations = {
     page_title: "David Rodríguez — Offensive Security",
     page_description: "David Rodríguez — Seguridad ofensiva. Reconocimiento, explotación controlada, Active Directory, seguridad web y evidencia reproducible.",
     skip: "Saltar al contenido", nav_aria: "Navegación principal", mobile_nav_aria: "Navegación móvil",
-    nav_labs: "Laboratorio", nav_skills: "Capacidades", nav_contact: "Contacto", menu_open: "Abrir menú", menu_close: "Cerrar menú",
+    nav_labs: "Secuencia", nav_contact: "Contacto", menu_open: "Abrir menú", menu_close: "Cerrar menú",
     hero_eyebrow: "Una secuencia de investigación", hero_location: "Murcia, España",
     hero_line_1: "Ver el sistema.", hero_line_2: "Encontrar la grieta.",
     hero_description: "Seguridad ofensiva. Reconocimiento, explotación controlada y evidencia que se puede repetir.",
@@ -34,7 +34,7 @@ const translations = {
     page_title: "David Rodríguez — Offensive Security",
     page_description: "David Rodríguez — Offensive security. Reconnaissance, controlled exploitation, Active Directory, web security and reproducible evidence.",
     skip: "Skip to content", nav_aria: "Main navigation", mobile_nav_aria: "Mobile navigation",
-    nav_labs: "Labs", nav_skills: "Capabilities", nav_contact: "Contact", menu_open: "Open menu", menu_close: "Close menu",
+    nav_labs: "Sequence", nav_contact: "Contact", menu_open: "Open menu", menu_close: "Close menu",
     hero_eyebrow: "An investigation sequence", hero_location: "Murcia, Spain",
     hero_line_1: "See the system.", hero_line_2: "Find the breach.",
     hero_description: "Offensive security. Reconnaissance, controlled exploitation and evidence you can reproduce.",
@@ -66,8 +66,7 @@ const film = document.querySelector("[data-film]");
 film.loop = false;
 film.pause();
 const filmScenes = {
-  hero: [0, 3.2], recon: [3.2, 6.4], access: [6.4, 9.6], privesc: [9.6, 12.8], evidence: [12.8, 16],
-  labs: [3.2, 9.6], capabilities: [9.6, 12.8], contact: [16, 20]
+  hero: [0, 3.2], recon: [3.2, 6.4], access: [6.4, 9.6], privesc: [9.6, 12.8], evidence: [12.8, 16], contact: [16, 20]
 };
 function guideFilm(name, progress = 0) {
   const scene = filmScenes[name];
@@ -153,7 +152,7 @@ const sectionObserver = new IntersectionObserver((entries) => {
     document.querySelectorAll(".desktop-nav a").forEach((link) => link.classList.toggle("is-active", link.hash === `#${entry.target.id}`));
   });
 }, { rootMargin: "-30% 0px -60%" });
-["laboratorios", "capacidades", "contacto"].forEach((id) => sectionObserver.observe(document.getElementById(id)));
+["secuencia", "contacto"].forEach((id) => sectionObserver.observe(document.getElementById(id)));
 
 const story = document.querySelector("[data-story]");
 const storyCopies = [...document.querySelectorAll("[data-story-copy]")];
@@ -195,18 +194,12 @@ function render(scrollPosition) {
     const progress = Math.max(0, Math.min(1, -rect.top / distance));
     const step = Math.min(3, Math.floor(progress * 4));
     setStoryStep(step);
-    const labsSection = document.getElementById("laboratorios");
-    const skillsSection = document.getElementById("capacidades");
-    const contactSection = document.getElementById("contacto");
     if (scrollPosition < story.offsetTop) {
       guideFilm("hero", scrollPosition / story.offsetTop);
     } else if (rect.bottom > window.innerHeight) {
       guideFilm(["recon", "access", "privesc", "evidence"][step], progress * 4 - step);
-    } else if (scrollPosition < skillsSection.offsetTop - window.innerHeight * .4) {
-      guideFilm("labs", sectionProgress(labsSection, scrollPosition));
-    } else if (scrollPosition < contactSection.offsetTop - window.innerHeight * .4) {
-      guideFilm("capabilities", sectionProgress(skillsSection, scrollPosition));
     } else {
+      const contactSection = document.getElementById("contacto");
       guideFilm("contact", sectionProgress(contactSection, scrollPosition));
     }
   }

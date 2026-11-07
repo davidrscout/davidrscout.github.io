@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>natu</title>
+  <meta name="description" content="natu — security research and coordinated disclosure. Active Directory, web, open source and AI.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="referrer" content="no-referrer">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="natu">
+  <meta property="og:description" content="Security research and coordinated disclosure.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-out" viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5h4v4" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/></symbol>
+    <symbol id="cord-taut" viewBox="0 0 34 10"><path d="M4 5H30" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="4" cy="5" r="2.4"/><circle cx="30" cy="5" r="2.4"/></symbol>
+    <symbol id="cord-load" viewBox="0 0 34 10"><path d="M4 5H30" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="14" y="2" width="6" height="6" transform="rotate(45 17 5)"/><circle cx="4" cy="5" r="2.4"/><circle cx="30" cy="5" r="2.4"/></symbol>
+    <symbol id="cord-cut" viewBox="0 0 34 10"><path d="M4 5H14M20 5H30" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M14 3.2 15.6 6.8M18.4 3.2 20 6.8" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="4" cy="5" r="2.4"/><circle cx="30" cy="5" r="2.4"/></symbol>
+    <symbol id="cord-slack" viewBox="0 0 34 10"><path d="M4 3Q17 12 30 3" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="4" cy="3" r="2.4"/><circle cx="30" cy="3" r="2.4"/></symbol>
+  </svg>
+
+  <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+  <header class="rail rail-top">
+    <a class="mark" href="#file" aria-label="natu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="mk-cord" d="M4 20 12 3 20 20Z M4 20 20 12 M20 20 4 12"/><path class="mk-rod" d="M5.5 18.5 18.5 5.5 M18.5 18.5 9 9"/></svg>
+      <span>natu</span>
+    </a>
+    <nav class="nav" aria-label="Sections" data-i18n-aria="nav">
+      <a href="#file" data-i18n="n_file">file</a>
+      <a href="#lab" data-i18n="n_lab">lab</a>
+      <a href="#log" data-i18n="n_log">log</a>
+      <a href="#method" data-i18n="n_method">method</a>
+      <a href="#machines" data-i18n="n_machines">machines</a>
+      <a href="#defense" data-i18n="n_defense">defense</a>
+      <a href="#ai" data-i18n="n_ai">ai</a>
+    </nav>
+    <p class="state"><span class="pulse" aria-hidden="true"></span><span data-i18n="active">active</span></p>
+    <div class="lang" role="group" aria-label="Language" data-i18n-aria="lang">
+      <button type="button" data-lang="en" aria-pressed="true">en</button>
+      <button type="button" data-lang="es" aria-pressed="false">es</button>
+    </div>
+  </header>
+
+  <main id="main" class="sheet">
+
+    <section id="file" class="zone z-file" aria-labelledby="t-file">
+      <h1 id="t-file">natu</h1>
+      <p class="rule" data-i18n="rule">no PoC, no report.</p>
+      <p class="line" data-i18n="line">security research · coordinated disclosure</p>
+      <dl class="spec">
+        <div><dt data-i18n="k_alias">alias</dt><dd>natu</dd></div>
+        <div><dt data-i18n="k_name">name</dt><dd><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span></dd></div>
+        <div><dt data-i18n="k_loc">location</dt><dd><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span></dd></div>
+        <div><dt data-i18n="k_focus">focus</dt><dd data-i18n="v_focus">active directory · web · open source · ai</dd></div>
+        <div><dt data-i18n="k_offense">offense</dt><dd data-i18n="v_offense">kerberos · privilege escalation · pivoting · manual exploitation, no frameworks</dd></div>
+        <div><dt data-i18n="k_build">build</dt><dd data-i18n="v_build">python tooling · apis · cloud · vps hardening</dd></div>
+        <div><dt data-i18n="k_status">status</dt><dd class="on" data-i18n="active">active</dd></div>
+      </dl>
+    </section>
+
+    <section id="lab" class="zone z-lab" aria-labelledby="t-lab">
+      <header class="zh">
+        <h2 id="t-lab"><span data-i18n="t_lab">lab</span> <span class="dim">acme.local</span></h2>
+        <p data-i18n="d_lab">isolated active directory · real misconfigurations · no ctf shortcuts</p>
+      </header>
+      <div class="lab-body">
+        <figure class="column" data-column>
+          <svg class="col-svg" role="img" aria-labelledby="col-title col-desc">
+            <title id="col-title" data-i18n="col_title">Attack path in the lab, drawn as a tensegrity column</title>
+            <desc id="col-desc" data-i18n="col_desc">Six nodes from Kali, outside the domain, to Domain Admin on DC01. Each step tightens its cord and the column extends.</desc>
+          </svg>
+          <ol class="sr-only">
+            <li data-i18n="s1_l">Kali, outside the domain</li>
+            <li data-i18n="s2_l">Unauthenticated enumeration</li>
+            <li data-i18n="s3_l">User discovery over Kerberos</li>
+            <li data-i18n="s4_l">AS-REP roasting on an account with pre-authentication disabled</li>
+            <li data-i18n="s5_l">ACL abuse with GenericAll</li>
+            <li data-i18n="s6_l">Domain Admin on DC01</li>
+          </ol>
+        </figure>
+        <div class="lab-side">
+          <div class="live">
+            <p class="live-read" aria-hidden="true">
+              <span><b data-i18n="k_mode">mode</b><i data-live="mode">—</i></span>
+              <span><b data-i18n="k_step">step</b><i data-live="step">—</i></span>
+              <span><b data-i18n="k_now">now</b><i data-live="now">—</i></span>
+            </p>
+            <button type="button" class="live-btn" data-pause aria-pressed="false" data-i18n="pause">pause</button>
+          </div>
+          <ul class="hosts">
+            <li><b>dc01</b><span>windows server 2022</span></li>
+            <li><b>ws01</b><span>windows 10</span></li>
+            <li><b>kali</b><span data-i18n="outside">outside the domain</span></li>
+          </ul>
+          <a class="btn" href="https://github.com/davidrscout/HomeLab" target="_blank" rel="noopener noreferrer"><span data-i18n="writeup">write-up</span><svg aria-hidden="true"><use href="#i-out"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="log" class="zone z-log" aria-labelledby="t-log">
+      <header class="zh">
+        <h2 id="t-log" data-i18n="t_log">log</h2>
+        <p data-i18n="d_log">names withheld until the fix ships</p>
+      </header>
+      <h3 data-i18n="g_cvd">coordinated disclosure</h3>
+      <ul class="log">
+        <li><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span><span class="what" data-i18n="e1">ai assistant in a spreadsheet · authorization</span><span class="st taut"><svg aria-hidden="true"><use href="#cord-taut"/></svg><span data-i18n="st_mit">mitigation observed</span></span></li>
+        <li><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span><span class="what" data-i18n="e2">open-source library · rust</span><span class="st taut"><svg aria-hidden="true"><use href="#cord-taut"/></svg><span data-i18n="st_adv">advisory filed</span></span></li>
+        <li><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span><span class="what" data-i18n="e3">open-source library · go</span><span class="st taut"><svg aria-hidden="true"><use href="#cord-taut"/></svg><span data-i18n="st_adv">advisory filed</span></span></li>
+        <li><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span><span class="what" data-i18n="e4">library · python · c</span><span class="st slack"><svg aria-hidden="true"><use href="#cord-slack"/></svg><span data-i18n="st_aud_f">audited</span></span></li>
+      </ul>
+      <h3>bug bounty</h3>
+      <ul class="log">
+        <li><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span><span class="what" data-i18n="e5">l1 blockchain</span><span class="st load"><svg aria-hidden="true"><use href="#cord-load"/></svg><span data-i18n="st_val">in validation</span></span></li>
+        <li><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span><span class="what" data-i18n="e6">linux distribution</span><span class="st cut"><svg aria-hidden="true"><use href="#cord-cut"/></svg><span data-i18n="st_dup">duplicate</span></span></li>
+        <li><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span><span class="what" data-i18n="e7">cms core</span><span class="st slack"><svg aria-hidden="true"><use href="#cord-slack"/></svg><span data-i18n="st_aud_m">audited</span></span></li>
+        <li><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span><span class="what" data-i18n="e8">block editor</span><span class="st slack"><svg aria-hidden="true"><use href="#cord-slack"/></svg><span data-i18n="st_aud_m">audited</span></span></li>
+        <li><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span><span class="what" data-i18n="e9">eu digital identity wallet</span><span class="st slack"><svg aria-hidden="true"><use href="#cord-slack"/></svg><span data-i18n="st_aud_f">audited</span></span></li>
+        <li><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span><span class="what" data-i18n="e10">biometric verification sdk</span><span class="st slack"><svg aria-hidden="true"><use href="#cord-slack"/></svg><span data-i18n="st_aud_m">audited</span></span></li>
+        <li><span class="redact" role="img" aria-label="redacted" data-i18n-aria="redacted" data-tip="withheld" data-i18n-tip="withheld"></span><span class="what" data-i18n="e11">travel booking platform</span><span class="st slack"><svg aria-hidden="true"><use href="#cord-slack"/></svg><span data-i18n="st_aud_f">audited</span></span></li>
+      </ul>
+      <p class="legend">
+        <span class="taut"><svg aria-hidden="true"><use href="#cord-taut"/></svg><span data-i18n="lg_taut">reported</span></span>
+        <span class="load"><svg aria-hidden="true"><use href="#cord-load"/></svg><span data-i18n="lg_load">under review</span></span>
+        <span class="cut"><svg aria-hidden="true"><use href="#cord-cut"/></svg><span data-i18n="lg_cut">duplicate</span></span>
+        <span class="slack"><svg aria-hidden="true"><use href="#cord-slack"/></svg><span data-i18n="lg_slack">audited, no report</span></span>
+      </p>
+    </section>
+
+    <section id="machines" class="zone z-mach" aria-labelledby="t-mach">
+      <header class="zh">
+        <h2 id="t-mach" data-i18n="t_mach">machines</h2>
+        <p data-i18n="d_mach">hack the box · write-ups only for retired machines</p>
+      </header>
+      <ul class="machines">
+        <li>Gavel</li><li>MonitorsFour</li><li>Editor</li><li>Eighteen</li><li>Previous</li><li>DarkZero</li><li>HackNet</li><li>Giveback</li><li>Outbound</li><li>Guardian</li><li>Signed</li>
+      </ul>
+      <div class="z-foot">
+        <p>windows · linux · active directory · web</p>
+        <a class="lnk" href="https://app.hackthebox.com/users/2807257" target="_blank" rel="noopener noreferrer"><span data-i18n="profile">profile</span><svg aria-hidden="true"><use href="#i-out"/></svg></a>
+      </div>
+    </section>
+
+    <section id="defense" class="zone z-def" aria-labelledby="t-def">
+      <header class="zh">
+        <h2 id="t-def" data-i18n="t_def">defense</h2>
+        <p data-i18n="d_def">own systems in production · none named</p>
+      </header>
+      <ul class="items">
+        <li><b>pentest</b> <span data-i18n="v_d1">full, static and live · critical and medium fixed</span></li>
+        <li><b data-i18n="k_authz">authz</b> <span data-i18n="v_d2">plan limits enforced server-side</span></li>
+        <li><b>ssh</b> <span data-i18n="v_d3">key-only · automatic rollback</span></li>
+        <li><b>watchdog</b> <span data-i18n="v_d4">alerts and automatic restart</span></li>
+        <li><b data-i18n="k_reviews">reviews</b> <span data-i18n="v_d5">multi-agent · adversarial verification</span></li>
+        <li><b data-i18n="k_disc">disclosure</b> <span data-i18n="v_d6">security.txt published</span></li>
+      </ul>
+    </section>
+
+    <section id="ai" class="zone z-ai" aria-labelledby="t-ai">
+      <header class="zh">
+        <h2 id="t-ai" data-i18n="t_ai">ai</h2>
+        <p data-i18n="d_ai">applied to security · current focus</p>
+      </header>
+      <ul class="items">
+        <li><b data-i18n="k_recon">recon</b> <span data-i18n="v_a1">llm-assisted triage</span></li>
+        <li><b data-i18n="k_agents">agents</b> <span data-i18n="v_a2">reason over the state of the environment</span></li>
+        <li><b data-i18n="k_reports">reports</b> <span data-i18n="v_a3">generated from working notes</span></li>
+        <li><b data-i18n="k_scans">scans</b> <span data-i18n="v_a4">semantic analysis of results</span></li>
+        <li><b>pipeline</b> <span data-i18n="v_a5">own offensive pipeline · private</span></li>
+        <li><b>natuscan</b> <a class="lnk lnk-inline" href="https://github.com/davidrscout/NatuScan" target="_blank" rel="noopener noreferrer"><span data-i18n="v_a6">gui toolkit in python · in progress</span><svg aria-hidden="true"><use href="#i-out"/></svg></a></li>
+      </ul>
+    </section>
+
+    <section id="method" class="zone z-method" aria-labelledby="t-method">
+      <header class="zh">
+        <h2 id="t-method" data-i18n="t_method">method</h2>
+        <p data-i18n="d_method">from target to disclosure</p>
+      </header>
+      <ol class="beam">
+        <li><i class="knot" aria-hidden="true"></i><b data-i18n="m1">target</b><small data-i18n="m1s">in scope</small></li>
+        <li><i class="knot" aria-hidden="true"></i><b data-i18n="m2">surface</b><small data-i18n="m2s">mapped</small></li>
+        <li><i class="knot" aria-hidden="true"></i><b data-i18n="m3">hypotheses</b><small data-i18n="m3s">ranked</small></li>
+        <li><i class="knot" aria-hidden="true"></i><b>poc</b><small data-i18n="m4s">against the real code</small></li>
+        <li class="gate"><i class="knot" aria-hidden="true"></i><b data-i18n="m5">verify</b><small data-i18n="m5s">100 % or no report</small><em data-i18n="m5x">no report</em></li>
+        <li class="end"><i class="knot" aria-hidden="true"></i><b data-i18n="m6">disclose</b><small data-i18n="m6s">fix first</small></li>
+      </ol>
+    </section>
+
+  </main>
+
+  <footer class="rail rail-bottom">
+    <p data-i18n="foot">natu · names wait for the fix</p>
+    <nav class="refs" aria-label="References" data-i18n-aria="refs">
+      <a href="https://github.com/davidrscout/HomeLab" target="_blank" rel="noopener noreferrer">homelab<svg aria-hidden="true"><use href="#i-out"/></svg></a>
+      <a href="https://github.com/davidrscout/NatuScan" target="_blank" rel="noopener noreferrer">natuscan<svg aria-hidden="true"><use href="#i-out"/></svg></a>
+      <a href="https://app.hackthebox.com/users/2807257" target="_blank" rel="noopener noreferrer">hack the box<svg aria-hidden="true"><use href="#i-out"/></svg></a>
+    </nav>
+  </footer>
+</body>
+</html>

@@ -623,8 +623,10 @@ h3 {
 
 @media (min-width: 900px) {
   .lab-body { grid-template-columns: minmax(0, 1fr) auto; gap: clamp(16px, 1.4vw, 32px); }
-  .lab-side { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; min-width: 25ch; padding-top: 14px; }
+  /* ancho fijo: el texto vivo («AS-REP ROASTING») no puede mover la columna */
+  .lab-side { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; width: 28ch; padding-top: 14px; }
   .lab-side .hosts { margin-top: auto; }
+  .live { max-width: none; }
 }
 
 @media (min-width: 900px) and (max-width: 1599px) {
@@ -642,8 +644,9 @@ h3 {
 
 @media (min-width: 1600px) {
   .lab-body { flex: 1; min-height: 0; grid-template-rows: minmax(0, 1fr); }
-  .column { height: 100%; }
-  .col-svg { height: 100%; min-height: 480px; }
+  /* el SVG va en absoluto: su viewBox no participa en el tamaño de la fila (sin bucle de medida) */
+  .column { min-height: 480px; }
+  .col-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
   .lab-side { padding-bottom: 6px; }
   .sheet {
     grid-template-columns: minmax(0, 26fr) minmax(0, 38fr) minmax(0, 36fr);
@@ -659,7 +662,8 @@ h3 {
 /* entre 1600 y 2199 la zona del laboratorio es estrecha: el panel baja y la columna gana ancho */
 @media (min-width: 1600px) and (max-width: 2199px) {
   .lab-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; }
-  .lab-side { flex-direction: row; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 24px; padding-top: 0; min-width: 0; }
+  .lab-side { flex-direction: row; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 24px; padding-top: 0; width: auto; }
+  .live { max-width: 30ch; }
   .lab-side .hosts { margin-top: 0; }
 }
 
